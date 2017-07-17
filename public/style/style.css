@@ -167,3 +167,46 @@ table {
     color: white;
     text-decoration: none;
 }
+
+.login-form{
+    padding-top: 20px;
+}
+
+.login-form label{
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.login-form input{
+    border-style: none;
+    border-bottom: 1px solid #FF8C00;
+}
+
+.button-section{
+    padding-top: 20px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.button-section #login{
+    background-color: #FF8C00;
+    border-style: none;
+    border-radius: 3px;
+    padding: 7px;
+    color: white;
+
+    margin-top: 50px;
+    margin-left: 46%;
+}
+
+#login:hover{
+    background-color: #ECD83B;
+    color: white;
+    text-decoration: none;
+}
+
+#login:active{
+    background-color: #AF8F14;
+    color: white;
+    text-decoration: none;
+}
