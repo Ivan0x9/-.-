@@ -13,6 +13,8 @@ var port = 3000;
 var index = require('./routes/index');
 var users = require('./routes/users');
 var register= require('./routes/register.js');
+var login= require('./routes/login.js');
+
 var hbs =require('hbs');
 var http = require('http');
 var url = require('url');
@@ -38,6 +40,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', users);
 app.use('/register', register);
+app.use('/login',login);
 
 
 // catch 404 and forward to error handler
