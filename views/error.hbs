@@ -1,3 +1,38 @@
-<h1>{{message}}</h1>
-<h2>{{error.status}}</h2>
-<pre>{{error.stack}}</pre>
+<!DOCTYPE html>
+<html>
+<head>
+    {{>headpart}}
+    <title>Intelligent Project Manager</title>
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">
+                <img alt="Brand" src="images/iem-icon.png">
+            </a>
+        </div>
+        <ul class="navbar navbar-nav navbar-right">
+            <li><a href="#">Početna</a></li>
+            <li><a href="login.html">Prijava</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="main-double container">
+    <div class="content-register row justify-content-start">
+        <h1 class="content-header">{{error.status}} {{message}}</h1>
+        <form id="register-form col-4">
+            <div class="register-form-left col-md-5 col-sm-5 col-lg-5 col-md-offset-1 col-sm-offset-1">
+                <div class="col-md-5 col-md-offset-4">
+                    <label for="first-name">{{error.status}}</label><br>
+                    <label for="last-name">{{error.stack}}</label><br>
+                </div>
+            </div>
+
+
+
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
+</html>
