@@ -7,6 +7,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var lessMiddleware = require('less-middleware');
 var fs = require('fs');
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 var port = 3000;
 //routing variables
 
@@ -41,6 +43,8 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/register', register);
 app.use('/login',login);
+
+
 
 
 // catch 404 and forward to error handler
