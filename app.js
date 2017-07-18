@@ -7,20 +7,24 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var lessMiddleware = require('less-middleware');
 var fs = require('fs');
-var server = require('http').Server(app);
-var io = require('socket.io')(server);
+var hbs =require('hbs');
+var url = require('url');
 var port = 3000;
 //routing variables
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 var register= require('./routes/register.js');
-var login= require('./routes/login.js');
+var login = require('./routes/login.js');
+var test = require('./routes/test.js')
 
-var hbs =require('hbs');
-var http = require('http');
-var url = require('url');
 var app = express();
+var http = require('http').createServer(app);
+
+var io = require('socket.io')(http);
+
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -43,8 +47,15 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/register', register);
 app.use('/login',login);
+app.use('/test', test);
 
 
+io.on('connection', function(socket){
+ console.log('a user connected');
+ socket.on('disconnect', function(){
+ console.log('user disconnected');
+ });
+ });
 
 
 // catch 404 and forward to error handler
@@ -68,11 +79,14 @@ app.use(function(err, req, res, next) {
 module.exports = app;
 
 
-app.listen(port,function(){
+http.listen(port,function(){
  console.log('Server started on port ' + port);
 
-
 });
+
+
+
+
 
 
 
