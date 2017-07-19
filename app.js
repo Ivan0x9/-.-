@@ -50,12 +50,19 @@ app.use('/login',login);
 app.use('/test', test);
 
 
-io.on('connection', function(socket){
+io.sockets.on('connection', function(socket){
  console.log('a user connected');
  socket.on('disconnect', function(){
  console.log('user disconnected');
  });
+
+ socket.on('send:message', function (data) {
+        console.log('RADI');
+    });
+
  });
+
+
 
 
 // catch 404 and forward to error handler
