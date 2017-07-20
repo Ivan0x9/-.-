@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html ng-app="myApp">
 <html>
 <head>
     {{>headpart}}
@@ -10,17 +11,19 @@
 <div class="main-double container">
     <div class="content-register row justify-content-start">
         <h1 class="content-header">PRIJAVA</h1>
-        <form id="login-form col-md-12"  method="POST">
+        <div ng-controller="LoginCtrl">
+        <form id="login-form col-md-12">
             <div class="login-form col-md-5 col-sm-5 col-lg-5 col-md-offset-5 col-sm-offset-4">
                 <label for="user-name-email">Korisničko ime ili email</label><br>
-                <input type="text" name="user-name-email" id="user-name-email" value=""><br>
+                <input type="text" name="user-name-email" id="user-name-email" value="" ng-model="usernameemail"><br>
                 <label for="password">Lozinka</label><br>
-                <input type="password" name="password" id="password" value=""><br>
+                <input type="password" name="password" id="password" value="" ng-model="password"><br>
             </div>
             <div class="button-section">
-                <button type="button" name="login" id="login">Prijavi se</button>
+                <button type="button" name="login" id="login" ng-click="sendLogin()">Prijavi se</button>
             </div>
         </form>
+        </div>
     </div>
 </div>
 

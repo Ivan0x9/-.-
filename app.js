@@ -59,7 +59,10 @@ io.sockets.on('connection', function(socket){
  socket.on('send:message', function (data) {
         console.log('RADI');
     });
-
+    socket.on('send:login', function (data) {
+        console.log('RADI');
+        console.log(data);
+    });
  });
 
 
