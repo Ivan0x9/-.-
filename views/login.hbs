@@ -22,8 +22,9 @@
                 <button type="button" name="login" id="login" ng-click="sendLogin()">Prijavi se</button>
             </div>
             <div class="warning-message col-md-4 col-md-offset-4 text-center" ng-style="showMsg">
-                <span>Molimo unesite korisničko ime ili email.</span><br>
-                <span>Molimo unesite lozinku.</span>
+                <span ng-bind-html="insertHTML"></span><br>
+
+
             </div>
         </form>
     </div>

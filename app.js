@@ -10,18 +10,33 @@ var fs = require('fs');
 var hbs =require('hbs');
 var url = require('url');
 var port = 3000;
+
+
 //routing variables
 
 var index = require('./routes/index');
 var users = require('./routes/users');
 var register= require('./routes/register.js');
 var login = require('./routes/login.js');
-var test = require('./routes/test.js')
+var test = require('./routes/test.js');
+var api = require('./routes/api.js');
 
+
+
+//additional configuration
 var app = express();
 var http = require('http').createServer(app);
-
 var io = require('socket.io')(http);
+//session
+
+var session = require("express-session")({
+    secret: "ninđakornjače",
+    resave: true,
+    saveUninitialized: true
+});
+
+
+
 
 
 
@@ -42,59 +57,85 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(lessMiddleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
+// Use express-session middleware for express
+app.use(session);
+
+
+
+
+
+
+//io usage
+var username="a";
+var password="a";
+
+io.sockets.on('connection', function(socket){
+console.log('a user connected');
+
+//console.log(clients);
+socket.on('disconnect', function(){
+console.log('user disconnected');
+});
+
+socket.on('send:message', function (data) {
+    console.log('RADI');
+});
+
+socket.on('send:login', function (data) {
+    //baza
+
+ if(data.username == username && data.password == password) {
+
+
+        console.log('RADI');
+
+    }
+});
+
+
+});
+
+//routes
 
 app.use('/', login);
 app.use('/users', users);
 app.use('/register', register);
 app.use('/login',login);
 app.use('/test', test);
-
-
-io.sockets.on('connection', function(socket){
- console.log('a user connected');
- socket.on('disconnect', function(){
- console.log('user disconnected');
- });
-
- socket.on('send:message', function (data) {
-        console.log('RADI');
-    });
-    socket.on('send:login', function (data) {
-        console.log('RADI');
-        console.log(data);
-    });
- });
-
+app.use('/api', api);
 
 
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+var err = new Error('Not Found');
+err.status = 404;
+next(err);
 });
 
 // error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+// set locals, only providing error in development
+res.locals.message = err.message;
+res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+// render the error page
+res.status(err.status || 500);
+res.render('error');
+});
+
+
+
+
+
+
+//server start
+http.listen(port,function(){
+console.log('Server started on port ' + port);
+
 });
 
 module.exports = app;
-
-
-http.listen(port,function(){
- console.log('Server started on port ' + port);
-
-});
-
-
 
 
 
