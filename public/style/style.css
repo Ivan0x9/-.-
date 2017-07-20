@@ -224,3 +224,16 @@ table {
     color: red;
     padding: 10px;
 }
+
+.warning-message{
+    display: block;
+    visibility: hidden;
+
+    padding: 20px;
+    top: 30px;
+
+    background-color: whitesmoke;
+    border: 1px solid #367ABD;
+
+    box-shadow: 1px 1px 2px #888888;
+}
