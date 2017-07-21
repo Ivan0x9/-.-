@@ -3,7 +3,7 @@
 /* Controllers */
 
 angular.module('myApp.controllers', []).
-controller('LoginCtrl', function ($scope, $window, $http,$sce, socket) {
+controller('LoginCtrl', function ($scope, $window, $http, $sce, socket) {
 
     $scope.sendLogin=function() {
 
@@ -53,6 +53,79 @@ controller('LoginCtrl', function ($scope, $window, $http,$sce, socket) {
             socket.emit('send:login',data);*/
 
 
+        }
+    }
+}).
+controller('RegisterCtrl', function ($scope, $window, $http, $sce) {
+    $scope.sendRegistration = function(){
+        var varHTML;
+
+        if($scope.firstName == '' || $scope.firstName == undefined){
+            $scope.showMsg = {'visibility': 'visible'};
+            varHTML = 'Molimo unesite Vaše ime.';
+
+            $scope.insertHTML = $sce.trustAsHtml(varHTML);
+        }
+        else if($scope.lastName == '' || $scope.lastName == undefined){
+            $scope.showMsg = { 'visibility': 'visible' };
+            varHTML = 'Molimo unesite Vaše prezime.';
+
+            $scope.insertHTML = $sce.trustAsHtml(varHTML);
+        }
+        else if($scope.companyName == '' || $scope.companyName == undefined){
+            $scope.showMsg = { 'visibility': 'visible' };
+            varHTML = 'Molimo unesite ime poduzeća.';
+
+            $scope.insertHTML = $sce.trustAsHtml(varHTML);
+        }
+        else if($scope.transactionEmail == '' || $scope.transactionEmail == undefined){
+            $scope.showMsg = { 'visibility': 'visible' };
+            varHTML = 'Molimo unesite email adresu za transakcije.';
+
+            $scope.insertHTML = $sce.trustAsHtml(varHTML);
+        }
+        else if($scope.userName == '' || $scope.userName == undefined){
+            $scope.showMsg = { 'visibility': 'visible' };
+            varHTML = 'Molimo unesite korisničko ime.';
+
+            $scope.insertHTML = $sce.trustAsHtml(varHTML);
+        }
+        else if($scope.userEmail == '' || $scope.userEmail == undefined){
+            $scope.showMsg = { 'visibility': 'visible' };
+            varHTML = 'Molimo unesite korisnički email.';
+
+            $scope.insertHTML = $sce.trustAsHtml(varHTML);
+        }
+        else if($scope.password == '' || $scope.password == undefined){
+            $scope.showMsg = { 'visibility': 'visible' };
+            varHTML = 'Molimo unesite lozinku (Najmanje 6 znakova).';
+
+            $scope.insertHTML = $sce.trustAsHtml(varHTML);
+        }
+        else if($scope.password != $scope.confirmPassword) {
+            $scope.showMsg = { 'visibility': 'visible' };
+            varHTML = 'Potvrdite lozinku.';
+
+            $scope.insertHTML = $sce.trustAsHtml(varHTML);
+        }
+        else{
+            $http.post('/api', {firstName: $scope.firstName, lastName: $scope.lastName, companyName: $scope.companyName,
+                transactionEmail: $scope.transactionEmail, userName: $scope.userName, userEmail: $scope.userEmail, password: $scope.password}).
+            then(function SuccessCallback(data) {
+                    console.log(data.data);
+                    if (data.data == "cool") {
+                        console.log("OK");
+                    }
+                else {
+                    console.log("Rejected");
+                    $scope.showMsg = {'visibility': 'visible'};
+                    varHTML == '<div style="color:red">Neuspijela registracija<div>';
+
+                    $scope.insertHTML = $sce.trustAsHtml(varHTML);
+                }
+            }, function errorCallback(data) {
+                console.error("error in posting");
+            });
         }
     }
 }).
