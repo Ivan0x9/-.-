@@ -30,7 +30,7 @@ controller('LoginCtrl', function ($scope, $window, $http, $sce, socket) {
 
         }
         else{
-            $http.post('/api',{username: $scope.usernameemail, password: $scope.password}).
+            $http.post('/api/login',{username: $scope.usernameemail, password: $scope.password}).
             then(function successCallback(data) {
                console.log(data.data);
                 if(data.data == "cool"){
@@ -109,7 +109,7 @@ controller('RegisterCtrl', function ($scope, $window, $http, $sce) {
             $scope.insertHTML = $sce.trustAsHtml(varHTML);
         }
         else{
-            $http.post('/api', {firstName: $scope.firstName, lastName: $scope.lastName, companyName: $scope.companyName,
+            $http.post('/api/register', {firstName: $scope.firstName, lastName: $scope.lastName, companyName: $scope.companyName,
                 transactionEmail: $scope.transactionEmail, userName: $scope.userName, userEmail: $scope.userEmail, password: $scope.password}).
             then(function SuccessCallback(data) {
                     console.log(data.data);

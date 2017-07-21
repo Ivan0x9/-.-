@@ -6,10 +6,25 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var lessMiddleware = require('less-middleware');
+var sessions = require("client-sessions");
 var fs = require('fs');
 var hbs =require('hbs');
 var url = require('url');
+//database
+
 var port = 3000;
+
+var db = require('./lib/DB');
+
+
+
+
+
+
+
+
+
+
 
 
 //routing variables
@@ -27,15 +42,8 @@ var api = require('./routes/api.js');
 var app = express();
 var http = require('http').createServer(app);
 var io = require('socket.io')(http);
+require('./lib/io')(io);
 //session
-
-var session = require("express-session")({
-    secret: "ninđakornjače",
-    resave: true,
-    saveUninitialized: true
-});
-
-
 
 
 
@@ -58,7 +66,19 @@ app.use(cookieParser());
 app.use(lessMiddleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 // Use express-session middleware for express
-app.use(session);
+app.use(sessions({
+    cookieName: 'sessval', // cookie name dictates the key name added to the request object
+    secret: 'ninjakornjace', // should be a large unguessable string
+    duration: 24 * 60 * 60 * 1000, // how long the session will stay valid in ms
+    cookie: {
+       // path: '/api', // cookie will only be sent to requests under '/api'
+       // maxAge: 60000, // duration of the cookie in milliseconds, defaults to duration above
+       ephemeral: true // when true, cookie expires when the browser closes
+        //httpOnly: true, // when true, cookie is not accessible from javascript
+        //secure: false // when true, cookie will only be sent over SSL. use key 'secureProxy' instead if you handle SSL not in your node process
+    }
+}));
+
 
 
 
@@ -69,31 +89,7 @@ app.use(session);
 var username="a";
 var password="a";
 
-io.sockets.on('connection', function(socket){
-console.log('a user connected');
 
-//console.log(clients);
-socket.on('disconnect', function(){
-console.log('user disconnected');
-});
-
-socket.on('send:message', function (data) {
-    console.log('RADI');
-});
-
-socket.on('send:login', function (data) {
-    //baza
-
- if(data.username == username && data.password == password) {
-
-
-        console.log('RADI');
-
-    }
-});
-
-
-});
 
 //routes
 
