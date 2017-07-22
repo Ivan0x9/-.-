@@ -32,13 +32,14 @@ controller('LoginCtrl', function ($scope, $window, $http, $sce, socket) {
         else{
             $http.post('/api/login',{username: $scope.usernameemail, password: $scope.password}).
             then(function successCallback(data) {
-               console.log(data.data);
+
                 if(data.data == "cool"){
-                   console.log("OK");
+                     $scope.showMsg = {'visibility':'hidden'};
+                     $window.location.href = '/test';
                }else{
                    console.log("Rejected");
                     $scope.showMsg = {'visibility': 'visible'};
-                    varHTML='<div style="color:red">Neuspijela autorizacija<div>';
+                    varHTML='<div style="color:red">Neuspijela autorizacija</div>';
 
                     $scope.insertHTML = $sce.trustAsHtml(varHTML);
 
@@ -56,7 +57,7 @@ controller('LoginCtrl', function ($scope, $window, $http, $sce, socket) {
         }
     }
 }).
-controller('RegisterCtrl', function ($scope, $window, $http, $sce) {
+controller('RegisterCtrl', function ($scope, $window, $http, $sce, $timeout) {
     $scope.sendRegistration = function(){
         var varHTML;
 
@@ -112,16 +113,26 @@ controller('RegisterCtrl', function ($scope, $window, $http, $sce) {
             $http.post('/api/register', {firstName: $scope.firstName, lastName: $scope.lastName, companyName: $scope.companyName,
                 transactionEmail: $scope.transactionEmail, userName: $scope.userName, userEmail: $scope.userEmail, password: $scope.password}).
             then(function SuccessCallback(data) {
-                    console.log(data.data);
-                    if (data.data == "cool") {
-                        console.log("OK");
+
+                    if (data.data == "errorusername") {
+                        $scope.showMsg = {'visibility': 'visible'};
+                        varHTML = '<div style="color:red">Korisničko ime već postoji.</div>';
+
+                        $scope.insertHTML = $sce.trustAsHtml(varHTML);
                     }
-                else {
-                    console.log("Rejected");
+                    else if(data.data == "erroremail"){
+                        $scope.showMsg = {'visibility': 'visible'};
+                        varHTML = '<div style="color:red">Korisnički email već postoji.</div>';
+
+                        $scope.insertHTML = $sce.trustAsHtml(varHTML);
+                    } else if(data.data == "success"){
+
                     $scope.showMsg = {'visibility': 'visible'};
-                    varHTML == '<div style="color:red">Neuspijela registracija<div>';
+                    varHTML = '<div style="color:blue">Uspješna registracija.</div>';
 
                     $scope.insertHTML = $sce.trustAsHtml(varHTML);
+                        $timeout(function () { $window.location.href = '/login';}, 2500);
+
                 }
             }, function errorCallback(data) {
                 console.error("error in posting");

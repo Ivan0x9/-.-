@@ -35,7 +35,9 @@ var register= require('./routes/register.js');
 var login = require('./routes/login.js');
 var test = require('./routes/test.js');
 var api = require('./routes/api.js');
-
+var project_list=require('./routes/project-list');
+var transaction_to_projects=require('./routes/transactions-to-projects');
+var user_profile=require('./routes/user-profile');
 
 
 //additional configuration
@@ -99,6 +101,10 @@ app.use('/register', register);
 app.use('/login',login);
 app.use('/test', test);
 app.use('/api', api);
+app.use('/project-list',project_list);
+app.use('transactions-to-projects',transaction_to_projects);
+app.use('user-profile',user_profile);
+
 
 
 

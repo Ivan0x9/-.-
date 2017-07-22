@@ -5,20 +5,30 @@ var pool=db.pool;
 /* GET users listing. */
 router.get('/', function(req, res, next) {
 
-    pool.query("SELECT * FROM world.city", function (error, results, fields) {
+    var sql = [
+        "SELECT username FROM korisnik WHERE korisnik.username =?",
+    ].join('');
+    var inserts = [req.sessval.user];
+    pool.query(sql,inserts, function (error, results, fields) {
         if (error) throw error;
-        console.log('The solution is: ', results);
+
+        console.log(results);
+        if( results.length  > 0){
+
+            //sending errors
+            res.render('test');
+
+
+        }else {
+            res.render('error');
+
+
+        }
+
+
     });
 
 
-    if(req.sessval.user == "a"){
-        res.send('cool');
-    }else {
-
-
-        res.render('test');
-
-    }
 
 
 });
