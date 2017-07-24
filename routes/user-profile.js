@@ -4,6 +4,10 @@ var router = express.Router();
 /* GET users listing. */
 router.get('/', function(req, res, next) {
     res.send('user-profile');
+    res.render('user-profile', {
+        id: 'project-list',
+        item: 'Projekti'
+    })
 });
 
 module.exports = router;
