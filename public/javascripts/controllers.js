@@ -140,6 +140,14 @@ controller('RegisterCtrl', function ($scope, $window, $http, $sce, $timeout) {
         }
     }
 }).
+controller('showProject', function($scope, $location){
+    $scope.showProject = function(project){
+        $location.path('#/project-list/' + project.id);
+    };
+}).
+controller('showProjectGroup', function($scope) {
+    $scope.name = 'World'; // <-- ...The hell???
+}).
   controller('AppCtrl', function ($scope, socket) {
    $scope.sendMessage=function() {
        socket.emit('send:message', function (data) {
