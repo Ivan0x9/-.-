@@ -6,6 +6,7 @@ router.get('/', function(req, res, next) {
 
 
     res.render('login', {
+        title: 'Prijava',
         id: 'register',
         item: 'Registracija'
     });

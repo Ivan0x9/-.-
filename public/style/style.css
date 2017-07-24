@@ -1,56 +1,55 @@
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
-}
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
-	display: block;
-}
-html,body{
-    width: 100%;
-    height: 100%;
-    min-height: 100%;
-    
-    /*font-family: 'Open Sans Condensed', sans-serif;*/
-    font-family: 'Raleway', sans-serif;
-}
 body {
-	line-height: 1;
-}
-ol, ul {
-	list-style: none;
-}
-blockquote, q {
-	quotes: none;
-}
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
-	content: none;
-}
-table {
-	border-collapse: collapse;
-	border-spacing: 0;
+    height:100vh;
+    width: 100%;
 }
 
+table, tbody, th, td, tr{
+    height: 0;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
+/* MAIN STYLESHEET TEMPLATE ================================================ */
+
+#wrapper {
+    height:100vh;
+    position:relative;
+}
+#header {
+    height: 7vh;
+    background: #367ABD;
+
+}
+#content {
+    position: relative;
+    height: calc(100% - 100px);
+    width: 100%;
+}
+
+#left-column{
+    background-color: #eaeaea;
+}
+
+#right-column{
+    background-color: #dddddd;
+}
+
+#footer {
+    display: block;
+    position: relative;
+    height:50px;
+    bottom:0;
+    left:0;
+    background: #367ABD;
+}
+
+/* NAVBAR STYLE ========================================================= */
+
 .navbar{
+    margin-bottom: 0;
     border-radius: 0;
     border-style: none;
     
@@ -60,17 +59,13 @@ table {
 .navbar-brand img{
     position: absolute;
     top: 5px;
-    width: 40px;
+    height: 40px;
 }
 
 .navbar-right{
     position: absolute;
     top: 0;
     right: 15px;
-}
-
-.navbar-nav > li{
-    
 }
 
 .navbar-default .navbar-nav > li{
@@ -97,118 +92,213 @@ table {
     text-decoration: none;
 }
 
+/* REGISTRATION & LOGIN STYLE ================================================ */
+.submit-form{
+    padding-top: 15px;
+    height: 30%;
+    color: #696969;
+}
 
 .content-header{
     width: 50%;
+    height: 40px;
+    padding-top: 7px;
     margin: 0 auto;
-    text-align: center;
-    
+
     color: white;
     background-color: #367ABD;
-    
-    padding-top: 10px;
-    padding-bottom: 10px;
+
     border-radius: 3px;
+    box-shadow: 0px 5px 10px #b0b0b0;
 }
 
-.register-form-left{
+.submit-form-fields{
+    height: 40px;
     padding-top: 20px;
 }
 
-.register-form-right{
-    padding-top: 20px;
-}
-
-.register-form-left label{
-    margin-top: 30px;
-    margin-bottom: 10px
-}
-
-.register-form-left input{
-    border-style: none;
-    border-bottom: 1px solid #FF8C00;
-}
-
-.register-form-right label{
+.submit-form-fields label{
     margin-top: 30px;
     margin-bottom: 10px;
 }
 
-.register-form-right input{
+.submit-form-fields input{
     border-style: none;
     border-bottom: 1px solid #FF8C00;
 }
 
-.button-section{
-    padding-top: 20px;
-    width: 100%;
-    margin: 0 auto;
+.submit-form-fields-submit{
+    height: 50px;
+    margin-top: 150px;
 }
 
-.button-section #register{
+.reg-margin{
+    margin-top: 310px;
+}
+
+/* BUTTONS */
+
+.button-section{
+    padding-top: 20px;
+}
+
+.button-section #submit{
     background-color: #FF8C00;
     border-style: none;
     border-radius: 3px;
     padding: 7px;
     color: white;
-    
-    margin-top: 50px;
-    margin-left: 44%;
 }
 
-#register:hover{
+#submit:hover{
     background-color: #ECD83B;
     color: white;
     text-decoration: none;
 }
 
-#register:active{
+#submit:active{
     background-color: #AF8F14;
     color: white;
     text-decoration: none;
 }
 
-.login-form{
-    padding-top: 20px;
+/* PROJECT LIST & TRANSACTION LIST ===================================== */
+
+.scroll-area{
+    display: block;
+    float:left;
+    overflow-y:scroll;
 }
 
-.login-form label{
-    margin-top: 30px;
-    margin-bottom: 10px;
+.scroll-area::-webkit-scrollbar-track
+{
+    background-color: #F5F5F5;
 }
 
-.login-form input{
-    border-style: none;
-    border-bottom: 1px solid #FF8C00;
+.scroll-area::-webkit-scrollbar
+{
+    width: 5px;
+    background-color: #F5F5F5;
 }
 
-.button-section{
-    padding-top: 20px;
-    width: 100%;
-    margin: 0 auto;
+.scroll-area::-webkit-scrollbar-thumb
+{
+    background-color: #aeaeae;
 }
 
-.button-section #login{
+#left-column table{
+    margin-top: 20px;
+}
+#left-column tbody tr {
+    background-color: #ffffff;
+}
+
+#left-column .table-hover tbody tr:hover td, #left-column .table-hover tbody tr:hover th {
+    background-color: #FF8C00;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.repo-button{
     background-color: #FF8C00;
     border-style: none;
     border-radius: 3px;
-    padding: 7px;
     color: white;
-
-    margin-top: 50px;
-    margin-left: 46%;
 }
 
-#login:hover{
-    background-color: #ECD83B;
-    color: white;
-    text-decoration: none;
+#right-column table{
+    margin-top: 20px;
+    width: 95%;
 }
 
-#login:active{
-    background-color: #AF8F14;
+#right-column tbody td,
+#right-column tbody tr,
+#right-column tbody tr th{
+    background-color: #d8edf3;
+}
+
+#right-column tbody td:nth-of-type(odd),
+#right-column body tr:nth-of-type(odd){
+    background-color: #b1d9e7;
+}
+
+thead{
+    background-color: #367ABD;
+    color: #ffffff;
+}
+
+thead th:nth-of-type(even){
+    background-color: #095a8e;
+}
+
+#right-column .table-hover tbody tr:hover td, #right-column .table-hover tbody tr:hover th {
+    background-color: #FF8C00;
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.footer-button{
+    margin: 12px 12px 0 0;
+    background-color: #FF8C00;
+    border-style: none;
+    border-radius: 3px;
     color: white;
-    text-decoration: none;
+}
+
+/* PROJECT TEMPLATE ============================================================= */
+
+#left-column .list-group{
+    height: 45px;
+    margin-top: 10px;
+}
+
+#left-column .list-group > li{
+    background-color: #095a8e;
+    color: #ffffff;
+    border: none;
+    border-radius: 0 0 0 0;
+}
+#left-column .list-group > li:nth-of-type(even){
+    background-color: #367ABD;
+    color: #ffffff;
+}
+
+#left-column tbody tr > th{
+    background-color: #cd6700;
+    color: #ffffff;
+}
+#left-column tbody tr > td{
+    background-color: #8bc8db;
+}
+
+/* BUTTONS, ERRORS & WARNING MESSAGES =========================================== */
+.back-button{
+    border-radius: 9999px;
+    background-color: #FF8C00;
+    border-style: none;
+    color: white;
+}
+.project-navbar .navbar-nav > li{
+    background-color: transparent;
+    color: white;
+}
+
+.project-navbar .navbar-nav > li > a{
+    display: block;
+    color: white;
+    padding-right: 10px;
+    padding-left: 10px;
+    margin-top: -3px;
+}
+
+.project-navbar .navbar-nav > li a:hover{
+    background-color: transparent;
+    color: white;
+}
+
+.project-navbar .navbar-nav > li a:active{
+    background-color: transparent;
+    color: white;
 }
 
 .error-h1{
@@ -228,8 +318,9 @@ table {
 .warning-message{
     display: block;
     visibility: hidden;
+    height: 60px;
 
-    padding: 20px;
+    padding: 12px;
     top: 30px;
 
     background-color: whitesmoke;

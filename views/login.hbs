@@ -3,28 +3,31 @@
 <html>
 <head>
     {{>headpart}}
-    <title>Intelligent Project Manager</title>
 </head>
 <body>
-{{>iemnav}}
+<div id="wrapper">
+    {{>iemnav}}
 
-<div class="main-double container">
-    <div class="content-register row justify-content-start">
-        <h1 class="content-header">PRIJAVA</h1>
-        <form id="login-form" ng-controller="LoginCtrl">
-            <div class="login-form col-md-4 col-sm-4 col-lg-4 col-md-offset-4 col-sm-offset-4 text-center">
-                <label for="user-name-email">Korisničko ime ili email</label><br>
-                <input type="text" name="user-name-email" id="user-name-email" value="" ng-model="usernameemail"><br>
-                <label for="password">Lozinka</label><br>
-                <input type="password" name="password" id="password" value="" ng-model="password"><br>
-            </div>
-            <div class="button-section">
-                <button type="button" name="login" id="login" ng-click="sendLogin()">Prijavi se</button>
-            </div>
-            <div class="warning-message col-md-4 col-md-offset-4 text-center" ng-style="showMsg">
-                <span ng-bind-html="insertHTML"></span><br>
-            </div>
-        </form>
+    <div id="content">
+        <div class="submit-form">
+            <h3 class="content-header text-center">PRIJAVA</h3>
+            <form id="login-form" class="col-md-4 col-sm-4 col-lg-4 col-md-offset-4 col-sm-offset-4 text-center" ng-controller="LoginCtrl">
+                <div class="submit-form-fields col-md-12 col-sm-12 col-lg-12">
+                    <label for="user-name-email">Korisničko ime ili email</label><br>
+                    <input type="text" name="user-name-email" id="user-name-email" value="" ng-model="usernameemail"><br>
+                    <label for="password">Lozinka</label><br>
+                    <input type="password" name="password" id="password" value="" ng-model="password"><br>
+                </div>
+                <div class="submit-form-fields-submit text-center col-md-12 col-sm-12 col-lg-12">
+                    <div class="button-section">
+                        <button type="button" name="login" id="submit" ng-click="sendLogin()">Prijavi se</button>
+                    </div>
+                    <div class="warning-message col-md-12 col-lg-12 text-center" ng-style="showMsg">
+                        <span ng-bind-html="insertHTML"></span><br>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
