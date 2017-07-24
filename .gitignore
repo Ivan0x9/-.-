@@ -1,2 +1,7 @@
-*node_modules/
-*.idea/
+# gitignore files
+
+# ignore modules
+node_modules/**
+
+# ignore webstorm created folder
+.idea/**
