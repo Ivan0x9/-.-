@@ -251,6 +251,13 @@ thead th:nth-of-type(even){
     color: white;
 }
 
+.cp-button{
+    background-color: #FF8C00;
+    border-style: none;
+    border-radius: 3px;
+    color: white;
+}
+
 /* PROJECT TEMPLATE ============================================================= */
 
 #left-column .list-group{
