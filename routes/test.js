@@ -4,7 +4,7 @@ var db = require('../lib/DB');
 var pool=db.pool;
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-
+   //session prohibit
     var sql = [
         "SELECT username FROM korisnik WHERE korisnik.username =?",
     ].join('');
@@ -20,6 +20,7 @@ router.get('/', function(req, res, next) {
 
 
         }else {
+            res.locals.message='Access denied';
             res.render('error');
 
 
