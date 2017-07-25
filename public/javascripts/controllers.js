@@ -153,8 +153,41 @@ app.controller('showProjectGroup', function($scope) {
     $scope.name = 'World'; // <-- ...The hell???
 });
 
-app.controller('Note', function($scope){
-    $scope.items = [];
+app.controller('CreateProCtrl', function($scope, $window, $http, $sce){
+
+
+     $scope.sendProject = function(){
+         if($scope.projectName == '' || $scope.projectName == undefined){
+             console.log('Error: Nije unesen naziv');
+             return;
+         }
+         else if($scope.durationStart == '' || $scope.durationStart == undefined) {
+
+             console.log('Error: Nije unesen datum pocetka');
+             return;
+         }else if($scope.durationEnd == '' || $scope.durationEnd == undefined){
+
+             console.log('Error: Nije unesen datum kraja');
+             return;
+         }else{
+             var diff=DateDiff.inDays($scope.durationStart,$scope.durationEnd);
+             if(diff < 0 ){
+                 console.log('Error: Datum kraja postavljen prije datuma početka');
+                 return;
+             }else{
+
+             }
+
+
+         }
+
+
+         //ovdje nastavi
+        console.log($scope.projectName+' '+$scope.durationStart+' '+$scope.durationEnd+' ');
+
+     }
+
+   /* $scope.items = [];
 
     $scope.add = function () {
         $scope.items.push({
@@ -163,7 +196,7 @@ app.controller('Note', function($scope){
             questionPlaceholder: "foo",
             text: ""
         });
-    };
+    };*/
 });
 
 app.controller('AppCtrl', function ($scope, socket) {
@@ -181,3 +214,14 @@ app.controller('AppCtrl', function ($scope, socket) {
   controller('MyCtrl2', function ($scope) {
     // write Ctrl here
   });
+
+//functions
+var DateDiff = {
+
+    inDays: function (d1, d2) {
+        var t2 = d2.getTime();
+        var t1 = d1.getTime();
+
+        return parseInt((t2 - t1) / (24 * 3600 * 1000));
+    }
+};
