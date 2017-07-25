@@ -36,6 +36,7 @@ var project_list=require('./routes/project-list');
 var project_template=require('./routes/project-template.js');
 var transaction_to_projects=require('./routes/transactions-to-projects');
 var user_profile=require('./routes/user-profile');
+var create_project = require('./routes/create-project');
 
 
 //additional configuration
@@ -117,6 +118,7 @@ app.use('/project-list',project_list);
 app.use('/project-template', project_template);
 app.use('transactions-to-projects',transaction_to_projects);
 app.use('user-profile',user_profile);
+app.use('/create-project', create_project);
 
 
 

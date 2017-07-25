@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<html>
+<head>
+    {{>headpart}}
+</head>
+<body>
+<div id="wrapper">
+    {{>projectnav}}
+
+    <div id="content">
+        <div class="container submit-form">
+            <h3 class="content-header text-center">KREIRAJ PROJEKT</h3>
+            <form id="login-form" class="content-form text-center">
+                <div class="submit-form-fields form-group row">
+                    <label for="projectName" class="col-sm-6 form-control-label">Ime projekta</label>
+                    <div class="col-sm-6">
+                        <input type="text" id="projectName" placeholder="Ime projekta">
+                    </div>
+                </div>
+                <div class="submit-form-fields form-group row">
+                    <label for="durationStart" class="col-sm-6 form-control-label">Datum početka projekta</label>
+                    <div class="col-sm-6">
+                        <input type="date" id="durationStart">
+                    </div>
+                </div>
+                <div class="submit-form-fields form-group row">
+                    <label for="durationEnd" class="col-sm-6 form-control-label">Datum kraja projekta</label>
+                    <div class="col-sm-6">
+                        <input type="date" id="durationEnd">
+                    </div>
+                </div>
+                <div class="submit-form-fields form-group row">
+                        <label class="col-sm-6 form-control-label">Izaberi IBAN</label>
+                        <div>
+                            <select class="col-sm-5"></select>
+                        </div>
+                </div>
+                <hr>
+                <div class="submit-form-fields form-group row">
+                    <label for="createAccount" class="col-sm-6 form-control-label">Unesi IBAN</label>
+                    <div class="col-sm-6">
+                        <input type="text" id="createAccount"><button type="button" id="submit">+</button>
+                    </div>
+                </div>
+                <div class="submit-form-fields-submit form-group row">
+                    <div class="button-section col-sm-12 col-md-offset-2">
+                        <button type="button" name="submitProject" id="submit" ng-click="">Prijavi</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{{>onbodyend}}
+</body>
+</html>

@@ -153,6 +153,19 @@ app.controller('showProjectGroup', function($scope) {
     $scope.name = 'World'; // <-- ...The hell???
 });
 
+app.controller('Note', function($scope){
+    $scope.items = [];
+
+    $scope.add = function () {
+        $scope.items.push({
+            inlineChecked: false,
+            question: "",
+            questionPlaceholder: "foo",
+            text: ""
+        });
+    };
+});
+
 app.controller('AppCtrl', function ($scope, socket) {
    $scope.sendMessage=function() {
        socket.emit('send:message', function (data) {

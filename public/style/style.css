@@ -95,7 +95,6 @@ table, tbody, th, td, tr{
 /* REGISTRATION & LOGIN STYLE ================================================ */
 .submit-form{
     padding-top: 15px;
-    height: 30%;
     color: #696969;
 }
 
@@ -112,14 +111,15 @@ table, tbody, th, td, tr{
     box-shadow: 0px 5px 10px #b0b0b0;
 }
 
-.submit-form-fields{
-    height: 40px;
-    padding-top: 20px;
+.content-form{
+    width: 50%;
+    height: 100%;
+    margin: 0 auto;
 }
 
-.submit-form-fields label{
-    margin-top: 30px;
-    margin-bottom: 10px;
+.submit-form-fields{
+    height: 30px;
+    margin-top: 40px;
 }
 
 .submit-form-fields input{
@@ -127,9 +127,13 @@ table, tbody, th, td, tr{
     border-bottom: 1px solid #FF8C00;
 }
 
+.from-group{
+    padding-top: 30px;
+}
+
 .submit-form-fields-submit{
     height: 50px;
-    margin-top: 150px;
+    margin-top: 50px;
 }
 
 .reg-margin{
