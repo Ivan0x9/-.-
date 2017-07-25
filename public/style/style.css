@@ -112,8 +112,8 @@ table, tbody, th, td, tr{
 }
 
 .content-form{
-    width: 50%;
-    height: 100%;
+    width: 60%;
+    height: 300px;
     margin: 0 auto;
 }
 
@@ -132,20 +132,22 @@ table, tbody, th, td, tr{
 }
 
 .submit-form-fields-submit{
-    height: 50px;
-    margin-top: 50px;
+    height: 10px;
+}
+#register-form-left{
+    display: block;
+    width: 50%;
 }
 
-.reg-margin{
-    margin-top: 310px;
+#register-form-right{
+    display: block;
+    width: 50%;
 }
 
 /* BUTTONS */
-
 .button-section{
-    padding-top: 20px;
+    padding-top: 40px;
 }
-
 .button-section #submit{
     background-color: #FF8C00;
     border-style: none;
@@ -325,7 +327,7 @@ thead th:nth-of-type(even){
     height: 60px;
 
     padding: 12px;
-    top: 30px;
+    top: 60px;
 
     background-color: whitesmoke;
     border: 1px solid #367ABD;

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="myApp" name="myApp">
+<html ng-app="myApp">
 <head>
     {{>headpart}}
 </head>
@@ -10,41 +10,73 @@
     <div id="content">
         <div class="submit-form">
             <h3 class="content-header text-center">REGISTRACIJA</h3>
-            <form name="registrationForm" id="register-form" class="col-xs-12 col-sm-12 col-md-12" ng-controller="RegisterCtrl">
-                <div class="submit-form-fields register-form-left col-md-5 col-sm-5 col-lg-5 col-md-offset-1 col-sm-offset-1">
-                    <div class="col-md-5 col-md-offset-4">
-                        <label for="first-name">Ime</label><br>
-                        <input type="text" name="first-name" id="first-name" value="" ng-model="firstName"><br>
-                        <label for="last-name">Prezime</label><br>
-                        <input type="text" name="last-name" id="last-name" value="" ng-model="lastName"><br>
-                        <label for="company-name">Naziv tvrtke</label><br>
-                        <input type="text" name="company-name" id="company-name" value="" ng-model="companyName"><br>
-                        <label for="transaction-email">Transakcijski email</label><br>
-                        <input type="email" name="transactionEmail" id="transaction-email" value="" ng-model="transactionEmail"><br>
+
+
+            <form id="registration-form" class="container-fluid content-form" ng-controller="RegisterCtrl">
+                <div class="register-form-left col-md-6 col-sm-12">
+                    <div class="submit-form-fields form-group row">
+                        <label for="firstName" class="col-sm-6 form-control-label">Ime</label>
+                        <div class="col-sm-6">
+                            <input type="text" name="firstName" id="firstName" value="" ng-model="firstName"><br>
+                        </div>
                     </div>
-                </div>
-                <div class="submit-form-fields register-form-right col-md-5 col-sm-5 col-lg-5 col-md-offset-1 col-sm-offset-1">
-                    <div class="col-md-5">
-                        <label for="user-name">Korisničko ime</label><br>
-                        <input type="text" name="user-name" id="user-name" value="" ng-model="userName"><br>
-                        <label for="user-email">Korisnički email</label><br>
-                        <input type="email" name="userEmail" id="user-email" value="" ng-model="userEmail"><br>
-                        <label for="password">Lozinka</label><br>
-                        <input type="password" name="password" id="password" value="" ng-model="password" ng-minlength="6"><br>
-                        <label for="re-password">Potvrda lozinke</label><br>
-                        <input type="password" name="confirm-password" id="confirm-password" value="" ng-model="confirmPassword" required compare-to="password"><br>
+                    <div class="submit-form-fields form-group row">
+                        <label for="lastName" class="col-sm-6 form-control-label">Prezime</label>
+                        <div class="col-sm-6">
+                            <input type="text" name="lastName" id="lastName" value="" ng-model="lastName"><br>
+                        </div>
                     </div>
-                </div>
-                <div class="submit-form-fields-submit reg-margin text-center col-md-12 col-sm-12 col-lg-12">
-                    <div class="button-section">
-                        <button type="button" name="login" id="submit" ng-click="sendRegistration()">Prijavi se</button>
+                    <div class="submit-form-fields form-group row">
+                        <label for="companyName" class="col-sm-6 form-control-label">Naziv tvrtke</label>
+                        <div class="col-sm-6">
+                            <input type="text" name="companyName" id="companyName" value="" ng-model="companyName"><br>
+                        </div>
                     </div>
-                    <div class="warning-message col-md-4 col-md-offset-4 text-center" ng-style="showMsg">
-                        <span ng-bind-html="insertHTML"></span><br>
+                    <div class="submit-form-fields form-group row">
+                        <label for="transactionEmail" class="col-sm-6 form-control-label">Transakcijski email</label>
+                        <div class="col-sm-6">
+                            <input type="email" name="transactionEmail" id="transactionEmail" value="" ng-model="transactionEmail"><br>
+                        </div>
                     </div>
                 </div>
 
+                <div class="register-form-right col-md-6 col-sm-12">
+                    <div class="submit-form-fields form-group row">
+                        <label for="userName" class="col-sm-6 form-control-label">Korisničko ime</label>
+                        <div class="col-sm-6">
+                            <input type="text" name="userName" id="userName" value="" ng-model="userName"><br>
+                        </div>
+                    </div>
+                    <div class="submit-form-fields form-group row">
+                        <label for="userEmail" class="col-sm-6 form-control-label">Korisniči email</label>
+                        <div class="col-sm-6">
+                            <input type="email" name="userEmail" id="userEmail" value="" ng-model="userEmail"><br>
+                        </div>
+                    </div>
+                    <div class="submit-form-fields form-group row">
+                        <label for="password" class="col-sm-6 form-control-label">Korisniči email</label>
+                        <div class="col-sm-6">
+                            <input type="password" name="password" id="password" value="" ng-model="password" minlength="6"><br>
+                        </div>
+                    </div>
+                    <div class="submit-form-fields form-group row">
+                        <label for="confirmPassword" class="col-sm-6 form-control-label">Korisniči email</label>
+                        <div class="col-sm-6">
+                            <input type="password" name="confirmPassword" id="confirmPassword" value="" ng-model="confirmPassword" required compare-to="password"><br>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="submit-form-fields-submit form-group row">
+                    <div class="button-section col-sm-12 col-sm-offset-5">
+                        <button type="button" name="register" id="submit" ng-click="sendRegistration()">Registriraj se</button>
+                    </div>
+                    <div class="warning-message col-sm-12 col-md-12 col-lg-12 text-center" ng-style="showMsg">
+                        <span ng-bind-html="insertHTML"></span><br>
+                    </div>
+                </div>
             </form>
+
         </div>
     </div>
 </div>
