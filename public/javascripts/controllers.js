@@ -2,8 +2,9 @@
 
 /* Controllers */
 
-angular.module('myApp.controllers', []).
-controller('LoginCtrl', function ($scope, $window, $http, $sce, socket) {
+var app = angular.module('myApp.controllers', []);
+
+app.controller('LoginCtrl', function ($scope, $window, $http, $sce, socket) {
 
     $scope.sendLogin=function() {
 
@@ -56,8 +57,9 @@ controller('LoginCtrl', function ($scope, $window, $http, $sce, socket) {
 
         }
     }
-}).
-controller('RegisterCtrl', function ($scope, $window, $http, $sce, $timeout) {
+});
+
+app.controller('RegisterCtrl', function ($scope, $window, $http, $sce, $timeout) {
     $scope.sendRegistration = function(){
         var varHTML;
 
@@ -139,16 +141,19 @@ controller('RegisterCtrl', function ($scope, $window, $http, $sce, $timeout) {
             });
         }
     }
-}).
-controller('showProject', function($scope, $location){
+});
+
+app.controller('showProject', function($scope, $location){
     $scope.showProject = function(project){
         $location.path('#/project-list/' + project.id);
     };
-}).
-controller('showProjectGroup', function($scope) {
+});
+
+app.controller('showProjectGroup', function($scope) {
     $scope.name = 'World'; // <-- ...The hell???
-}).
-  controller('AppCtrl', function ($scope, socket) {
+});
+
+app.controller('AppCtrl', function ($scope, socket) {
    $scope.sendMessage=function() {
        socket.emit('send:message', function (data) {
 
