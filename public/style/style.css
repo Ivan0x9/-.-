@@ -7,6 +7,10 @@ table, tbody, th, td, tr{
     height: 0;
 }
 
+select{
+    border: 1px solid #FF8C00;
+}
+
 ::-webkit-scrollbar {
     width: 0px;
     background: transparent;
@@ -19,7 +23,7 @@ table, tbody, th, td, tr{
     position:relative;
 }
 #header {
-    height: 7vh;
+    height: 40px;
     background: #367ABD;
 
 }
@@ -59,7 +63,7 @@ table, tbody, th, td, tr{
 .navbar-brand img{
     position: absolute;
     top: 5px;
-    height: 40px;
+    height: 80%;
 }
 
 .navbar-right{
@@ -174,6 +178,8 @@ table, tbody, th, td, tr{
     display: block;
     float:left;
     overflow-y:scroll;
+    box-shadow: inset 0px 5px 5px rgba(0, 0, 0, 0.16);
+
 }
 
 .scroll-area::-webkit-scrollbar-track
@@ -277,11 +283,26 @@ thead th:nth-of-type(even){
 }
 
 #left-column tbody tr > th{
-    background-color: #cd6700;
+    background-color: #ff8c00;
     color: #ffffff;
 }
 #left-column tbody tr > td{
-    background-color: #8bc8db;
+    background-color: #ffffff;
+    color: #367ABD;;
+}
+
+#left-column .table-hover tbody .project-row td{
+    background-color: #b1d9e7;
+    color: #000000;
+}
+
+#left-column .table-hover tbody .transaction-row th{
+    background-color: #ffffff;
+}
+
+#left-column .table-hover tbody > .transaction-row{
+    border: 2px solid #b1d9e7;
+    color: #439dbb;
 }
 
 /* BUTTONS, ERRORS & WARNING MESSAGES =========================================== */

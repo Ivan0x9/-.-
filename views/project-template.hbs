@@ -8,7 +8,7 @@
     <div id="wrapper">
         {{>projectnav}}
 
-        <div id="content" class="">
+        <div id="content">
             <div id="left-column" class="scroll-area col-xs-10 col-sm-10 col-md-10 col-lg-10">
                 <ul class="list-group">
                     <li class="list-group-item col-md-3 col-xs-3">Ukupno</li>
@@ -32,25 +32,105 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat-start="groupName in projectGroup">
+                        <tr class="project-row" ng-repeat-start="groupName in projectGroup">
                             <th scope="row">{{$index}}.</th>
                             <td>{{groupName}}</td>
                             <td>{{budget}}</td>
                             <td>{{costs}}</td>
                             <td>{{remainingAmount}}</td>
                         </tr>
-                        <tr ng-repeat-end="" ng-if="">
-                            <th scope="row">{{date}}</th>
+                        <tr class="transaction-row" ng-repeat-end="" ng-if="">
+                            <th scope="row"></th>
+                            <td>{{date}}</td>
                             <td>{{partner}}</td>
                             <td>{{description}}</td>
                             <td>{{amount}}</td>
                         </tr>
-                        <tr>
+                        <tr class="project-row">
                             <th scope="row">2.</th>
                             <td>Ljudski resursi</td>
                             <td>50000,00</td>
                             <td>0</td>
                             <td>50000,00</td>
+                        </tr>
+                        <tr class="transaction-row">
+                            <th scope="row"></th>
+                            <td>02.06.2017.</td>
+                            <td>John Doe</td>
+                            <td>Lorem ipsum dolores amet i tako dalje...</td>
+                            <td>20000</td>
+                        </tr>
+                        <tr class="project-row">
+                            <th scope="row">2.</th>
+                            <td>Putovanja</td>
+                            <td>10000,00</td>
+                            <td>2000,00</td>
+                            <td>80000,00</td>
+                        </tr>
+                        <tr class="project-row">
+                            <th scope="row">3.</th>
+                            <td>Oprema i roba</td>
+                            <td>4000,00</td>
+                            <td>400,00</td>
+                            <td>3600,00</td>
+                        </tr>
+                        <tr class="transaction-row">
+                            <th scope="row"></th>
+                            <td>02.06.2017.</td>
+                            <td>John Doe</td>
+                            <td>Lorem ipsum dolores amet i tako dalje...</td>
+                            <td>20000</td>
+                        </tr>
+                        <tr class="transaction-row">
+                            <th scope="row"></th>
+                            <td>02.06.2017.</td>
+                            <td>John Doe</td>
+                            <td>Lorem ipsum dolores amet i tako dalje...</td>
+                            <td>20000</td>
+                        </tr>
+
+                        <tr class="project-row">
+                            <th scope="row">4.</th>
+                            <td>Ostali troškovi i usluge</td>
+                            <td>17000,00</td>
+                            <td>9600,00</td>
+                            <td>7400,00</td>
+                        </tr>
+                        <tr class="transaction-row">
+                            <th scope="row"></th>
+                            <td>02.06.2017.</td>
+                            <td>John Doe</td>
+                            <td>Lorem ipsum dolores amet i tako dalje...</td>
+                            <td>20000</td>
+                        </tr>
+                        <tr class="transaction-row">
+                            <th scope="row"></th>
+                            <td>02.06.2017.</td>
+                            <td>John Doe</td>
+                            <td>Lorem ipsum dolores amet i tako dalje...</td>
+                            <td>20000</td>
+                        </tr>
+                        <tr class="transaction-row">
+                            <th scope="row"></th>
+                            <td>02.06.2017.</td>
+                            <td>John Doe</td>
+                            <td>Lorem ipsum dolores amet i tako dalje...</td>
+                            <td>20000</td>
+                        </tr>
+
+                        <tr class="project-row">
+                            <th scope="row">5.</th>
+                            <td>Troškovi obavljanja osnovne djelatnosti</td>
+                            <td>18000,00</td>
+                            <td>17500,00</td>
+                            <td>500,00</td>
+                        </tr>
+                        <tr class="transaction-row">
+                            <th scope="row"></th>
+                            <td>02.06.2017.</td>
+                            <td>John Doe</td>
+                            <td>Lorem ipsum dolores amet i tako dalje...</td>
+                            <td>20000</td>
                         </tr>
                     </tbody>
                 </table>
