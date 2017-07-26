@@ -188,12 +188,15 @@ app.controller('CreateProCtrl', function($scope, $window, $http, $sce){
             button: ""
         });
      console.log($scope.IBANS);
-    }
+     $scope.newIBAN='';
+        $scope.showMsg = {'visibility': 'hidden'};
+    };
 
     $scope.delIBAN = function(index){
         $scope.IBANS.splice(index,1);
         console.log($scope.IBANS);
-    }
+
+    };
 
 
 
