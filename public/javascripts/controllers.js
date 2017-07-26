@@ -154,6 +154,8 @@ app.controller('showProjectGroup', function($scope) {
 });
 
 app.controller('CreateProCtrl', function($scope, $window, $http, $sce){
+     //lets make angular change some shit
+
 
 
      $scope.sendProject = function(){

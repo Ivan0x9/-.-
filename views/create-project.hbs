@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="myApp">
+<html ng-app="myApp" ng-init="projectName='Ime projekta'">
 <html>
 <head>
     {{>headpart}}
@@ -10,12 +10,12 @@
 
     <div id="content" ng-controller="CreateProCtrl">
         <div class="container submit-form">
-            <h3 class="content-header text-center">KREIRAJ PROJEKT</h3>
+            <h3 class="content-header text-center" ng-bind="projectName">Ime projekta</h3>
             <form id="login-form" class="content-form text-center">
                 <div class="submit-form-fields form-group row">
                     <label for="projectName" class="col-sm-6 form-control-label">Ime projekta</label>
                     <div class="col-sm-6">
-                        <input type="text" id="projectName" placeholder="Ime projekta" ng-model="projectName">
+                        <input type="text" id="projectName" placeholder="Ime projekta" ng-model="projectName" ng-click="projectName=''" >
                     </div>
                 </div>
                 <div class="submit-form-fields form-group row">
