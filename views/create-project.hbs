@@ -33,7 +33,7 @@
                 <div class="submit-form-fields form-group row">
                     <label for="budget" class="col-xs-6 col-sm-6 form-control-label">Iznos (HRK)</label>
                     <div class="col-xs-6 col-sm-6">
-                        <input type="number" id="durationEnd" ng-model="budget">
+                        <input type="number" id="durationEnd" min="0" ng-model="budget">
                     </div>
                 </div>
                 <div id="budget-content-form">
@@ -48,16 +48,20 @@
                             <hr>
                             <div class="budget-content submit-form-fields form-group row">
                                 <label for="createAccount" class="form-control-label col-md-6">Unesi IBAN</label>
-                                <div class="">
-                                    <input type="text" id="createAccount" maxlength="21">
-                                    <button type="button" class="btn btn-primary btn-sm cp-button">+</button>
-                                </div>
+                                <div class="repeatthis">
+                                    <input type="text" id="createAccount" maxlength="21" ng-model="newIBAN">
+                                    <button type="button" class="btn btn-primary btn-sm cp-button" ng-click="addIBAN()">+</button>
+
                             </div>
+                                <div class="repeatIBAN" ng-style="showIBANS" ng-repeat="IBAN in IBANS">
+                                    <input type="text" id="createAccount" maxlength="21" ng-model="IBAN.value" disabled>
+                                    <button type="button" class="btn btn-primary btn-sm cp-button" ng-model="IBAN.button" ng-click="delIBAN($index)">-</button>
+                                </div>
 
 
                             <div class="submit-form-fields-submit form-group row ">
                                 <div class="button-section col-sm-12 col-sm-offset-6">
-                                    <button type="button" name="login" id="submit">Prijavi</button>
+                                    <button type="button" name="login" id="submit" ng-click="sendProject()">Kreiraj</button>
                                 </div>
                             </div>
                         </div>

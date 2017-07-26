@@ -298,6 +298,10 @@ thead th:nth-of-type(even){
     color: white;
 }
 
+.repeatIBAN{
+    visibility: hidden;
+}
+
 /* PROJECT TEMPLATE ============================================================= */
 
 #left-column .list-group{

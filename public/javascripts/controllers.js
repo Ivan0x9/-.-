@@ -155,39 +155,107 @@ app.controller('showProjectGroup', function($scope) {
 
 app.controller('CreateProCtrl', function($scope, $window, $http, $sce){
      //lets make angular change some shit
+    $scope.IBANS=[];
+    $scope.IBANS.push({
+        value: "X",
+        button: ""
+    });
+    var deletedthefirst=false;
+
+    $scope.addIBAN = function(){
+        var varHTML;
+        if($scope.newIBAN == undefined || $scope.newIBAN == null){
+            $scope.showMsg = {'visibility': 'visible'};
+            varHTML = '<div style="color:red">Novi IBAN nije unesen</div>';
+            $scope.insertHTML = $sce.trustAsHtml(varHTML);
+            return;
+        }
+        if($scope.newIBAN.length < 21){
+            $scope.showMsg = {'visibility': 'visible'};
+            varHTML = '<div style="color:red">Uneseni IBAN je kraći od 21</div>';
+            $scope.insertHTML = $sce.trustAsHtml(varHTML);
+            return;
+        }
+        $scope.showIBANS = {'visibility': 'visible'};
+
+    if(deletedthefirst==false){
+        $scope.IBANS.splice(0,1);
+        deletedthefirst=true;
+    }
+
+    $scope.IBANS.push({
+            value: $scope.newIBAN,
+            button: ""
+        });
+     console.log($scope.IBANS);
+    }
+
+    $scope.delIBAN = function(index){
+        $scope.IBANS.splice(index,1);
+        console.log($scope.IBANS);
+    }
+
+
 
 
 
      $scope.sendProject = function(){
+         var varHTML;
          if($scope.projectName == '' || $scope.projectName == undefined){
-             console.log('Error: Nije unesen naziv');
+             $scope.showMsg = {'visibility': 'visible'};
+             varHTML = '<div style="color:red">Nije uneseno ime projekta.</div>';
+
+             $scope.insertHTML = $sce.trustAsHtml(varHTML);
+
              return;
          }
          else if($scope.durationStart == '' || $scope.durationStart == undefined) {
+             $scope.showMsg = {'visibility': 'visible'};
+             varHTML = '<div style="color:red">Nije unesen datum početka.</div>';
 
-             console.log('Error: Nije unesen datum pocetka');
+             $scope.insertHTML = $sce.trustAsHtml(varHTML);
+
              return;
          }else if($scope.durationEnd == '' || $scope.durationEnd == undefined){
+             $scope.showMsg = {'visibility': 'visible'};
+             varHTML = '<div style="color:red">Nije unesen datum kraja.</div>';
 
-             console.log('Error: Nije unesen datum kraja');
+             $scope.insertHTML = $sce.trustAsHtml(varHTML);
+
              return;
+         }else if(($scope.budget == '' || $scope.budget == undefined) && ($scope.budget != '0')){
+             $scope.showMsg = {'visibility': 'visible'};
+             varHTML = '<div style="color:red">Nije unesen budžet.</div>';
+
+             $scope.insertHTML = $sce.trustAsHtml(varHTML);
+             return;
+
+
          }else{
              var diff=DateDiff.inDays($scope.durationStart,$scope.durationEnd);
              if(diff < 0 ){
-                 console.log('Error: Datum kraja postavljen prije datuma početka');
+                 $scope.showMsg = {'visibility': 'visible'};
+                 varHTML = '<div style="color:red">Datum kraja postavljen prije datuma početka.</div>';
+
+                 $scope.insertHTML = $sce.trustAsHtml(varHTML);
+
                  return;
+
              }else{
 
              }
 
 
          }
+          var sdatestr=$scope.durationStart.toString();
+         var  edatestr=$scope.durationEnd.toString();
 
 
+        console.log($scope.projectName+' '+$scope.durationStart+' '+$scope.durationEnd+' '+$scope.budget+' '+sdatestr+ edatestr);
          //ovdje nastavi
-        console.log($scope.projectName+' '+$scope.durationStart+' '+$scope.durationEnd+' ');
-
      }
+
+
 
    /* $scope.items = [];
 
@@ -227,3 +295,4 @@ var DateDiff = {
         return parseInt((t2 - t1) / (24 * 3600 * 1000));
     }
 };
+
