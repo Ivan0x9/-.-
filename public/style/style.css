@@ -296,11 +296,18 @@ thead th:nth-of-type(even){
     border-style: none;
     border-radius: 3px;
     color: white;
+
+    width: 27px;
+    height: 27px;
 }
 
 .repeatIBAN{
     visibility: hidden;
 }
+.repeatIBAN input{
+    border-bottom-style: none;
+}
+
 
 /* PROJECT TEMPLATE ============================================================= */
 

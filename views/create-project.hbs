@@ -39,21 +39,15 @@
                 <div id="budget-content-form">
                     <div class="col-xs-8 col-sm-8">
                         <div class="budget-form">
-                            <div class="budget-content submit-form-fields form-group row">
-                                <label class="col-xs-5 col-sm-5 col-md-5 form-control-label">Izaberi IBAN</label>
-                                <div class="col-xs-6 col-sm-6">
-                                    <select class="col-xs-10 col-sm-10 col-md-10 float-md-right"></select>
-                                </div>
-                            </div>
                             <hr>
                             <div class="budget-content submit-form-fields form-group row">
                                 <label for="createAccount" class="form-control-label col-md-6">Unesi IBAN</label>
                                 <div class="repeatthis">
                                     <input type="text" id="createAccount" maxlength="21" ng-model="newIBAN">
                                     <button type="button" class="btn btn-primary btn-sm cp-button" ng-click="addIBAN()">+</button>
+                                </div>
 
-                            </div>
-                                <div class="repeatIBAN" ng-style="showIBANS" ng-repeat="IBAN in IBANS">
+                                <div class="repeatIBAN col-md-12 col-md-offset-6" ng-style="showIBANS" ng-repeat="IBAN in IBANS">
                                     <input type="text" id="createAccount" maxlength="21" ng-model="IBAN.value" disabled>
                                     <button type="button" class="btn btn-primary btn-sm cp-button" ng-model="IBAN.button" ng-click="delIBAN($index)">-</button>
                                 </div>
