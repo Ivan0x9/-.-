@@ -116,14 +116,14 @@ select{
 }
 
 .content-form{
-    width: 60%;
+    width: 70%;
     height: 300px;
     margin: 0 auto;
 }
 
 .submit-form-fields{
-    height: 30px;
-    margin-top: 40px;
+    margin-top: 20px;
+    height: 40px;
 }
 
 .submit-form-fields input{
@@ -148,9 +148,22 @@ select{
     width: 50%;
 }
 
-/* BUTTONS */
+#create-form .submit-form-fields input{
+    width: 200px;
+}
+
+.budget-form{
+    background-color: #f7f7f7;
+    height: 200px;
+    padding: 20px;
+    width: 700px;
+    border-bottom: 1px solid #00B7FF;
+}
+
+/* BUTTONS ========================================================= */
 .button-section{
     padding-top: 40px;
+    padding-bottom: 60px;
 }
 .button-section #submit{
     background-color: #FF8C00;
