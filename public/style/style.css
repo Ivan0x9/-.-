@@ -396,3 +396,15 @@ thead th:nth-of-type(even){
 
     box-shadow: 1px 1px 2px #888888;
 }
+
+.cp-warning-msg{
+    visibility: hidden;
+    position: fixed;
+    top: 120px;
+    right: 20px;
+    height: 100px;
+    background-color: #e8e8e8;
+    border: 2px solid #ff4034;
+
+    padding: 20px;
+}
