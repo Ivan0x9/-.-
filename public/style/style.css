@@ -97,6 +97,8 @@ select{
 }
 
 /* REGISTRATION & LOGIN STYLE ================================================ */
+
+
 .submit-form{
     padding-top: 15px;
     color: #696969;
@@ -136,8 +138,10 @@ select{
 }
 
 .submit-form-fields-submit{
-    height: 10px;
+    height: 20px;
+    margin-top: 70px;
 }
+
 #register-form-left{
     display: block;
     width: 50%;
@@ -152,15 +156,32 @@ select{
     width: 200px;
 }
 
-.budget-form{
-    background-color: #f7f7f7;
-    height: 200px;
-    padding: 20px;
-    width: 700px;
-    border-bottom: 1px solid #00B7FF;
+#budget-content-form{
+    height: 0;
 }
 
+.budget-form div{
+    height: 30px;
+}
+
+.budget-form{
+    display: block;
+    margin: 0px auto 10px auto;
+    padding: 20px;
+    width: 100%;
+
+}
+
+.budget-content{
+    position: relative;
+    width: 100%;
+    height: 30%;
+    display: block;
+}
+
+
 /* BUTTONS ========================================================= */
+
 .button-section{
     padding-top: 40px;
     padding-bottom: 60px;
