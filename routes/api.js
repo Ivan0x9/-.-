@@ -3,25 +3,82 @@ var router = express.Router();
 var db = require('../lib/DB');
 var pool=db.pool;
 
-var user='a';
-var pass='a';
+
 /* GET users listing. */
+router.post('/IBANS',function(req,res){
+
+    console.log(req.body);
+
+
+
+
+
+});
+
+
+
+router.post('/IBAN',function(req,res){
+   // console.log(req.sessval.user);
+
+
+
+       var sql = [
+           "SELECT * FROM br_rac WHERE br_rac.id_korisnik=? AND br_rac.IBAN=?",
+       ].join('');
+       var inserts = [req.sessval.id, req.body.IBAN];
+       pool.query(sql, inserts, function (error, results, fields) {
+           if (error) throw error;
+
+           // console.log(results);
+           if (results.length > 0) {
+
+               //sending errors
+
+               res.send('success');
+
+
+           } else {
+
+
+
+
+               res.send('failure');
+
+
+           }
+
+
+       });
+
+
+
+
+
+
+});
+
+
+
+
+
+
 router.post('/login', function(req, res) {
  //ka fol provjerio bazu
 
 
     var sql = [
-        "SELECT username,email,password FROM korisnik WHERE (korisnik.username =? OR korisnik.email=?) AND password=?",
+        "SELECT username,email,password,id_korisnik FROM korisnik WHERE (korisnik.username =? OR korisnik.email=?) AND password=?",
     ].join('');
     var inserts = [req.body.username,req.body.username,req.body.password];
     pool.query(sql,inserts, function (error, results, fields) {
         if (error) throw error;
 
-        console.log(results);
+        //console.log(results);
         if( results.length  > 0){
 
             //sending errors
             req.sessval.user= req.body.username;
+            req.sessval.id= results[0].id_korisnik;
                 res.send('cool');
 
 

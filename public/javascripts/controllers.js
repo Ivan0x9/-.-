@@ -161,9 +161,9 @@ app.controller('CreateProCtrl', function($scope, $window, $http, $sce){
         button: ""
     });
     var deletedthefirst=false;
-
     $scope.addIBAN = function(){
         var varHTML;
+
         if($scope.newIBAN == undefined || $scope.newIBAN == null){
             $scope.showMsg = {'visibility': 'visible'};
             varHTML = '<div style="color:red">Novi IBAN nije unesen</div>';
@@ -176,21 +176,42 @@ app.controller('CreateProCtrl', function($scope, $window, $http, $sce){
             $scope.insertHTML = $sce.trustAsHtml(varHTML);
             return;
         }
-        $scope.showIBANS = {'visibility': 'visible'};
+        $http.post('/api/IBAN', {IBAN: $scope.newIBAN, workmode: 'add'}).
+        then(function SuccessCallback(data) {
 
-    if(deletedthefirst==false){
-        $scope.IBANS.splice(0,1);
-        deletedthefirst=true;
-    }
+            if (data.data == "success") {
+                console.log('found');
 
-    $scope.IBANS.push({
-            value: $scope.newIBAN,
-            button: ""
+            }
+            else if(data.data == "failure"){
+                console.log('notfound');
+                //sve proslo
+                $scope.showIBANS = {'visibility': 'visible'};
+
+                if(deletedthefirst==false){
+                    $scope.IBANS.splice(0,1);
+                    deletedthefirst=true;
+                }
+                $scope.IBANS.push({
+                    value: $scope.newIBAN,
+                    button: ""
+                });
+                console.log($scope.IBANS);
+                $scope.newIBAN='';
+                $scope.showMsg = {'visibility': 'hidden'};
+            }
+        }, function errorCallback(data) {
+            console.error("error in posting");
         });
-     console.log($scope.IBANS);
-     $scope.newIBAN='';
-        $scope.showMsg = {'visibility': 'hidden'};
+
+
+
+
+
+
     };
+
+
 
     $scope.delIBAN = function(index){
         $scope.IBANS.splice(index,1);
@@ -250,26 +271,33 @@ app.controller('CreateProCtrl', function($scope, $window, $http, $sce){
 
 
          }
+         //parsiranje datuma u string
           var sdatestr=$scope.durationStart.toString();
          var  edatestr=$scope.durationEnd.toString();
 
 
         console.log($scope.projectName+' '+$scope.durationStart+' '+$scope.durationEnd+' '+$scope.budget+' '+sdatestr+ edatestr);
          //ovdje nastavi
+         $http.post('/api/IBANS', {IBANS: $scope.IBANS, NAME: $scope.projectName,STARTDATE: sdatestr, ENDDATE: edatestr, BUDGET: $scope.budget }).
+         then(function SuccessCallback(data) {
+
+             if (data.data == "success") {
+                 console.log('found');
+
+             }
+             else if(data.data == "failure"){
+                 console.log('notfound');
+                 //sve proslo
+
+             }
+         }, function errorCallback(data) {
+             console.error("error in posting");
+         });
      }
 
 
 
-   /* $scope.items = [];
 
-    $scope.add = function () {
-        $scope.items.push({
-            inlineChecked: false,
-            question: "",
-            questionPlaceholder: "foo",
-            text: ""
-        });
-    };*/
 });
 
 app.controller('AppCtrl', function ($scope, socket) {
