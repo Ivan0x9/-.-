@@ -42,7 +42,7 @@
                             <div class="budget-content submit-form-fields form-group row">
                                 <label class="col-xs-5 col-sm-5 col-md-5 form-control-label">Izaberi IBAN</label>
                                 <div class="col-xs-6 col-sm-6">
-                                    <select class="col-xs-10 col-sm-10 col-md-10 float-md-right"></select>
+                                    <select class="col-xs-10 col-sm-10 col-md-10 float-md-right" ng-model="dropdownIBAN" ng-options="x for x in names"  ng-change="update()"></select>
                                 </div>
                             </div>
                             <hr>

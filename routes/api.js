@@ -5,9 +5,32 @@ var pool=db.pool;
 
 
 /* GET users listing. */
-router.post('/IBANS',function(req,res){
+router.post('/GETIBANS',function(req,res){
 
     console.log(req.body);
+    console.log(req.sessval.id);
+    var sql = [
+        "SELECT * FROM br_rac WHERE br_rac.id_korisnik=?",
+    ].join('');
+    var inserts = [req.sessval.id];
+    pool.query(sql, inserts, function (error, results, fields) {
+        if (error) throw error;
+
+        console.log(results);
+        if (results.length > 0) {
+
+            //sending errors
+
+            res.send(results);
+
+        } else {
+
+            res.send('failure');
+
+        }
+
+
+    });
 
 
 
@@ -36,14 +59,9 @@ router.post('/IBAN',function(req,res){
 
                res.send('success');
 
-
            } else {
 
-
-
-
                res.send('failure');
-
 
            }
 

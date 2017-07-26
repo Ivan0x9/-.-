@@ -153,14 +153,65 @@ app.controller('showProjectGroup', function($scope) {
     $scope.name = 'World'; // <-- ...The hell???
 });
 
+
+
+
+
+
 app.controller('CreateProCtrl', function($scope, $window, $http, $sce){
      //lets make angular change some shit
+    $scope.names= [];
+
     $scope.IBANS=[];
     $scope.IBANS.push({
         value: "X",
         button: ""
     });
     var deletedthefirst=false;
+//getibans
+    $http.post('/api/GETIBANS', {HELLO: "HELLO"}).
+    then(function SuccessCallback(data) {
+           if(data.data=='failure'){
+               console.log('NOTHING IN BASE');
+
+           }else {
+               console.log(data.data);
+               console.log(data.data[0]);
+               console.log(data.data.length);
+               for(var i=0;i<data.data.length;i++){
+                   $scope.names.push(data.data[i].IBAN);
+
+                }
+           }
+
+
+    }, function errorCallback(data) {
+        console.error("error in posting");
+    });
+
+
+ $scope.update=function(){
+
+     $scope.showIBANS = {'visibility': 'visible'};
+
+     if(deletedthefirst==false){
+         $scope.IBANS.splice(0,1);
+         deletedthefirst=true;
+     }
+     $scope.IBANS.push({
+         value: $scope.dropdownIBAN,
+         button: ""
+     });
+     console.log($scope.IBANS);
+     $scope.newIBAN='';
+     $scope.showMsg = {'visibility': 'hidden'};
+    };
+
+
+
+
+
+
     $scope.addIBAN = function(){
         var varHTML;
 
@@ -180,11 +231,11 @@ app.controller('CreateProCtrl', function($scope, $window, $http, $sce){
         then(function SuccessCallback(data) {
 
             if (data.data == "success") {
-                console.log('found');
+                //console.log('found');
 
             }
             else if(data.data == "failure"){
-                console.log('notfound');
+                //console.log('notfound');
                 //sve proslo
                 $scope.showIBANS = {'visibility': 'visible'};
 
@@ -278,21 +329,7 @@ app.controller('CreateProCtrl', function($scope, $window, $http, $sce){
 
         console.log($scope.projectName+' '+$scope.durationStart+' '+$scope.durationEnd+' '+$scope.budget+' '+sdatestr+ edatestr);
          //ovdje nastavi
-         $http.post('/api/IBANS', {IBANS: $scope.IBANS, NAME: $scope.projectName,STARTDATE: sdatestr, ENDDATE: edatestr, BUDGET: $scope.budget }).
-         then(function SuccessCallback(data) {
-
-             if (data.data == "success") {
-                 console.log('found');
-
-             }
-             else if(data.data == "failure"){
-                 console.log('notfound');
-                 //sve proslo
-
-             }
-         }, function errorCallback(data) {
-             console.error("error in posting");
-         });
+         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
      }
 
 
