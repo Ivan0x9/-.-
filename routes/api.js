@@ -5,10 +5,189 @@ var pool=db.pool;
 
 
 /* GET users listing. */
-router.post('/GETIBANS',function(req,res){
+router.post('/PUSHPROJECT',function(req,res) {
 
     console.log(req.body);
-    console.log(req.sessval.id);
+    //console.log(req.sessval.id);
+    var IBANSlock=req.body.IBANS.length;
+    var IBANSLIMIT=IBANSlock;
+    var IBANSlock2;
+    var IBANSlock3;
+    var IBANSlock4;
+
+    //console.log('IBANSLIMIT ' + IBANSLIMIT);
+    var IBANS=[];
+    for(var j=0;j<IBANSLIMIT;j++){
+        IBANS.push(req.body.IBANS[j].value);
+    }
+    console.log('IBANS');
+    console.log(IBANS);
+
+
+
+    var IBANStypeIN= [];
+    var IBANStypeOUT= [];
+    var projid;
+    var i;
+    var sql1 = [
+        "INSERT INTO projekt SET ime=?,datumpoc=?,datumkraj=?,iznos=?,id_korisnik=?",
+    ].join('');
+    var inserts1 = [req.body.name, req.body.start, req.body.end, req.body.budget, req.sessval.id];
+    pool.query(sql1, inserts1, function (error, results, fields) {
+        if (error) throw error;
+        projid = results.insertId;
+        console.log('Projid'+ projid);
+        for(var i=0;i<IBANSLIMIT;i=i+1) {
+          checkINOUT(i);
+        }//end of for
+
+    });
+
+    var checkINOUT=function(k){
+        var sql2 = [
+            "SELECT * FROM br_rac WHERE IBAN=? AND id_korisnik=?",
+        ].join('');
+        var inserts2 = [req.body.IBANS[k].value, req.sessval.id];
+        pool.query(sql2, inserts2, function (error, results, fields) {
+            if (error) throw error;
+            if (results.length > 0) {
+                var IBANSobject ={IBANS: IBANS[k], insertId: results[0].id_br_rac};
+                IBANStypeIN.push(IBANSobject);
+                IBANSlock -=1;
+                //console.log(req.body.IBANS[i].value + 'postoji');
+                if(IBANSlock===0){
+                    finishrequest();
+                }
+
+            } else {
+                var IBANSobjectno ={IBANS: IBANS[k], insertId: ''};
+                IBANStypeOUT.push(IBANSobjectno);
+                IBANSlock -=1;
+                //console.log(req.body.IBANS[i].value + 'ne postoji');
+                if(IBANSlock===0){
+                    finishrequest();
+                }
+            }
+        });
+    };
+
+    var finishrequest = function(){
+        console.log('GOTOVO');
+        console.log(IBANStypeIN);
+        console.log(IBANStypeOUT);
+        var IBANSYESREPEAT=IBANStypeIN.length;
+        IBANSlock2=IBANSYESREPEAT;
+        for(var j=0;j<IBANSYESREPEAT;j++) {
+            checkYES(j);
+        }
+    };
+
+    var checkYES=function(k){
+        var sql3 = [
+            "INSERT INTO rac_proj SET id_br_rac=?,id_projekt=?",
+        ].join('');
+        var inserts3 = [IBANStypeIN[k].insertId, projid];
+        pool.query(sql3, inserts3, function (error, results, fields) {
+            if (error) throw error;
+
+            IBANSlock2 -= 1;
+
+            if (IBANSlock2 === 0) {
+
+                finishYES();
+            }
+
+
+        });
+
+    };
+
+    var finishYES= function(){
+        console.log('YES DONE');
+        var IBANSINSERTREPEAT=IBANStypeOUT.length;
+        IBANSlock3=IBANSINSERTREPEAT;
+        for(var l=0;l<IBANSINSERTREPEAT;l++) {
+            insertNEWIBANS(l, IBANSlock3);
+        }
+    };
+
+    var insertNEWIBANS=function(k,timeout){
+        var sql4 = [
+            "INSERT INTO br_rac SET IBAN=?,id_korisnik=?",
+        ].join('');
+        var inserts4 = [IBANStypeOUT[k].IBANS, req.sessval.id];
+        pool.query(sql4, inserts4, function (error, results, fields) {
+            if (error) throw error;
+            IBANStypeOUT[k].insertId = results.insertId;
+            timeout -= 1;
+            //console.log(req.body.IBANS[i].value + 'postoji');
+            if (timeout === 0) {
+                finishNO();
+            }
+
+
+        });
+
+
+    };
+
+    var finishNO = function (){
+        console.log('INSERT DONE');
+        console.log(IBANStypeOUT);
+        var IBANSINSERTREPEAT=IBANStypeOUT.length;
+        IBANSlock4=IBANSINSERTREPEAT;
+        for(var o=0;o<IBANSINSERTREPEAT;o++) {
+            insertRACNO(o, IBANSlock4);
+        }
+    };
+
+
+    var insertRACNO=function(k,timeout){
+        var sql5 = [
+            "INSERT INTO rac_proj SET id_br_rac=?,id_projekt=?",
+        ].join('');
+        var inserts5 = [IBANStypeOUT[k].insertId, projid];
+        pool.query(sql5, inserts5, function (error, results, fields) {
+            if (error) throw error;
+            timeout -= 1;
+            //console.log(req.body.IBANS[i].value + 'postoji');
+            if (timeout === 0) {
+                finishEverything();
+            }
+
+
+        });
+
+
+    };
+    var finishEverything = function(){
+        console.log('Over!');
+        res.send('success');
+        res.end();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+});
+
+
+
+
+
+router.post('/GETIBANS',function(req,res){
+
+
     var sql = [
         "SELECT * FROM br_rac WHERE br_rac.id_korisnik=?",
     ].join('');
