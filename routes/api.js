@@ -18,7 +18,8 @@ router.post('/PUSHPROJECT',function(req,res) {
 
     //console.log('IBANSLIMIT ' + IBANSLIMIT);
     var IBANS=[];
-    var KATEGORIJE= ['Ljudski resursi','Putovanja','Oprema i roba','Ostali troškovi i usluge','Troškovi obavljanja osnovne djelatnosti'];
+    var KATEGORIJE= ['Ljudski resursi','Putovanja','Oprema i roba','Ostali troškovi i usluge','Troškovi obavljanja osnovne djelatnosti','Budžetni prihodi', 'Nepovezani budžet'];
+
     for(var j=0;j<IBANSLIMIT;j++){
         if(req.body.IBANS[j].value != 'X' && req.body.IBANS[j].value != undefined) {
 
