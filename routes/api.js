@@ -7,21 +7,27 @@ var pool=db.pool;
 /* GET users listing. */
 router.post('/PUSHPROJECT',function(req,res) {
 
-    console.log(req.body);
+    //console.log(req.body);
     //console.log(req.sessval.id);
     var IBANSlock=req.body.IBANS.length;
     var IBANSLIMIT=IBANSlock;
     var IBANSlock2;
     var IBANSlock3;
     var IBANSlock4;
+    var IBANSlock5;
 
     //console.log('IBANSLIMIT ' + IBANSLIMIT);
     var IBANS=[];
+    var KATEGORIJE= ['Ljudski resursi','Putovanja','Oprema i roba','Ostali troškovi i usluge','Troškovi obavljanja osnovne djelatnosti'];
     for(var j=0;j<IBANSLIMIT;j++){
-        IBANS.push(req.body.IBANS[j].value);
+        if(req.body.IBANS[j].value != 'X' && req.body.IBANS[j].value != undefined) {
+
+            IBANS.push(req.body.IBANS[j].value);
+        }
     }
-    console.log('IBANS');
-    console.log(IBANS);
+   // console.log('IBANS');
+    //console.log(IBANS);
+   // console.log(IBANS.length);
 
 
 
@@ -36,14 +42,18 @@ router.post('/PUSHPROJECT',function(req,res) {
     pool.query(sql1, inserts1, function (error, results, fields) {
         if (error) throw error;
         projid = results.insertId;
-        console.log('Projid'+ projid);
-        for(var i=0;i<IBANSLIMIT;i=i+1) {
-          checkINOUT(i);
-        }//end of for
-
+       // console.log('Projid'+ projid);
+        if(IBANS.length==0){
+            finishEverything();
+        }else {
+            for (var i = 0; i < IBANSLIMIT; i = i + 1) {
+                checkINOUT(i);
+            }//end of for
+        }
     });
 
     var checkINOUT=function(k){
+
         var sql2 = [
             "SELECT * FROM br_rac WHERE IBAN=? AND id_korisnik=?",
         ].join('');
@@ -72,13 +82,17 @@ router.post('/PUSHPROJECT',function(req,res) {
     };
 
     var finishrequest = function(){
-        console.log('GOTOVO');
-        console.log(IBANStypeIN);
-        console.log(IBANStypeOUT);
+        //console.log('GOTOVO');
+        //console.log(IBANStypeIN);
+       // console.log(IBANStypeOUT);
         var IBANSYESREPEAT=IBANStypeIN.length;
-        IBANSlock2=IBANSYESREPEAT;
-        for(var j=0;j<IBANSYESREPEAT;j++) {
-            checkYES(j);
+        if(IBANSYESREPEAT==0){
+            finishYES();
+        }else {
+            IBANSlock2 = IBANSYESREPEAT;
+            for (var j = 0; j < IBANSYESREPEAT; j++) {
+                checkYES(j);
+            }
         }
     };
 
@@ -103,11 +117,15 @@ router.post('/PUSHPROJECT',function(req,res) {
     };
 
     var finishYES= function(){
-        console.log('YES DONE');
+       // console.log('YES DONE');
         var IBANSINSERTREPEAT=IBANStypeOUT.length;
-        IBANSlock3=IBANSINSERTREPEAT;
-        for(var l=0;l<IBANSINSERTREPEAT;l++) {
-            insertNEWIBANS(l, IBANSlock3);
+        if(IBANSINSERTREPEAT==0){
+            finishEverything();
+        }else {
+            IBANSlock3 = IBANSINSERTREPEAT;
+            for (var l = 0; l < IBANSINSERTREPEAT; l++) {
+                insertNEWIBANS(l, IBANSlock3);
+            }
         }
     };
 
@@ -132,8 +150,8 @@ router.post('/PUSHPROJECT',function(req,res) {
     };
 
     var finishNO = function (){
-        console.log('INSERT DONE');
-        console.log(IBANStypeOUT);
+        //console.log('INSERT DONE');
+        //console.log(IBANStypeOUT);
         var IBANSINSERTREPEAT=IBANStypeOUT.length;
         IBANSlock4=IBANSINSERTREPEAT;
         for(var o=0;o<IBANSINSERTREPEAT;o++) {
@@ -161,21 +179,30 @@ router.post('/PUSHPROJECT',function(req,res) {
 
     };
     var finishEverything = function(){
-        console.log('Over!');
+       // console.log('Over!');
+
+        var KATLENGTH=KATEGORIJE.length;
+        IBANSlock5=KATLENGTH;
+        for(var ko=0;ko<KATLENGTH;ko++) {
+            insertKAT(ko, IBANSlock5);
+        }
         res.send('success');
-        res.end();
-    }
+    };
+
+    var insertKAT=function(k){
+        var sql6 = [
+            "INSERT INTO kategorija SET naziv=?,id_projekt=?",
+        ].join('');
+        var inserts6 = [KATEGORIJE[k], projid];
+        pool.query(sql6, inserts6, function (error, results, fields) {
+            if (error) throw error;
 
 
 
+        });
 
 
-
-
-
-
-
-
+    };
 
 
 
@@ -195,7 +222,7 @@ router.post('/GETIBANS',function(req,res){
     pool.query(sql, inserts, function (error, results, fields) {
         if (error) throw error;
 
-        console.log(results);
+        //console.log(results);
         if (results.length > 0) {
 
             //sending errors
