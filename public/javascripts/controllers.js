@@ -426,13 +426,13 @@ app.controller('CreateProCtrl', function($scope, $window, $http, $sce){
                console.log('NOTHING IN BASE');
 
            }else {
-               console.log(data.data);
-               console.log(data.data[0]);
-               console.log(data.data.length);
+
                for(var i=0;i<data.data.length;i++){
                    $scope.names.push(data.data[i].IBAN);
 
                 }
+
+
            }
 
 
@@ -441,7 +441,7 @@ app.controller('CreateProCtrl', function($scope, $window, $http, $sce){
     });
 
 
- $scope.update=function(){
+ $scope.update=function(index){
 
      $scope.showIBANS = {'visibility': 'visible'};
 
@@ -453,7 +453,9 @@ app.controller('CreateProCtrl', function($scope, $window, $http, $sce){
          value: $scope.dropdownIBAN,
          button: ""
      });
-     console.log($scope.IBANS);
+     //$scope.names.splice($scope.names.indexOf($scope.dropdownIBAN),1);
+    //var  position=$scope.names.indexOf($scope.dropdownIBAN);
+     //console.log($scope.IBANS);
      $scope.newIBAN='';
      $scope.showMsg = {'visibility': 'hidden'};
     };
@@ -483,6 +485,9 @@ app.controller('CreateProCtrl', function($scope, $window, $http, $sce){
 
             if (data.data == "success") {
                 //console.log('found');
+                $scope.showMsg = {'visibility': 'visible'};
+                varHTML = '<div style="color:red">IBAN već postoji.</div>';
+                $scope.insertHTML = $sce.trustAsHtml(varHTML);
 
             }
             else if(data.data == "failure"){
@@ -498,7 +503,7 @@ app.controller('CreateProCtrl', function($scope, $window, $http, $sce){
                     value: $scope.newIBAN,
                     button: ""
                 });
-                console.log($scope.IBANS);
+                //console.log($scope.IBANS);
                 $scope.newIBAN='';
                 $scope.showMsg = {'visibility': 'hidden'};
             }
@@ -516,8 +521,9 @@ app.controller('CreateProCtrl', function($scope, $window, $http, $sce){
 
 
     $scope.delIBAN = function(index){
+       // if($scope.IBANS.)
         $scope.IBANS.splice(index,1);
-        console.log($scope.IBANS);
+        //console.log($scope.IBANS);
 
     };
 
@@ -580,7 +586,25 @@ app.controller('CreateProCtrl', function($scope, $window, $http, $sce){
 
         console.log($scope.projectName+' '+$scope.durationStart+' '+$scope.durationEnd+' '+$scope.budget+' '+sdatestr+ edatestr);
          //ovdje nastavi
-         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+         $http.post('/api/PUSHPROJECT', {name: $scope.projectName, start: sdatestr, end: edatestr, budget: $scope.budget, IBANS: $scope.IBANS  }).
+         then(function SuccessCallback(data) {
+             if(data.data=='success'){
+                 console.log('NOTHING IN BASE redirect');
+
+             }else {
+
+                 console.log('Something went wrong');
+
+
+             }
+
+
+         }, function errorCallback(data) {
+             console.error("error in posting");
+         });
+
+
+
      }
 
 
