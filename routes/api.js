@@ -7,21 +7,27 @@ var pool=db.pool;
 /* GET users listing. */
 router.post('/PUSHPROJECT',function(req,res) {
 
-    console.log(req.body);
+    //console.log(req.body);
     //console.log(req.sessval.id);
     var IBANSlock=req.body.IBANS.length;
     var IBANSLIMIT=IBANSlock;
-    var IBANSlock2;
     var IBANSlock3;
     var IBANSlock4;
 
+
     //console.log('IBANSLIMIT ' + IBANSLIMIT);
     var IBANS=[];
+
+     //ovo triba popravit na klijentu
     for(var j=0;j<IBANSLIMIT;j++){
-        IBANS.push(req.body.IBANS[j].value);
+        if(req.body.IBANS[j].value != 'X' && req.body.IBANS[j].value != undefined) {
+
+            IBANS.push(req.body.IBANS[j].value);
+        }
     }
-    console.log('IBANS');
-    console.log(IBANS);
+   // console.log('IBANS');
+    //console.log(IBANS);
+   // console.log(IBANS.length);
 
 
 
@@ -36,14 +42,19 @@ router.post('/PUSHPROJECT',function(req,res) {
     pool.query(sql1, inserts1, function (error, results, fields) {
         if (error) throw error;
         projid = results.insertId;
-        console.log('Projid'+ projid);
-        for(var i=0;i<IBANSLIMIT;i=i+1) {
-          checkINOUT(i);
-        }//end of for
-
+       // console.log('Projid'+ projid);
+        insertKAT();
+        if(IBANS.length==0){
+            finishEverything();
+        }else {
+            for (var i = 0; i < IBANSLIMIT; i = i + 1) {
+                checkINOUT(i);
+            }//end of for
+        }
     });
 
     var checkINOUT=function(k){
+
         var sql2 = [
             "SELECT * FROM br_rac WHERE IBAN=? AND id_korisnik=?",
         ].join('');
@@ -72,30 +83,37 @@ router.post('/PUSHPROJECT',function(req,res) {
     };
 
     var finishrequest = function(){
-        console.log('GOTOVO');
-        console.log(IBANStypeIN);
-        console.log(IBANStypeOUT);
+        //console.log('GOTOVO');
+        //console.log(IBANStypeIN);
+       // console.log(IBANStypeOUT);
         var IBANSYESREPEAT=IBANStypeIN.length;
-        IBANSlock2=IBANSYESREPEAT;
-        for(var j=0;j<IBANSYESREPEAT;j++) {
-            checkYES(j);
+        if(IBANSYESREPEAT==0){
+            finishYES();
+        }else {
+            insertINracproj(IBANSYESREPEAT);
+
         }
     };
 
-    var checkYES=function(k){
-        var sql3 = [
-            "INSERT INTO rac_proj SET id_br_rac=?,id_projekt=?",
-        ].join('');
-        var inserts3 = [IBANStypeIN[k].insertId, projid];
-        pool.query(sql3, inserts3, function (error, results, fields) {
+    var insertINracproj=function(k){
+
+        var SQLHEAD = 'INSERT INTO rac_proj' +
+            ' (id_br_rac,id_projekt)' +
+            'VALUES';
+        for(var i=0;i<k;i++){
+            SQLHEAD += '(' + IBANStypeIN[i].insertId + ',' + projid + ')';
+            if(i != (k-1)){
+                SQLHEAD += ',';
+            }else{
+                SQLHEAD += ';';
+            }
+        }
+
+        pool.query(SQLHEAD, function (error, results, fields) {
             if (error) throw error;
 
-            IBANSlock2 -= 1;
-
-            if (IBANSlock2 === 0) {
-
                 finishYES();
-            }
+
 
 
         });
@@ -103,11 +121,15 @@ router.post('/PUSHPROJECT',function(req,res) {
     };
 
     var finishYES= function(){
-        console.log('YES DONE');
+       // console.log('YES DONE');
         var IBANSINSERTREPEAT=IBANStypeOUT.length;
-        IBANSlock3=IBANSINSERTREPEAT;
-        for(var l=0;l<IBANSINSERTREPEAT;l++) {
-            insertNEWIBANS(l, IBANSlock3);
+        if(IBANSINSERTREPEAT==0){
+            finishEverything();
+        }else {
+            IBANSlock3 = IBANSINSERTREPEAT;
+            for (var l = 0; l < IBANSINSERTREPEAT; l++) {
+                insertNEWIBANS(l, IBANSlock3);
+            }
         }
     };
 
@@ -132,28 +154,36 @@ router.post('/PUSHPROJECT',function(req,res) {
     };
 
     var finishNO = function (){
-        console.log('INSERT DONE');
-        console.log(IBANStypeOUT);
+        //console.log('INSERT DONE');
+        //console.log(IBANStypeOUT);
         var IBANSINSERTREPEAT=IBANStypeOUT.length;
-        IBANSlock4=IBANSINSERTREPEAT;
-        for(var o=0;o<IBANSINSERTREPEAT;o++) {
-            insertRACNO(o, IBANSlock4);
-        }
+
+
+            insertRACNO(IBANSINSERTREPEAT);
     };
 
 
-    var insertRACNO=function(k,timeout){
-        var sql5 = [
-            "INSERT INTO rac_proj SET id_br_rac=?,id_projekt=?",
-        ].join('');
-        var inserts5 = [IBANStypeOUT[k].insertId, projid];
-        pool.query(sql5, inserts5, function (error, results, fields) {
-            if (error) throw error;
-            timeout -= 1;
-            //console.log(req.body.IBANS[i].value + 'postoji');
-            if (timeout === 0) {
-                finishEverything();
+    var insertRACNO=function(k){
+
+        var SQLHEAD = 'INSERT INTO rac_proj' +
+            ' (id_br_rac,id_projekt)' +
+            'VALUES';
+        for(var i=0;i<k;i++){
+            SQLHEAD += '(' + IBANStypeOUT[i].insertId + ',' + projid + ')';
+            if(i != (k-1)){
+                SQLHEAD += ',';
+            }else{
+                SQLHEAD += ';';
             }
+        }
+
+        pool.query(SQLHEAD, function (error, results, fields) {
+            if (error) throw error;
+
+            //console.log(req.body.IBANS[i].value + 'postoji');
+
+                finishEverything();
+
 
 
         });
@@ -161,22 +191,30 @@ router.post('/PUSHPROJECT',function(req,res) {
 
     };
     var finishEverything = function(){
-        console.log('Over!');
+       // console.log('Over!');
+
         res.send('success');
-        res.end();
-    }
+    };
 
+    var insertKAT=function(){
 
+        var SQLHEAD = 'INSERT INTO kategorija' +
+            ' (naziv,id_projekt)' +
+            'VALUES'+
+            "('Ljudski resursi',"+ projid + '),' +
+            "('Putovanja',"+ projid + '),' +
+            "('Oprema i roba',"+ projid + '),' +
+            "('Ostali troškovi i usluge',"+ projid + '),' +
+            "('Troškovi obavljanja osnovne djelatnosti',"+ projid + '),' +
+            "('Budžetni prihodi'," + projid + '),' +
+            "('Nepovezani budžet',"+ projid + ');' ;
 
+        pool.query(SQLHEAD, function (error, results, fields) {
+            if (error) throw error;
 
+        });
 
-
-
-
-
-
-
-
+    };
 
 
 });
@@ -195,7 +233,7 @@ router.post('/GETIBANS',function(req,res){
     pool.query(sql, inserts, function (error, results, fields) {
         if (error) throw error;
 
-        console.log(results);
+        //console.log(results);
         if (results.length > 0) {
 
             //sending errors
