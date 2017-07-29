@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    {{>headpart}}
+    <link href="style/testtable.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div id="wrapper">
+    {{>iemnav}}
+
+    <div id="content" ng-controller="listProjectGroups">
+        <div id="left-column" class="scroll-area col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <table id="projectEditTable" class="table">
+                <thead>
+                <tr>
+                    <th>Naziv</th>
+                    <th>Trajanje</th>
+                    <th>Iznos</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>Neki bitan projekt</td>
+                    <td>do 28.09.2018.</td>
+                    <td>20000,00</td>
+                </tr>
+                <tr id="categoryTable">
+                    <td colspan="5">
+                        <div class="span5">
+                            <table class="table table-condensed">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Naziv</th>
+                                    <th>Budžet</th>
+                                    <th>Troškovi</th>
+                                    <th>Preostali iznos</th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                <tr>
+                                    <td class="rowNum">1.</td>
+                                    <td>Ljudski resursi</td>
+                                    <td>50000,00</td>
+                                    <td>0</td>
+                                    <td>50000,00</td>
+                                </tr>
+                                <tr id="subCategoryTableL1">
+                                    <td class="rowNumSub1">&nbsp;1.1.</td>
+                                    <td>Plaće</td>
+                                    <td>10000,00</td>
+                                    <td>8000,00</td>
+                                    <td>2000,00</td>
+                                </tr>
+                                <tr id="subCategoryTableL1">
+                                    <td class="rowNumSub1">&nbsp;1.2.</td>
+                                    <td>Nadoknada drugog dohotka</td>
+                                    <td>1000,00</td>
+                                    <td>0</td>
+                                    <td>1000,00</td>
+                                </tr>
+                                <tr id="subCategoryTableL2">
+                                    <td class="rowNumSub2">&nbsp;&nbsp;1.1.1.</td>
+                                    <td>Nadoknada drugog dohotka</td>
+                                    <td>1000,00</td>
+                                    <td>0</td>
+                                    <td>1000,00</td>
+                                </tr>
+                                <tr>
+                                    <td class="rowNum">2.</td>
+                                    <td>Putovanja</td>
+                                    <td>10000,00</td>
+                                    <td>2000,00</td>
+                                    <td>8000,00</td>
+                                </tr>
+                                <tr>
+                                    <td class="rowNum">3.</td>
+                                    <td>Oprema i roba</td>
+                                    <td>4000,00</td>
+                                    <td>400,00</td>
+                                    <td>3600,00</td>
+                                </tr>
+                                <tr>
+                                    <td class="rowNum">4.</td>
+                                    <td>Ostali troškovi i usluge</td>
+                                    <td>17000,00</td>
+                                    <td>9600,00</td>
+                                    <td>7400,00</td>
+                                </tr>
+                                <tr>
+                                    <td class="rowNum">5.</td>
+                                    <td>Troškovi obavljanja osnovne djelatnosti</td>
+                                    <td>18000,00</td>
+                                    <td>17500,00</td>
+                                    <td>500,00</td>
+                                </tr>
+                                </tbody>
+                                <thead class="budget-indicator" colspan="3">
+                                <tr class="span3">
+                                    <th>Budžet</th>
+                                    <th>$$$</th>
+                                    <th>Preostali Budžet</th>
+                                    <th colspan="2">$$$</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Neki bitan projekt</td>
+                    <td>do 28.09.2018.</td>
+                    <td>20000,00</td>
+                </tr>
+                <tr>
+                    <td>Neki bitan projekt</td>
+                    <td>do 28.09.2018.</td>
+                    <td>20000,00</td>
+                </tr>
+                <tr>
+                    <td>Neki bitan projekt</td>
+                    <td>do 28.09.2018.</td>
+                    <td>20000,00</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div id="footer" class="col-md-12 col-xs-12">
+        <footer>
+            <button type="button" class="btn btn-primary btn-sm footer-button" id="submit">Zaključi</button>
+        </footer>
+    </div>
+</div>
+
+{{>onbodyend}}
+</body>
+</html>

@@ -56,7 +56,7 @@ select{
     margin-bottom: 0;
     border-radius: 0;
     border-style: none;
-    
+
     background-color: #367ABD;
 }
 
@@ -85,7 +85,7 @@ select{
 }
 
 .navbar-default .navbar-nav > li a:hover{
-    background-color: #ECD83B;
+    background-color: #ecd83b;
     color: white;
     text-decoration: none;
 }
@@ -206,7 +206,7 @@ select{
     text-decoration: none;
 }
 
-/* PROJECT LIST & TRANSACTION LIST ===================================== */
+/* PROJECT LIST & TRANSACTION LIST FUNCTIONALITY ===================================== */
 
 .scroll-area{
     display: block;
@@ -232,55 +232,12 @@ select{
     background-color: #aeaeae;
 }
 
-#left-column table{
-    margin-top: 20px;
-}
-#left-column tbody tr {
-    background-color: #ffffff;
-}
-
-#left-column .table-hover tbody tr:hover td, #left-column .table-hover tbody tr:hover th {
-    background-color: #FF8C00;
-    color: #ffffff;
-    cursor: pointer;
-}
-
 .repo-button{
     background-color: #FF8C00;
     border-style: none;
     border-radius: 3px;
     color: white;
-}
-
-#right-column table{
-    margin-top: 20px;
-    width: 95%;
-}
-
-#right-column tbody td,
-#right-column tbody tr,
-#right-column tbody tr th{
-    background-color: #d8edf3;
-}
-
-#right-column tbody td:nth-of-type(odd),
-#right-column body tr:nth-of-type(odd){
-    background-color: #b1d9e7;
-}
-
-thead{
-    background-color: #367ABD;
-    color: #ffffff;
-}
-
-thead th:nth-of-type(even){
-    background-color: #095a8e;
-}
-
-#right-column .table-hover tbody tr:hover td, #right-column .table-hover tbody tr:hover th {
-    background-color: #FF8C00;
-    color: #ffffff;
-    cursor: pointer;
+    margin-top: 15px;
 }
 
 .footer-button{
@@ -301,6 +258,19 @@ thead th:nth-of-type(even){
     height: 27px;
 }
 
+.link-button{
+    position: absolute;
+    background-color: #FF8C00;
+    border-style: none;
+    border-radius: 3px;
+    color: white;
+}
+
+.link-button:hover{
+    background-color: #f3d626;
+}
+
+
 .repeatIBAN{
     visibility: hidden;
 }
@@ -309,7 +279,75 @@ thead th:nth-of-type(even){
 }
 
 
-/* PROJECT TEMPLATE ============================================================= */
+/* PROJECT TEMPLATE TABLES ============================================================= */
+
+#project-table{
+    margin-top: 20px;
+}
+
+#project-table thead{
+    color: #ffffff;
+}
+
+#project-table thead th:nth-of-type(odd){
+    background-color: #367ABD;
+}
+
+#project-table thead th:nth-of-type(even){
+    background-color: #095a8e;
+}
+
+/*#left-column .table-hover tbody tr{
+    background-color: #ffffff;
+}
+
+#left-column .table-hover tbody tr:hover td{
+    background-color: #e0f1ff;
+    cursor: pointer;
+}
+
+#left-column .table-hover tbody tr:active td{
+    background-color: #ff8c00;
+    color: #ffffff;
+}*/
+
+#transaction-table{
+    margin-top: 20px;
+    width: 95%;
+}
+
+#transaction-table thead{
+    color: #ffffff;
+}
+
+#transaction-table thead th:nth-of-type(odd){
+    background-color: #367ABD;
+}
+
+#transaction-table thead th:nth-of-type(even){
+    background-color: #095a8e;
+}
+
+#right-column .table-hover tbody th:nth-of-type(odd){
+    background-color: #d8edf3;
+}
+#right-column .table-hover tbody th:nth-of-type(even){
+    background-color: #b1d9e7;
+}
+
+#right-column .table-hover tbody td:nth-of-type(even){
+    background-color: #d8edf3;
+}
+#right-column .table-hover tbody td:nth-of-type(odd){
+    background-color: #b1d9e7;
+}
+
+#right-column .table-hover tbody tr:hover td, #right-column .table-hover tbody tr:hover th{
+    background-color: #ff8c00;
+    cursor: default;
+}
+
+/* PROJECT TEMPLATE TABLES STYLESHEET =========================================== */
 
 #left-column .list-group{
     height: 45px;
@@ -327,30 +365,157 @@ thead th:nth-of-type(even){
     color: #ffffff;
 }
 
-#left-column tbody tr > th{
+.list-group{
+    width: 95%;
+}
+
+#project-table{
+    width: 95%;
+}
+
+#project-table th{
+    color: #ffffff;
+}
+
+#project-table tbody .category-row{
+    background-color: transparent;
+}
+
+#project-table tbody .sub-category-row1{
+    background-color: transparent;
+}
+
+#project-table tbody .sub-category-row2{
+    background-color: transparent;
+}
+
+#project-table tbody .transaction-row, #project-table tbody .transaction-row th{
+    background-color: transparent;
+    border-top: none;
+}
+
+.category-row td{
+    background-color: #b1d9e7;
+}
+.category-row th{
+    background-color: #ff8c00;
+}
+
+.category-row:hover td{
     background-color: #ff8c00;
     color: #ffffff;
 }
-#left-column tbody tr > td{
+
+.sub-category-row1 td{
+    background-color: #c1e9f7;
+}
+
+.sub-category-row1 th{
+    background-color: #ffa700;
+}
+
+.sub-category-row1:hover td{
+    background-color: #ffa700;
+    color: #ffffff;
+}
+
+.sub-category-row2 td{
+    background-color: #e0f1ff;
+}
+
+.sub-category-row2 th{
+    background-color: #f1bc39;
+}
+
+.sub-category-row2:hover td{
+    background-color: #f1bc39;
+    color: #ffffff;
+}
+
+.transaction-row td{
     background-color: #ffffff;
-    color: #367ABD;;
+    color: #367ABD;
 }
 
-#left-column .table-hover tbody .project-row td{
-    background-color: #b1d9e7;
-    color: #000000;
+.transaction-row:hover td{
+    background-color: #367ABD;
+    color: #ffffff;
 }
 
-#left-column .table-hover tbody .transaction-row th{
-    background-color: #ffffff;
+.transaction-row th{
+
 }
 
-#left-column .table-hover tbody > .transaction-row{
-    border: 2px solid #b1d9e7;
-    color: #439dbb;
+
+/* PROJECT TRANSACTION STYLESHEET =============================================== */
+/* PROJECT TABLE -------------------------------------------------------------------------------------- */
+
+#project-edit-table{
+    margin-top: 20px;
 }
+
+#project-edit-table .listGroupTable td{
+    padding: 0;
+}
+
+#project-edit-table thead{
+    color: #ffffff;
+}
+
+#project-edit-table thead th:nth-of-type(odd){
+    background-color: #367ABD;
+}
+
+#project-edit-table thead th:nth-of-type(even){
+    background-color: #095a8e;
+}
+
+.selected{
+    background-color: #f3d626;
+}
+
+/* TRANSACTION TABLE -----------------------------------------------------------------------------------*/
+
+#right-column .table-hover tbody tr:hover{
+    background-color: transparent;
+}
+
+#transaction-edit-table tbody tr > #rowLink{
+    background-color: transparent;
+    color: #ffffff;
+    padding: 2px 0 0 5px;
+}
+
+#transaction-edit-table tbody #rowLink:active tr{
+    background-color: red;
+}
+
+#transaction-edit-table{
+    margin-top: 20px;
+    width: 95%;
+}
+
+#transaction-edit-table thead{
+    color: #ffffff;
+}
+
+#transaction-edit-table thead th:nth-of-type(odd){
+    background-color: #367ABD;
+}
+
+#transaction-edit-table thead th:nth-of-type(even){
+    background-color: #095a8e;
+}
+
+#transaction-edit-table tbody tr:hover td, #transaction-edit-table tbody tr:hover th{
+    background-color: transparent;
+    color: #ffffff;
+}
+
 
 /* BUTTONS, ERRORS & WARNING MESSAGES =========================================== */
+
+
 .back-button{
     border-radius: 9999px;
     background-color: #FF8C00;

@@ -39,6 +39,7 @@ var project_template=require('./routes/project-template.js');
 var transaction_to_projects=require('./routes/transactions-to-projects');
 var user_profile=require('./routes/user-profile');
 var create_project = require('./routes/create-project');
+var test_table = require('./routes/testtable');
 var test2 = require('./routes/test2.js');
 var upload =require('./routes/upload.js');
 //additional configuration
@@ -124,6 +125,7 @@ app.use('transactions-to-projects',transaction_to_projects);
 app.use('user-profile',user_profile);
 app.use('/create-project', create_project);
 app.use('/test2',test2);
+app.use('/testtable', test_table);
 
 //use upload
 

@@ -148,6 +148,10 @@ app.controller('RegisterCtrl', function ($scope, $window, $http, $sce, $timeout)
     }
 });
 
+app.controller('hoverLink', function($scope){
+    $scope.open = false;
+});
+
 app.controller('showProject', function($scope, $location){
     $scope.showProject = function(project){
         $location.path('#/project-list/' + project.id);
@@ -160,7 +164,7 @@ app.controller('showProjectGroup', function($scope) {
 
 app.controller('listProjectGroups', function($scope){
 
-    $scope.tableRowExpanded = false;
+    $scope.tableRowExpanded = true;
     $scope.tableRowIndexExpandedCurr = "";
     $scope.tableRowIndexExpandedPrev = "";
     $scope.storeIdExpanded = "";
@@ -171,7 +175,6 @@ app.controller('listProjectGroups', function($scope){
             $scope.listGroupCollapse.push(false);
         }
     };
-
 
     $scope.selectTableRow = function (index, storeId) {
         if (typeof $scope.listGroupCollapse === 'undefined') {
@@ -226,14 +229,26 @@ app.controller('listProjectGroups', function($scope){
                     "sales": "71000",
                     "revenue": "21000",
                     "employees": "3",
-                    "employeesHoursSum": "24"
+                    "employeesHoursSum": "24",
+                    "someData": [{
+                        "jebiga": "jebiga",
+                        "josnes": "astaje",
+                        "sala": "haha",
+                        "dobar": "covik"
+                    }]
                 }, {
                     "date": "2013-07-02",
                     "cost": "50000",
                     "sales": "79000",
                     "revenue": "29000",
                     "employees": "4",
-                    "employeesHoursSum": "29"
+                    "employeesHoursSum": "29",
+                    "someData": [{
+                        "jebiga": "jebiga",
+                        "josnes": "astaje",
+                        "sala": "haha",
+                        "dobar": "covik"
+                    }]
                 }]
             }
         }, {
@@ -258,14 +273,26 @@ app.controller('listProjectGroups', function($scope){
                     "sales": "120000",
                     "revenue": "35000",
                     "employees": "5",
-                    "employeesHoursSum": "38"
+                    "employeesHoursSum": "38",
+                    "someData": [{
+                        "jebiga": "jebiga",
+                        "josnes": "astaje",
+                        "sala": "haha",
+                        "dobar": "covik"
+                    }]
                 }, {
                     "date": "2013-07-02",
                     "cost": "85000",
                     "sales": "130000",
                     "revenue": "45000",
                     "employees": "4",
-                    "employeesHoursSum": "32"
+                    "employeesHoursSum": "32",
+                    "someData": [{
+                        "jebiga": "jebiga",
+                        "josnes": "astaje",
+                        "sala": "haha",
+                        "dobar": "covik"
+                    }]
                 }]
             }
         }, {
@@ -405,9 +432,6 @@ app.controller('listProjectGroups', function($scope){
     };
 
 });
-
-
-
 
 app.controller('CreateProCtrl', function($scope, $window, $http, $sce){
      //lets make angular change some shit

@@ -1,0 +1,84 @@
+#projectEditTable{
+    margin-top: 20px;
+}
+
+#projectEditTable thead th:nth-of-type(odd){
+    background-color: #367ABD;
+}
+
+#projectEditTable thead th:nth-of-type(even){
+    background-color: #095a8e;
+}
+
+#projectEditTable thead th{
+    color: #ffffff;
+}
+
+#projectEditTable tbody tr{
+    background-color: #ffffff;
+}
+
+#projectEditTable tbody tr:hover{
+    background-color: #ff8c00;
+    color: #ffffff;
+}
+
+#projectEditTable tbody tr:active{
+    background-color: #367ABD;
+}
+
+.table > tbody > #categoryTable > td{
+    padding: 0;
+    color: #696969;
+}
+
+#categoryTable thead th:nth-of-type(odd){
+    background-color: #18a3d5;
+}
+#categoryTable thead th:nth-of-type(even){
+    background-color: #116cb1;
+}
+
+#projectEditTable tbody #categoryTable{
+    background-color: transparent;
+}
+
+#projectEditTable tbody #categoryTable:hover{
+    background-color: transparent;
+    color: #ffffff;
+}
+
+#categoryTable tbody tr{
+    background-color: #b1d9e7;
+}
+
+.rowNum{
+    background-color: #ff8c00;
+    color: #ffffff;
+}
+
+#projectEditTable tbody #subCategoryTableL1{
+    background-color: #c1e9f7;
+}
+
+#projectEditTable tbody #subCategoryTableL1:hover td{
+    background-color: #ffa700;
+}
+
+.rowNumSub1{
+    background-color: #ffa700;
+    color: #ffffff;
+}
+
+#projectEditTable tbody #subCategoryTableL2{
+    background-color: #e0f1ff;
+}
+
+#projectEditTable tbody #subCategoryTableL2:hover td{
+    background-color: #f1bc39;
+}
+
+.rowNumSub2{
+    background-color: #f1bc39;
+    color: #ffffff;
+}
