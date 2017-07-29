@@ -121,7 +121,7 @@ app.use('/api', api);
 app.use('/upload',upload);
 app.use('/project-list',project_list);
 app.use('/project-template', project_template);
-app.use('transactions-to-projects',transaction_to_projects);
+app.use('/transactions-to-projects',transaction_to_projects);
 app.use('user-profile',user_profile);
 app.use('/create-project', create_project);
 app.use('/test2',test2);
