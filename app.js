@@ -11,6 +11,8 @@ var sessions = require("client-sessions");
 var fs = require('fs');
 var hbs =require('hbs');
 var url = require('url');
+var formidable = require('formidable');
+var iconvlite = require('iconv-lite');
 //database
 
 var port = 3000;
@@ -37,8 +39,8 @@ var project_template=require('./routes/project-template.js');
 var transaction_to_projects=require('./routes/transactions-to-projects');
 var user_profile=require('./routes/user-profile');
 var create_project = require('./routes/create-project');
-
-
+var test2 = require('./routes/test2.js');
+var upload =require('./routes/upload.js');
 //additional configuration
 var app = express();
 var http = require('http').createServer(app);
@@ -61,6 +63,7 @@ hbs.registerPartials(__dirname + '/views/partials');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -114,13 +117,15 @@ app.use('/register', register);
 app.use('/login',login);
 app.use('/test', test);
 app.use('/api', api);
+app.use('/upload',upload);
 app.use('/project-list',project_list);
 app.use('/project-template', project_template);
 app.use('transactions-to-projects',transaction_to_projects);
 app.use('user-profile',user_profile);
 app.use('/create-project', create_project);
+app.use('/test2',test2);
 
-
+//use upload
 
 
 

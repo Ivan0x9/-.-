@@ -11,15 +11,14 @@ router.post('/PUSHPROJECT',function(req,res) {
     //console.log(req.sessval.id);
     var IBANSlock=req.body.IBANS.length;
     var IBANSLIMIT=IBANSlock;
-    var IBANSlock2;
     var IBANSlock3;
     var IBANSlock4;
-    var IBANSlock5;
+
 
     //console.log('IBANSLIMIT ' + IBANSLIMIT);
     var IBANS=[];
-    var KATEGORIJE= ['Ljudski resursi','Putovanja','Oprema i roba','Ostali troškovi i usluge','Troškovi obavljanja osnovne djelatnosti','Budžetni prihodi', 'Nepovezani budžet'];
 
+     //ovo triba popravit na klijentu
     for(var j=0;j<IBANSLIMIT;j++){
         if(req.body.IBANS[j].value != 'X' && req.body.IBANS[j].value != undefined) {
 
@@ -44,6 +43,7 @@ router.post('/PUSHPROJECT',function(req,res) {
         if (error) throw error;
         projid = results.insertId;
        // console.log('Projid'+ projid);
+        insertKAT();
         if(IBANS.length==0){
             finishEverything();
         }else {
@@ -90,27 +90,30 @@ router.post('/PUSHPROJECT',function(req,res) {
         if(IBANSYESREPEAT==0){
             finishYES();
         }else {
-            IBANSlock2 = IBANSYESREPEAT;
-            for (var j = 0; j < IBANSYESREPEAT; j++) {
-                checkYES(j);
-            }
+            insertINracproj(IBANSYESREPEAT);
+
         }
     };
 
-    var checkYES=function(k){
-        var sql3 = [
-            "INSERT INTO rac_proj SET id_br_rac=?,id_projekt=?",
-        ].join('');
-        var inserts3 = [IBANStypeIN[k].insertId, projid];
-        pool.query(sql3, inserts3, function (error, results, fields) {
+    var insertINracproj=function(k){
+
+        var SQLHEAD = 'INSERT INTO rac_proj' +
+            ' (id_br_rac,id_projekt)' +
+            'VALUES';
+        for(var i=0;i<k;i++){
+            SQLHEAD += '(' + IBANStypeIN[i].insertId + ',' + projid + ')';
+            if(i != (k-1)){
+                SQLHEAD += ',';
+            }else{
+                SQLHEAD += ';';
+            }
+        }
+
+        pool.query(SQLHEAD, function (error, results, fields) {
             if (error) throw error;
 
-            IBANSlock2 -= 1;
-
-            if (IBANSlock2 === 0) {
-
                 finishYES();
-            }
+
 
 
         });
@@ -154,25 +157,33 @@ router.post('/PUSHPROJECT',function(req,res) {
         //console.log('INSERT DONE');
         //console.log(IBANStypeOUT);
         var IBANSINSERTREPEAT=IBANStypeOUT.length;
-        IBANSlock4=IBANSINSERTREPEAT;
-        for(var o=0;o<IBANSINSERTREPEAT;o++) {
-            insertRACNO(o, IBANSlock4);
-        }
+
+
+            insertRACNO(IBANSINSERTREPEAT);
     };
 
 
-    var insertRACNO=function(k,timeout){
-        var sql5 = [
-            "INSERT INTO rac_proj SET id_br_rac=?,id_projekt=?",
-        ].join('');
-        var inserts5 = [IBANStypeOUT[k].insertId, projid];
-        pool.query(sql5, inserts5, function (error, results, fields) {
-            if (error) throw error;
-            timeout -= 1;
-            //console.log(req.body.IBANS[i].value + 'postoji');
-            if (timeout === 0) {
-                finishEverything();
+    var insertRACNO=function(k){
+
+        var SQLHEAD = 'INSERT INTO rac_proj' +
+            ' (id_br_rac,id_projekt)' +
+            'VALUES';
+        for(var i=0;i<k;i++){
+            SQLHEAD += '(' + IBANStypeOUT[i].insertId + ',' + projid + ')';
+            if(i != (k-1)){
+                SQLHEAD += ',';
+            }else{
+                SQLHEAD += ';';
             }
+        }
+
+        pool.query(SQLHEAD, function (error, results, fields) {
+            if (error) throw error;
+
+            //console.log(req.body.IBANS[i].value + 'postoji');
+
+                finishEverything();
+
 
 
         });
@@ -182,29 +193,28 @@ router.post('/PUSHPROJECT',function(req,res) {
     var finishEverything = function(){
        // console.log('Over!');
 
-        var KATLENGTH=KATEGORIJE.length;
-        IBANSlock5=KATLENGTH;
-        for(var ko=0;ko<KATLENGTH;ko++) {
-            insertKAT(ko, IBANSlock5);
-        }
         res.send('success');
     };
 
-    var insertKAT=function(k){
-        var sql6 = [
-            "INSERT INTO kategorija SET naziv=?,id_projekt=?",
-        ].join('');
-        var inserts6 = [KATEGORIJE[k], projid];
-        pool.query(sql6, inserts6, function (error, results, fields) {
+    var insertKAT=function(){
+
+        var SQLHEAD = 'INSERT INTO kategorija' +
+            ' (naziv,id_projekt)' +
+            'VALUES'+
+            "('Ljudski resursi',"+ projid + '),' +
+            "('Putovanja',"+ projid + '),' +
+            "('Oprema i roba',"+ projid + '),' +
+            "('Ostali troškovi i usluge',"+ projid + '),' +
+            "('Troškovi obavljanja osnovne djelatnosti',"+ projid + '),' +
+            "('Budžetni prihodi'," + projid + '),' +
+            "('Nepovezani budžet',"+ projid + ');' ;
+
+        pool.query(SQLHEAD, function (error, results, fields) {
             if (error) throw error;
-
-
 
         });
 
-
     };
-
 
 
 });
