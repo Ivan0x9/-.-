@@ -162,274 +162,70 @@ app.controller('showProjectGroup', function($scope) {
     $scope.name = 'World'; // <-- ...The hell???
 });
 
-app.controller('listProjectGroups', function($scope){
+app.controller('showTables', function($scope,$http){
 
-    $scope.tableRowExpanded = true;
-    $scope.tableRowIndexExpandedCurr = "";
-    $scope.tableRowIndexExpandedPrev = "";
-    $scope.storeIdExpanded = "";
 
-    $scope.listGroupCollapseFn = function () {
-        $scope.listGroupCollapse = [];
-        for (var i = 0; i < $scope.storeDataModel.storedata.length; i += 1) {
-            $scope.listGroupCollapse.push(false);
+
+    $http.post('/api/getprojects', {HELLO: "HELLO"}).
+    then(function SuccessCallback(data) {
+        if(data.data=='failure'){
+            console.log('NOTHING IN BASE');
+
+        }else {
+
+           // console.log(data.data);
+          var newdata = projectTableParser(data);
+          for(var i=0;i<newdata.length;i++) {
+              newdata[0].kategorija.sort(function (a, b) {
+                  if (a.brojkat < b.brojkat) {
+                      return -1;
+                  }
+                  if (a.brojkat > b.brojkat) {
+                      return 1;
+                  }
+                  return 0;
+              });
+          }
+
+
+
+            console.log (newdata);
+          $scope.projects = newdata;
         }
+
+
+
+
+
+
+    }, function errorCallback(data) {
+        console.error("error in posting");
+    });
+
+
+
+
+     $scope.tableshow = false;
+    var result = document.getElementsByClassName("clickableRow");
+        console.log(result);
+     var i=0;
+    $scope.hideTableRow=function($index,obj, $event){
+        if (i ==0) {
+            $scope.tableshow = true;
+            i=1;
+        }else if(i == 1){
+            $scope.tableshow = false;
+            i=0;
+        }
+        //console.log($event); - doesnt work
+        console.log(obj);
+        console.log(obj.currentTarget);
+        console.log(obj.currentTarget.cells[0].innerHTML);
+
     };
 
-    $scope.selectTableRow = function (index, storeId) {
-        if (typeof $scope.listGroupCollapse === 'undefined') {
-            $scope.listGroupCollapseFn();
-        }
 
-        if ($scope.tableRowExpanded === false && $scope.tableRowIndexExpandedCurr === "" && $scope.storeIdExpanded === "") {
-            $scope.tableRowIndexExpandedPrev = "";
-            $scope.tableRowExpanded = true;
-            $scope.tableRowIndexExpandedCurr = index;
-            $scope.storeIdExpanded = storeId;
-            $scope.listGroupCollapse[index] = true;
-        } else if ($scope.tableRowExpanded === true) {
-            if ($scope.tableRowIndexExpandedCurr === index && $scope.storeIdExpanded === storeId) {
-                $scope.tableRowExpanded = false;
-                $scope.tableRowIndexExpandedCurr = "";
-                $scope.storeIdExpanded = "";
-                $scope.listGroupCollapse[index] = false;
-            } else {
-                $scope.tableRowIndexExpandedPrev = $scope.tableRowIndexExpandedCurr;
-                $scope.tableRowIndexExpandedCurr = index;
-                $scope.storeIdExpanded = storeId;
-                $scope.listGroupCollapse[$scope.tableRowIndexExpandedCurr] = true;
-            }
-        }
-    };
 
-    $scope.storeDataModel = {
-        "metadata": {
-            "storesInTotal": "25",
-            "storesInRepresentation": "6"
-        },
-        "storedata": [{
-            "store": {
-                "storeId": "1000",
-                "storeName": "Store 1",
-                "storePhone": "+46 31 1234567",
-                "storeAddress": "Avenyn 1",
-                "storeCity": "Gothenburg"
-            },
-            "data": {
-                "startDate": "2013-07-01",
-                "endDate": "2013-07-02",
-                "costTotal": "100000",
-                "salesTotal": "150000",
-                "revenueTotal": "50000",
-                "averageEmployees": "3.5",
-                "averageEmployeesHours": "26.5",
-                "dayData": [{
-                    "date": "2013-07-01",
-                    "cost": "50000",
-                    "sales": "71000",
-                    "revenue": "21000",
-                    "employees": "3",
-                    "employeesHoursSum": "24",
-                    "someData": [{
-                        "jebiga": "jebiga",
-                        "josnes": "astaje",
-                        "sala": "haha",
-                        "dobar": "covik"
-                    }]
-                }, {
-                    "date": "2013-07-02",
-                    "cost": "50000",
-                    "sales": "79000",
-                    "revenue": "29000",
-                    "employees": "4",
-                    "employeesHoursSum": "29",
-                    "someData": [{
-                        "jebiga": "jebiga",
-                        "josnes": "astaje",
-                        "sala": "haha",
-                        "dobar": "covik"
-                    }]
-                }]
-            }
-        }, {
-            "store": {
-                "storeId": "2000",
-                "storeName": "Store 2",
-                "storePhone": "+46 8 9876543",
-                "storeAddress": "Drottninggatan 100",
-                "storeCity": "Stockholm"
-            },
-            "data": {
-                "startDate": "2013-07-01",
-                "endDate": "2013-07-02",
-                "costTotal": "170000",
-                "salesTotal": "250000",
-                "revenueTotal": "80000",
-                "averageEmployees": "4.5",
-                "averageEmployeesHours": "35",
-                "dayData": [{
-                    "date": "2013-07-01",
-                    "cost": "85000",
-                    "sales": "120000",
-                    "revenue": "35000",
-                    "employees": "5",
-                    "employeesHoursSum": "38",
-                    "someData": [{
-                        "jebiga": "jebiga",
-                        "josnes": "astaje",
-                        "sala": "haha",
-                        "dobar": "covik"
-                    }]
-                }, {
-                    "date": "2013-07-02",
-                    "cost": "85000",
-                    "sales": "130000",
-                    "revenue": "45000",
-                    "employees": "4",
-                    "employeesHoursSum": "32",
-                    "someData": [{
-                        "jebiga": "jebiga",
-                        "josnes": "astaje",
-                        "sala": "haha",
-                        "dobar": "covik"
-                    }]
-                }]
-            }
-        }, {
-            "store": {
-                "storeId": "3000",
-                "storeName": "Store 3",
-                "storePhone": "+1 99 555-1234567",
-                "storeAddress": "Elm Street",
-                "storeCity": "New York"
-            },
-            "data": {
-                "startDate": "2013-07-01",
-                "endDate": "2013-07-02",
-                "costTotal": "2400000",
-                "salesTotal": "3800000",
-                "revenueTotal": "1400000",
-                "averageEmployees": "25.5",
-                "averageEmployeesHours": "42",
-                "dayData": [{
-                    "date": "2013-07-01",
-                    "cost": "1200000",
-                    "sales": "1600000",
-                    "revenue": "400000",
-                    "employees": "23",
-                    "employeesHoursSum": "41"
-                }, {
-                    "date": "2013-07-02",
-                    "cost": "1200000",
-                    "sales": "2200000",
-                    "revenue": "1000000",
-                    "employees": "28",
-                    "employeesHoursSum": "43"
-                }]
-            }
-        }, {
-            "store": {
-                "storeId": "4000",
-                "storeName": "Store 4",
-                "storePhone": "0044 34 123-45678",
-                "storeAddress": "Churchill avenue",
-                "storeCity": "London"
-            },
-            "data": {
-                "startDate": "2013-07-01",
-                "endDate": "2013-07-02",
-                "costTotal": "1700000",
-                "salesTotal": "2300000",
-                "revenueTotal": "600000",
-                "averageEmployees": "13.0",
-                "averageEmployeesHours": "39",
-                "dayData": [{
-                    "date": "2013-07-01",
-                    "cost": "850000",
-                    "sales": "1170000",
-                    "revenue": "320000",
-                    "employees": "14",
-                    "employeesHoursSum": "39"
-                }, {
-                    "date": "2013-07-02",
-                    "cost": "850000",
-                    "sales": "1130000",
-                    "revenue": "280000",
-                    "employees": "12",
-                    "employeesHoursSum": "39"
-                }]
-            }
-        }, {
-            "store": {
-                "storeId": "5000",
-                "storeName": "Store 5",
-                "storePhone": "+33 78 432-98765",
-                "storeAddress": "Le Big Mac Rue",
-                "storeCity": "Paris"
-            },
-            "data": {
-                "startDate": "2013-07-01",
-                "endDate": "2013-07-02",
-                "costTotal": "1900000",
-                "salesTotal": "2500000",
-                "revenueTotal": "600000",
-                "averageEmployees": "16.0",
-                "averageEmployeesHours": "37",
-                "dayData": [{
-                    "date": "2013-07-01",
-                    "cost": "950000",
-                    "sales": "1280000",
-                    "revenue": "330000",
-                    "employees": "16",
-                    "employeesHoursSum": "37"
-                }, {
-                    "date": "2013-07-02",
-                    "cost": "950000",
-                    "sales": "1220000",
-                    "revenue": "270000",
-                    "employees": "16",
-                    "employeesHoursSum": "37"
-                }]
-            }
-        }, {
-            "store": {
-                "storeId": "6000",
-                "storeName": "Store 6",
-                "storePhone": "+49 54 7624214",
-                "storeAddress": "Bier strasse",
-                "storeCity": "Berlin"
-            },
-            "data": {
-                "startDate": "2013-07-01",
-                "endDate": "2013-07-02",
-                "costTotal": "1800000",
-                "salesTotal": "2200000",
-                "revenueTotal": "400000",
-                "averageEmployees": "11.0",
-                "averageEmployeesHours": "39",
-                "dayData": [{
-                    "date": "2013-07-01",
-                    "cost": "900000",
-                    "sales": "1100000",
-                    "revenue": "200000",
-                    "employees": "12",
-                    "employeesHoursSum": "39"
-                }, {
-                    "date": "2013-07-02",
-                    "cost": "900000",
-                    "sales": "1100000",
-                    "revenue": "200000",
-                    "employees": "10",
-                    "employeesHoursSum": "39"
-                }]
-            }
-        }],
-        "_links": {
-            "self": {
-                "href": "/storedata/between/2013-07-01/2013-07-02"
-            }
-        }
-    };
 
 });
 
@@ -663,3 +459,124 @@ var DateDiff = {
     }
 };
 
+var projectTableParser = function(data){
+
+
+    var brojprojekata = data.data.length;
+    var part = [];
+
+    var projektlist=[{
+        projekt : {},
+        kategorija: [],
+        budzet : {}
+
+    }];
+
+
+
+
+
+
+    for(var i=0; i< brojprojekata; i=i+1){
+       // console.log(i);
+        projektlist[i].projekt.id= data.data[i].about.id_projekt;
+        projektlist[i].projekt.naziv= data.data[i].about.ime;
+        var today = new Date();
+        var endDate = new Date(data.data[i].about.datumkraj);
+        projektlist[i].projekt.trajanje= DateDiff.inDays(today,endDate);
+        projektlist[i].projekt.iznos= data.data[i].about.iznos;
+       //console.log('WTF');
+       for(var j=0;j<data.data[i].kategorija.length; j++) {
+           if (data.data[i].kategorija[j].naziv == "Budžetni prihodi") {
+               projektlist[i].budzet.id_budzet= data.data[i].kategorija[j].id_kategorija;
+               projektlist[i].budzet.iznos= data.data[i].kategorija[j].troskovi;
+           } else if (data.data[i].kategorija[j].naziv == "Nepovezani budžet") {
+               projektlist[i].budzet.id_prebudzet= data.data[i].kategorija[j].id_kategorija;
+               projektlist[i].budzet.preiznos= data.data[i].kategorija[j].troskovi;
+           } else {
+
+               projektlist[i].kategorija[j] = {
+                   id_kat: data.data[i].kategorija[j].id_kategorija,
+                   vrstakat: "N",
+                   brojkat: "0",
+                   naziv: data.data[i].kategorija[j].naziv,
+                   budzet: data.data[i].kategorija[j].budzet,
+                   troskovi: data.data[i].kategorija[j].troskovi,
+                   preostaliiznos: data.data[i].kategorija[j].budzet - data.data[i].kategorija[j].troskovi
+
+
+               };
+               if (data.data[i].kategorija[j].naziv == "Ljudski resursi") {
+                   projektlist[i].kategorija[j].vrstakat = "K";
+                   projektlist[i].kategorija[j].brojkat = "1";
+               } else if (data.data[i].kategorija[j].naziv == "Putovanja") {
+                   projektlist[i].kategorija[j].vrstakat = "K";
+                   projektlist[i].kategorija[j].brojkat = "2";
+               } else if (data.data[i].kategorija[j].naziv == "Oprema i roba") {
+                   projektlist[i].kategorija[j].vrstakat = "K";
+                   projektlist[i].kategorija[j].brojkat = "3";
+               } else if (data.data[i].kategorija[j].naziv == "Ostali troškovi i usluge") {
+                   projektlist[i].kategorija[j].vrstakat = "K";
+                   projektlist[i].kategorija[j].brojkat = "4";
+               } else if (data.data[i].kategorija[j].naziv == "Troškovi obavljanja osnovne djelatnosti") {
+                   projektlist[i].kategorija[j].vrstakat = "K";
+                   projektlist[i].kategorija[j].brojkat = "5";
+               }else if(data.data[i].kategorija[j].tezina_kat == 1){//podkategorija
+                  var noviid;
+                  for(var k=0; k <projektlist[i].kategorija.length;k++){
+                      if(data.data[i].kategorija[j].id_kat == data.data[i].kategorija[k].id_kategorija){
+                          noviid = data.data[i].kategorija[k].naziv;
+                          if (noviid == "Ljudski resursi") {
+                              projektlist[i].kategorija[j].brojkat = "1";
+                          } else if (noviid == "Putovanja") {
+                              projektlist[i].kategorija[j].brojkat = "2";
+                          } else if (noviid == "Oprema i roba") {
+                              projektlist[i].kategorija[j].brojkat = "3";
+                          } else if (noviid == "Ostali troškovi i usluge") {
+                              projektlist[i].kategorija[j].brojkat = "4";
+                          } else if (noviid == "Troškovi obavljanja osnovne djelatnosti") {
+                              projektlist[i].kategorija[j].brojkat = "5";
+                          }
+
+
+
+                      }
+                  }
+                   projektlist[i].kategorija[j].vrstakat = "P";
+
+
+
+
+
+               }
+
+
+           }
+       }
+
+
+       if(i != (brojprojekata-1)) {
+           projektlist.push({
+               projekt: {},
+               kategorija: [],
+               budzet: {}
+
+           });
+       }
+
+
+    }
+
+
+
+
+
+    return projektlist;
+
+
+
+};
+
+Array.prototype.move = function (from, to) {
+    this.splice(to, 0, this.splice(from, 1)[0]);
+};

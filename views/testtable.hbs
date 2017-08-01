@@ -8,25 +8,30 @@
 <div id="wrapper">
     {{>iemnav}}
 
-    <div id="content" ng-controller="listProjectGroups">
+    <div id="content" ng-controller="showTables">
+
         <div id="left-column" class="scroll-area col-xs-12 col-sm-6 col-md-6 col-lg-6">
-            <table id="projectEditTable" class="table">
-                <thead>
+            <table id="projectEditTable" class="table" >
+                <thead >
                 <tr>
                     <th>Naziv</th>
                     <th>Trajanje</th>
                     <th>Iznos</th>
                 </tr>
                 </thead>
-                <tbody data-ng-switch on="listGroupCollapse[$index]">
-                <tr class="clickableRow" data-ng-click="selectTableRow($index, storedata.store.storeId)">
-                    <td>Neki bitan projekt</td>
-                    <td>do 28.09.2018.</td>
-                    <td>20000,00</td>
+                <tbody ng-repeat="project in projects">
+
+                <tr class="clickableRow" data-ng-click="hideTableRow($index,$event)">
+                    <td style="display: none">§project.projekt.id§</td>
+                    <td>§project.projekt.naziv§</td>
+                    <td>§project.projekt.trajanje§</td>
+                    <td>§project.projekt.iznos§</td>
                 </tr>
-                <tr id="categoryTable" data-ng-switch-when="true">
+
+                <tr id="categoryTable">
                     <td colspan="5">
                         <div class="span5">
+
                             <table class="table table-condensed">
                                 <thead>
                                 <tr>
@@ -60,13 +65,7 @@
                                     <td>0</td>
                                     <td>1000,00</td>
                                 </tr>
-                                <tr id="subCategoryTableL2">
-                                    <td class="rowNumSub2">&nbsp;&nbsp;1.1.1.</td>
-                                    <td>Nadoknada drugog dohotka</td>
-                                    <td>1000,00</td>
-                                    <td>0</td>
-                                    <td>1000,00</td>
-                                </tr>
+
                                 <tr>
                                     <td class="rowNum">2.</td>
                                     <td>Putovanja</td>
@@ -105,28 +104,61 @@
                                 </tr>
                                 </thead>
                             </table>
+
                         </div>
                     </td>
-                </tr>
-                <tr>
-                    <td>Neki bitan projekt</td>
-                    <td>do 28.09.2018.</td>
-                    <td>20000,00</td>
-                </tr>
-                <tr>
-                    <td>Neki bitan projekt</td>
-                    <td>do 28.09.2018.</td>
-                    <td>20000,00</td>
-                </tr>
-                <tr>
-                    <td>Neki bitan projekt</td>
-                    <td>do 28.09.2018.</td>
-                    <td>20000,00</td>
                 </tr>
                 </tbody>
             </table>
         </div>
 
+        <div id="right-column" class="scroll-area col-xs-12 col-sm-6 col-md-6 col-lg-6">
+            <button type="button" class="btn btn-primary btn-sm repo-button col-md-offset-5 col-xs-offset-5" id="submit">
+                <span class="glyphicon glyphicon-upload"></span>&nbsp;Upload
+            </button>
+
+            <table id="transaction-edit-table" class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Datum</th>
+                    <th>Partner</th>
+                    <th>Opis</th>
+                    <th>Iznos</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-controller="hoverLink" ng-mouseover="open=true" ng-mouseleave="open=false">
+                    <th scope="row">01.02.2017.</th>
+                    <td>Nikola Kavezić</td>
+                    <td>Lorem ipsum dolor sit amet.</td>
+                    <td>3322,00 HRK</td>
+                    <td id="rowLink"><button type="button" class="btn btn-primary link-button" ng-show="open"><span class="glyphicon glyphicon-link"></span></button></td>
+                </tr>
+
+                <tr ng-controller="hoverLink" ng-mouseover="open=true" ng-mouseleave="open=false">
+                    <th scope="row">01.02.2017.</th>
+                    <td>Nikola Kavezić</td>
+                    <td>Lorem ipsum dolor sit amet.</td>
+                    <td>3322,00 HRK</td>
+                    <td id="rowLink"><button type="button" class="btn btn-primary link-button" ng-show="open"><span class="glyphicon glyphicon-link"></span></button></td>
+                </tr>
+                <tr ng-controller="hoverLink" ng-mouseover="open=true" ng-mouseleave="open=false">
+                    <th scope="row">01.02.2017.</th>
+                    <td>Nikola Kavezić</td>
+                    <td>Lorem ipsum dolor sit amet.</td>
+                    <td>3322,00 HRK</td>
+                    <td id="rowLink"><button type="button" class="btn btn-primary link-button" ng-show="open"><span class="glyphicon glyphicon-link"></span></button></td>
+                </tr>
+                <tr ng-controller="hoverLink" ng-mouseover="open=true" ng-mouseleave="open=false">
+                    <th scope="row">01.02.2017.</th>
+                    <td>Nikola Kavezić</td>
+                    <td>Lorem ipsum dolor sit amet.</td>
+                    <td>3322,00 HRK</td>
+                    <td id="rowLink"><button type="button" class="btn btn-primary link-button" ng-show="open"><span class="glyphicon glyphicon-link"></span></button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <div id="footer" class="col-md-12 col-xs-12">
