@@ -176,7 +176,7 @@ app.controller('showTables', function($scope,$http){
            // console.log(data.data);
           var newdata = projectTableParser(data);
           for(var i=0;i<newdata.length;i++) {
-              newdata[0].kategorija.sort(function (a, b) {
+              newdata[i].kategorija.sort(function (a, b) {
                   if (a.brojkat < b.brojkat) {
                       return -1;
                   }
@@ -185,6 +185,7 @@ app.controller('showTables', function($scope,$http){
                   }
                   return 0;
               });
+              newdata[i].kategorija.clean(undefined);
           }
 
 
@@ -579,4 +580,13 @@ var projectTableParser = function(data){
 
 Array.prototype.move = function (from, to) {
     this.splice(to, 0, this.splice(from, 1)[0]);
+};
+Array.prototype.clean = function(deleteValue) {
+    for (var i = 0; i < this.length; i++) {
+        if (this[i] == deleteValue) {
+            this.splice(i, 1);
+            i--;
+        }
+    }
+    return this;
 };

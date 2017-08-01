@@ -43,64 +43,24 @@
                                 </tr>
                                 </thead>
 
-                                <tbody>
-                                <tr id="K">
-                                    <td class="rowNum">1.</td>
-                                    <td>Ljudski resursi</td>
-                                    <td>50000,00</td>
-                                    <td>0</td>
-                                    <td>50000,00</td>
-                                </tr>
-                                <tr id="P">
-                                    <td class="rowNumSub1">&nbsp;1.1.</td>
-                                    <td>Plaće</td>
-                                    <td>10000,00</td>
-                                    <td>8000,00</td>
-                                    <td>2000,00</td>
-                                </tr>
-                                <tr id="P">
-                                    <td class="rowNumSub1">&nbsp;1.2.</td>
-                                    <td>Nadoknada drugog dohotka</td>
-                                    <td>1000,00</td>
-                                    <td>0</td>
-                                    <td>1000,00</td>
-                                </tr>
-
-                                <tr>
-                                    <td class="rowNum">2.</td>
-                                    <td>Putovanja</td>
-                                    <td>10000,00</td>
-                                    <td>2000,00</td>
-                                    <td>8000,00</td>
-                                </tr>
-                                <tr>
-                                    <td class="rowNum">3.</td>
-                                    <td>Oprema i roba</td>
-                                    <td>4000,00</td>
-                                    <td>400,00</td>
-                                    <td>3600,00</td>
-                                </tr>
-                                <tr>
-                                    <td class="rowNum">4.</td>
-                                    <td>Ostali troškovi i usluge</td>
-                                    <td>17000,00</td>
-                                    <td>9600,00</td>
-                                    <td>7400,00</td>
-                                </tr>
-                                <tr>
-                                    <td class="rowNum">5.</td>
-                                    <td>Troškovi obavljanja osnovne djelatnosti</td>
-                                    <td>18000,00</td>
-                                    <td>17500,00</td>
-                                    <td>500,00</td>
+                                <tbody  ng-repeat="kategorija in project.kategorija track by $index">
+                                <tr id="§kategorija.vrstakat§">
+                                    <td style="display:none">§kategorija.id_kat§</td>
+                                    <td class="§kategorija.vrstakat§1">§kategorija.brojkat§</td>
+                                    <td>§kategorija.naziv§</td>
+                                    <td>§kategorija.budzet§</td>
+                                    <td>§kategorija.troskovi§</td>
+                                    <td>§kategorija.preostaliiznos§</td>
                                 </tr>
                                 </tbody>
                                 <thead class="budget-indicator" colspan="3">
                                 <tr class="span3">
+                                    <th style="display: none">§project.budzet.id_budzet§</th>
                                     <th>Budžet</th>
-                                    <th>$$$</th>
+                                    <th class="text-right">§project.budzet.iznos§</th>
+                                    <th style="display:none">§project.budzet.id_prebudzet§</th>
                                     <th>Preostali Budžet</th>
-                                    <th colspan="2">$$$</th>
+                                    <th colspan="2" class="text-right">§project.budzet.preiznos§</th>
                                 </tr>
                                 </thead>
                             </table>
