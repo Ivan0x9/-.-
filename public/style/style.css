@@ -297,7 +297,7 @@ select{
     background-color: #095a8e;
 }
 
-/*#left-column .table-hover tbody tr{
+#left-column .table-hover tbody tr{
     background-color: #ffffff;
 }
 
@@ -309,7 +309,7 @@ select{
 #left-column .table-hover tbody tr:active td{
     background-color: #ff8c00;
     color: #ffffff;
-}*/
+}
 
 #transaction-table{
     margin-top: 20px;
