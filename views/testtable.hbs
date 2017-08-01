@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="myApp">
+<html ng-app="myApp.controllers">
 <head>
     {{>headpart}}
     <link href="style/testtable.css" rel="stylesheet" type="text/css">
@@ -18,13 +18,13 @@
                     <th>Iznos</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr>
+                <tbody data-ng-switch on="listGroupCollapse[$index]">
+                <tr class="clickableRow" data-ng-click="selectTableRow($index, storedata.store.storeId)">
                     <td>Neki bitan projekt</td>
                     <td>do 28.09.2018.</td>
                     <td>20000,00</td>
                 </tr>
-                <tr id="categoryTable">
+                <tr id="categoryTable" data-ng-switch-when="true">
                     <td colspan="5">
                         <div class="span5">
                             <table class="table table-condensed">
