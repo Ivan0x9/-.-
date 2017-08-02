@@ -41,7 +41,7 @@ app.controller('LoginCtrl', function ($scope, $window, $http, $sce, socket) {
 
                 if(data.data == "cool"){
                      $scope.showMsg = {'visibility':'hidden'};
-                     $window.location.href = '/test';
+                     $window.location.href = '/testtable';
                }else{
                    console.log("Rejected");
                     $scope.showMsg = {'visibility': 'visible'};
@@ -225,10 +225,17 @@ app.controller('showTables', function($scope,$http){
 
     };
 
+    $scope.hoverIn = function(){
+        this.hoverEdit = true;
+    };
 
-
+    $scope.hoverOut = function(){
+        this.hoverEdit = false;
+    };
 
 });
+
+
 
 app.controller('CreateProCtrl', function($scope, $window, $http, $sce){
      //lets make angular change some shit

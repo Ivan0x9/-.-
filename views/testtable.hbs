@@ -44,25 +44,32 @@
                                 </thead>
 
                                 <tbody  ng-repeat="kategorija in project.kategorija track by $index">
-                                <tr id="§kategorija.vrstakat§">
+                                <tr id="§kategorija.vrstakat§" ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()">
                                     <td style="display:none">§kategorija.id_kat§</td>
                                     <td class="§kategorija.vrstakat§1">§kategorija.brojkat§</td>
                                     <td>§kategorija.naziv§</td>
                                     <td>§kategorija.budzet§</td>
                                     <td>§kategorija.troskovi§</td>
                                     <td>§kategorija.preostaliiznos§</td>
+                                    <td id="rowLink" >
+                                        <div style="position: absolute" class="">
+                                            <button data-ng-if="kategorija.vrstakat === 'K' " ng-show="hoverEdit" type="button" class="btn btn-primary add-button"><span>+</span></button>
+                                            <button ng-show="hoverEdit" style="left: 20px" type="button" class="btn btn-primary remove-button"><span>-</span></button>
+                                        </div>
+                                    </td>
                                 </tr>
                                 </tbody>
-                                <thead class="budget-indicator" colspan="3">
+                                <tfoot class="budget-indicator" colspan="3">
                                 <tr class="span3">
-                                    <th style="display: none">§project.budzet.id_budzet§</th>
+                                    <td style="display: none">§project.budzet.id_budzet§</td>
                                     <th>Budžet</th>
-                                    <th class="text-right">§project.budzet.iznos§</th>
-                                    <th style="display:none">§project.budzet.id_prebudzet§</th>
+                                    <td class="text-right">§project.budzet.iznos§</td>
+                                    <td style="display:none">§project.budzet.id_prebudzet§</td>
                                     <th>Preostali Budžet</th>
-                                    <th colspan="2" class="text-right">§project.budzet.preiznos§</th>
+                                    <td colspan="2" class="text-right">§project.budzet.preiznos§</td>
                                 </tr>
-                                </thead>
+
+                                </tfoot>
                             </table>
 
                         </div>
@@ -91,30 +98,39 @@
                     <th scope="row">01.02.2017.</th>
                     <td>Nikola Kavezić</td>
                     <td>Lorem ipsum dolor sit amet.</td>
-                    <td>3322,00 HRK</td>
-                    <td id="rowLink"><button type="button" class="btn btn-primary link-button" ng-show="open"><span class="glyphicon glyphicon-link"></span></button></td>
+                    <td>3322.00 HRK</td>
+                    <td id="rowLink"><button type="button" class="btn btn-primary link-button disenable" ng-show="open"><span class="glyphicon glyphicon-link"></span></button></td>
                 </tr>
 
                 <tr ng-controller="hoverLink" ng-mouseover="open=true" ng-mouseleave="open=false">
                     <th scope="row">01.02.2017.</th>
                     <td>Nikola Kavezić</td>
                     <td>Lorem ipsum dolor sit amet.</td>
-                    <td>3322,00 HRK</td>
-                    <td id="rowLink"><button type="button" class="btn btn-primary link-button" ng-show="open"><span class="glyphicon glyphicon-link"></span></button></td>
+                    <td>3322.00 HRK</td>
+                    <td id="rowLink"><button type="button" class="btn btn-primary link-button disenable" ng-show="open"><span class="glyphicon glyphicon-link"></span></button></td>
                 </tr>
                 <tr ng-controller="hoverLink" ng-mouseover="open=true" ng-mouseleave="open=false">
                     <th scope="row">01.02.2017.</th>
                     <td>Nikola Kavezić</td>
                     <td>Lorem ipsum dolor sit amet.</td>
-                    <td>3322,00 HRK</td>
-                    <td id="rowLink"><button type="button" class="btn btn-primary link-button" ng-show="open"><span class="glyphicon glyphicon-link"></span></button></td>
+                    <td>3322.00 HRK</td>
+                    <td id="rowLink"><button type="button" class="btn btn-primary link-button disenable" ng-show="open"><span class="glyphicon glyphicon-link"></span></button></td>
                 </tr>
                 <tr ng-controller="hoverLink" ng-mouseover="open=true" ng-mouseleave="open=false">
                     <th scope="row">01.02.2017.</th>
                     <td>Nikola Kavezić</td>
                     <td>Lorem ipsum dolor sit amet.</td>
-                    <td>3322,00 HRK</td>
-                    <td id="rowLink"><button type="button" class="btn btn-primary link-button" ng-show="open"><span class="glyphicon glyphicon-link"></span></button></td>
+                    <td>3322.00 HRK</td>
+                    <td id="rowLink"><button type="button" class="btn btn-primary link-button disenable" ng-show="open"><span class="glyphicon glyphicon-link"></span></button></td>
+                </tr>
+                <tr ng-controller="hoverLink" ng-mouseover="open=true" ng-mouseleave="open=false">
+                    <th scope="row">01.02.2017.</th>
+                    <td>Mihovil Francetić</td>
+                    <td>Uplata za opremu i robu</td>
+                    <td style="padding: 0;">
+                        <input style="" type="number" step="0.01" placeholder="3333.00"/>&nbsp;HRK
+                    </td>
+                    <td id="rowLink"><button type="button" class="btn btn-primary link-button disenable" ng-show="open"><span class="glyphicon glyphicon-link"></span></button></td>
                 </tr>
                 </tbody>
             </table>
@@ -123,7 +139,10 @@
 
     <div id="footer" class="col-md-12 col-xs-12">
         <footer>
-            <button type="button" class="btn btn-primary btn-sm footer-button" id="submit">Zaključi</button>
+            <button type="button" value="addProject" class="btn btn-primary btn-sm footer-button" id="create"><a href="create-project">Dodaj projekt</a></button>
+            <button type="button" value="editPT" class="btn btn-primary btn-sm footer-button" id="edit">Uredi projekte i kategorije</button>
+            <button type="button" value="closure" class="btn btn-primary btn-sm footer-button disenable" id="submit">Zaključi projekte i kategorije</button>
+            <button type="button" value="assignT" class="btn btn-primary btn-sm footer-button disenable" id="assign">Pridjeli transakcije</button>
         </footer>
     </div>
 </div>

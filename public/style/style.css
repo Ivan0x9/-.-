@@ -186,7 +186,7 @@ select{
     padding-top: 40px;
     padding-bottom: 60px;
 }
-.button-section #submit{
+#submit, #edit, #assign, #create {
     background-color: #FF8C00;
     border-style: none;
     border-radius: 3px;
@@ -194,17 +194,25 @@ select{
     color: white;
 }
 
-#submit:hover{
+#submit:hover, #edit:hover, #assign:hover, #create:hover{
     background-color: #ECD83B;
     color: white;
     text-decoration: none;
 }
 
-#submit:active{
+#submit:active, #edit:active, #assign:active, #create:active{
     background-color: #AF8F14;
     color: white;
     text-decoration: none;
 }
+
+#create a{
+    text-decoration: none;
+    color: #ffffff;
+}
+
+
+
 
 /* PROJECT LIST & TRANSACTION LIST FUNCTIONALITY ===================================== */
 
@@ -279,6 +287,23 @@ select{
 }
 
 
+.add-button, .remove-button{
+    padding: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #FF8C00;
+    border-style: none;
+    border-radius: 3px;
+}
+
+.remove-button{
+    background-color: #ff3526;
+}
+
+.add-button:hover, .remove-button:hover{
+    background-color: #f3d626;
+}
+
 /* PROJECT TEMPLATE TABLES ============================================================= */
 
 #project-table{
@@ -345,6 +370,27 @@ select{
 #right-column .table-hover tbody tr:hover td, #right-column .table-hover tbody tr:hover th{
     background-color: #ff8c00;
     cursor: default;
+}
+
+.table-hover tbody tr td > input{
+    margin: 5px 0px 0px 2px;
+    width: 45%;
+    border: 1px solid orange;
+    color: black;
+}
+
+.table-hover tbody tr td > input::-webkit-outer-spin-button,
+.table-hover tbody tr td > input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+.budget-indicator tr th{
+    background-color: #095a8e;
+}
+
+.budget-indicator tr td{
+    background-color: #367ABD;
 }
 
 /* PROJECT TEMPLATE TABLES STYLESHEET =========================================== */
@@ -583,4 +629,12 @@ select{
     border: 2px solid #ff4034;
 
     padding: 20px;
+}
+
+/*===================================================================================*/
+/* BUTTON ACTIONS ===================================================================*/
+/*===================================================================================*/
+
+.disenable{
+    visibility: hidden;
 }

@@ -1,5 +1,6 @@
 #projectEditTable{
     margin-top: 20px;
+    width: 94%;
 }
 
 #projectEditTable thead th:nth-of-type(odd){
@@ -23,8 +24,8 @@
     color: #ffffff;
 }
 
-#projectEditTable tbody tr:active{
-    background-color: #367ABD;
+#projectEditTable tfoot{
+    color: #ffffff;
 }
 
 .table > tbody > #categoryTable > td{
@@ -52,6 +53,14 @@
     background-color: #b1d9e7;
 }
 
+#projectEditTable tbody #K:hover #rowLink{
+    background-color: transparent;
+}
+
+#projectEditTable tbody #K #rowLink{
+    background-color: transparent;
+}
+
 #projectEditTable tbody #K:hover{
     background-color: #ff8c00;
 }
@@ -66,11 +75,11 @@
 }
 
 #projectEditTable tbody #P:hover td{
-    background-color: #ffa700;
+    background-color: #ffc300;
 }
 
 .P1{
-    background-color: #ffa700;
+    background-color: #ffc300;
     color: #ffffff;
 }
 
@@ -80,9 +89,14 @@
 
 #projectEditTable tbody #subCategoryTableL2:hover td{
     background-color: #f1bc39;
-}*/
+}
 
 .rowNumSub2{
     background-color: #f1bc39;
     color: #ffffff;
+}*/
+
+#categoryTable .table tbody tr #rowLink{
+    background-color: transparent; position: absolute; width: 52px; height: 31px; border-style: none;
 }
+
