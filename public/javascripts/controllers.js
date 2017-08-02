@@ -168,9 +168,9 @@ app.controller('showTables', function($scope,$http){
 
     $http.post('/api/getprojects', {HELLO: "HELLO"}).
     then(function SuccessCallback(data) {
-        if(data.data=='failure'){
+        if(data.data=='empty'){
             console.log('NOTHING IN BASE');
-
+          //ako nema projekata
         }else {
 
            // console.log(data.data);
@@ -190,7 +190,7 @@ app.controller('showTables', function($scope,$http){
 
 
 
-            console.log (newdata);
+           // console.log (newdata);
           $scope.projects = newdata;
         }
 
@@ -202,6 +202,25 @@ app.controller('showTables', function($scope,$http){
     }, function errorCallback(data) {
         console.error("error in posting");
     });
+
+    $http.post('/api/gettrans', {HELLO: "HELLO"}).
+    then(function SuccessCallback(data) {
+        if(data.data=='empty'){
+            console.log('NOTHING IN BASE');
+            //ako nema transakcija
+        }else {
+            var newdata;
+            //console.log(data.data);
+            newdata = transactionTableParser(data.data);
+            console.log(newdata);
+            $scope.transactions=newdata;
+        }
+
+
+    }, function errorCallback(data) {
+        console.error("error in posting");
+    });
+
 
 
 
@@ -582,6 +601,29 @@ var projectTableParser = function(data){
     return projektlist;
 
 
+
+};
+
+
+var transactionTableParser = function(data){
+
+    var days,months,year;
+    for(var i=0; i <data.length; i++){
+        year=data[i].about.datum.substring(0,4);
+        months=data[i].about.datum.substring(4,6);
+        days=data[i].about.datum.substring(6,8);
+        data[i].about.datum= days +"." + months +"."+ year;
+        if(data[i].about.iznos < 0){
+            data[i].about.color = "red";
+        }else{
+            data[i].about.color = "black"
+        }
+
+    }
+
+
+
+    return data;
 
 };
 

@@ -456,7 +456,7 @@ router.post('/getprojects',function(req,res){
             res.send(projekti);
             res.end();
         }else{
-            res.send('Prazno');
+            res.send('empty');
 
         }
 

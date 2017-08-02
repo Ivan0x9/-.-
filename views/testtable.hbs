@@ -93,43 +93,13 @@
                     <th>Iznos</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody ng-repeat="trans in transactions">
                 <tr ng-controller="hoverLink" ng-mouseover="open=true" ng-mouseleave="open=false">
-                    <th scope="row">01.02.2017.</th>
-                    <td>Nikola Kavezić</td>
-                    <td>Lorem ipsum dolor sit amet.</td>
-                    <td>3322.00 HRK</td>
-                    <td id="rowLink"><button type="button" class="btn btn-primary link-button disenable" ng-show="open"><span class="glyphicon glyphicon-link"></span></button></td>
-                </tr>
-
-                <tr ng-controller="hoverLink" ng-mouseover="open=true" ng-mouseleave="open=false">
-                    <th scope="row">01.02.2017.</th>
-                    <td>Nikola Kavezić</td>
-                    <td>Lorem ipsum dolor sit amet.</td>
-                    <td>3322.00 HRK</td>
-                    <td id="rowLink"><button type="button" class="btn btn-primary link-button disenable" ng-show="open"><span class="glyphicon glyphicon-link"></span></button></td>
-                </tr>
-                <tr ng-controller="hoverLink" ng-mouseover="open=true" ng-mouseleave="open=false">
-                    <th scope="row">01.02.2017.</th>
-                    <td>Nikola Kavezić</td>
-                    <td>Lorem ipsum dolor sit amet.</td>
-                    <td>3322.00 HRK</td>
-                    <td id="rowLink"><button type="button" class="btn btn-primary link-button disenable" ng-show="open"><span class="glyphicon glyphicon-link"></span></button></td>
-                </tr>
-                <tr ng-controller="hoverLink" ng-mouseover="open=true" ng-mouseleave="open=false">
-                    <th scope="row">01.02.2017.</th>
-                    <td>Nikola Kavezić</td>
-                    <td>Lorem ipsum dolor sit amet.</td>
-                    <td>3322.00 HRK</td>
-                    <td id="rowLink"><button type="button" class="btn btn-primary link-button disenable" ng-show="open"><span class="glyphicon glyphicon-link"></span></button></td>
-                </tr>
-                <tr ng-controller="hoverLink" ng-mouseover="open=true" ng-mouseleave="open=false">
-                    <th scope="row">01.02.2017.</th>
-                    <td>Mihovil Francetić</td>
-                    <td>Uplata za opremu i robu</td>
-                    <td style="padding: 0;">
-                        <input style="" type="number" step="0.01" placeholder="3333.00"/>&nbsp;HRK
-                    </td>
+                    <th  style="display:none">§trans.about.id_tran§</th>
+                    <td>§trans.about.datum§</td>
+                    <td>§trans.about.partner§</td>
+                    <td>§trans.about.opis§</td>
+                    <td style="color: §trans.about.color§; width:20%">§trans.about.iznos§ HRK</td>
                     <td id="rowLink"><button type="button" class="btn btn-primary link-button disenable" ng-show="open"><span class="glyphicon glyphicon-link"></span></button></td>
                 </tr>
                 </tbody>
