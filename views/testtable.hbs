@@ -5,10 +5,10 @@
     <link href="style/testtable.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<div id="wrapper">
+<div id="wrapper" ng-controller="showTables">
     {{>iemnav}}
 
-    <div id="content" ng-controller="showTables">
+    <div id="content" >
 
         <div id="left-column" class="scroll-area col-xs-12 col-sm-6 col-md-6 col-lg-6">
             <table id="projectEditTable" class="table" >
@@ -21,7 +21,7 @@
                 </thead>
                 <tbody ng-repeat="project in projects">
 
-                <tr class="clickableRow" data-ng-click="hideTableRow($index,$event)">
+                <tr class="clickableRow" data-ng-click="projectclick($index,$event)">
                     <td style="display: none">§project.projekt.id§</td>
                     <td>§project.projekt.naziv§</td>
                     <td>§project.projekt.trajanje§</td>
@@ -30,7 +30,7 @@
 
                 <tr id="categoryTable">
                     <td colspan="5">
-                        <div class="span5">
+                        <div ng-show="projectshow[$index]"  class="span5">
 
                             <table class="table table-condensed">
                                 <thead>
@@ -44,7 +44,7 @@
                                 </thead>
 
                                 <tbody  ng-repeat="kategorija in project.kategorija track by $index">
-                                <tr id="§kategorija.vrstakat§" ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()">
+                                <tr id="§kategorija.vrstakat§" ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()" data-ng-click="categoryclick($index,$event)">
                                     <td style="display:none">§kategorija.id_kat§</td>
                                     <td class="§kategorija.vrstakat§1">§kategorija.brojkat§</td>
                                     <td>§kategorija.naziv§</td>
@@ -52,21 +52,25 @@
                                     <td>§kategorija.troskovi§</td>
                                     <td>§kategorija.preostaliiznos§</td>
                                     <td id="rowLink" >
-                                        <div style="position: absolute" class="">
-                                            <button data-ng-if="kategorija.vrstakat === 'K' " ng-show="hoverEdit" type="button" class="btn btn-primary add-button"><span>+</span></button>
-                                            <button ng-show="hoverEdit" style="left: 20px" type="button" class="btn btn-primary remove-button"><span>-</span></button>
+                                        <div style="position: absolute">
+                                            <button data-ng-if="kategorija.vrstakat === 'K' && stanje == 2 " ng-show="hoverEdit" type="button" class="btn btn-primary add-button"><span>+</span></button>
+                                            <button data-ng-if="kategorija.vrstakat === 'P' && stanje == 2  " ng-show="hoverEdit" style="left: 20px" type="button" class="btn btn-primary remove-button"><span>-</span></button>
                                         </div>
                                     </td>
                                 </tr>
                                 </tbody>
                                 <tfoot class="budget-indicator" colspan="3">
-                                <tr class="span3">
+                                <tr data-ng-click="budgetclick($index,$event)" class="span3">
+
                                     <td style="display: none">§project.budzet.id_budzet§</td>
                                     <th>Budžet</th>
                                     <td class="text-right">§project.budzet.iznos§</td>
+
+
                                     <td style="display:none">§project.budzet.id_prebudzet§</td>
                                     <th>Preostali Budžet</th>
                                     <td colspan="2" class="text-right">§project.budzet.preiznos§</td>
+
                                 </tr>
 
                                 </tfoot>
@@ -94,13 +98,13 @@
                 </tr>
                 </thead>
                 <tbody ng-repeat="trans in transactions">
-                <tr ng-controller="hoverLink" ng-mouseover="open=true" ng-mouseleave="open=false">
+                <tr ng-controller="hoverLink" ng-mouseover="open=true" ng-mouseleave="open=false" data-ng-click="transclick($index,$event)">
                     <th  style="display:none">§trans.about.id_tran§</th>
                     <td>§trans.about.datum§</td>
                     <td>§trans.about.partner§</td>
                     <td>§trans.about.opis§</td>
                     <td style="color: §trans.about.color§; width:20%">§trans.about.iznos§ HRK</td>
-                    <td id="rowLink"><button type="button" class="btn btn-primary link-button disenable" ng-show="open"><span class="glyphicon glyphicon-link"></span></button></td>
+                    <td id="rowLink"><button type="button" class="btn btn-primary link-button" data-ng-if="stanje == 3 "ng-show="open"><span class="glyphicon glyphicon-link"></span></button></td>
                 </tr>
                 </tbody>
             </table>
@@ -109,10 +113,11 @@
 
     <div id="footer" class="col-md-12 col-xs-12">
         <footer>
-            <button type="button" value="addProject" class="btn btn-primary btn-sm footer-button" id="create"><a href="create-project">Dodaj projekt</a></button>
-            <button type="button" value="editPT" class="btn btn-primary btn-sm footer-button" id="edit">Uredi projekte i kategorije</button>
-            <button type="button" value="closure" class="btn btn-primary btn-sm footer-button disenable" id="submit">Zaključi projekte i kategorije</button>
-            <button type="button" value="assignT" class="btn btn-primary btn-sm footer-button disenable" id="assign">Pridjeli transakcije</button>
+            <button type="button" value="addProject" class="btn btn-primary btn-sm footer-button §buttonEnable[0]§" id="create"><a href="create-project">Dodaj projekt</a></button>
+            <button type="button" value="editPT" class="btn btn-primary btn-sm footer-button §buttonEnable[1]§" id="edit" data-ng-click="changestate(2)">Uredi projekte i kategorije</button>
+            <button type="button" value="closure" class="btn btn-primary btn-sm footer-button  §buttonEnable[2]§" id="submit" data-ng-click="changestate(1)">Zaključi projekte i kategorije</button>
+            <button type="button" value="assignT" class="btn btn-primary btn-sm footer-button §buttonEnable[3]§" id="assign" data-ng-click="changestate(3)">Pridjeli transakcije</button>
+            <button type="button" value="closeAssign" class="btn btn-primary btn-sm footer-button §buttonEnable[4]§" id="submit" data-ng-click="changestate(4)">Zaključi transakcije</button>
         </footer>
     </div>
 </div>

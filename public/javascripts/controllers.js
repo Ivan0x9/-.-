@@ -162,8 +162,16 @@ app.controller('showProjectGroup', function($scope) {
     $scope.name = 'World'; // <-- ...The hell???
 });
 
-app.controller('showTables', function($scope,$http){
 
+
+
+
+
+app.controller('showTables', function($scope,$http,$window){
+    $scope.stanje = 1; //pocetno stanje
+    var duzinaprojekata;
+    var duzinatransakcija;
+    $scope.buttonEnable= ["","","disenable","","disenable"];
 
 
     $http.post('/api/getprojects', {HELLO: "HELLO"}).
@@ -187,18 +195,10 @@ app.controller('showTables', function($scope,$http){
               });
               newdata[i].kategorija.clean(undefined);
           }
-
-
-
            // console.log (newdata);
           $scope.projects = newdata;
+          duzinaprojekata= newdata.length;
         }
-
-
-
-
-
-
     }, function errorCallback(data) {
         console.error("error in posting");
     });
@@ -213,34 +213,94 @@ app.controller('showTables', function($scope,$http){
             //console.log(data.data);
             newdata = transactionTableParser(data.data);
             console.log(newdata);
+            duzinatransakcija=newdata.length;
             $scope.transactions=newdata;
         }
-
 
     }, function errorCallback(data) {
         console.error("error in posting");
     });
 
+    $scope.projectshow =[];
 
 
 
-
-     $scope.tableshow = false;
+     /*
     var result = document.getElementsByClassName("clickableRow");
-        console.log(result);
-     var i=0;
-    $scope.hideTableRow=function($index,obj, $event){
-        if (i ==0) {
-            $scope.tableshow = true;
-            i=1;
-        }else if(i == 1){
-            $scope.tableshow = false;
-            i=0;
+        console.log(result);*/
+
+    $scope.projectclick=function($index,obj, $event) {
+        if ($scope.stanje == 1) {
+            var projectidfromhtml = obj.currentTarget.cells[0].innerHTML;
+            var poststring = '/project/' + projectidfromhtml;
+            $window.location.href = poststring;
+
+
+        } else if ($scope.stanje == 2 || $scope.stanje == 3) {
+            if ($scope.projectshow[$index] == true) {
+                $scope.projectshow[$index] = false;
+            } else {
+                $scope.projectshow[$index] = true;
+            }
+
+            /*
+            //console.log($event); - doesnt work
+            console.log(obj);
+            console.log(obj.currentTarget);
+            console.log(obj.currentTarget.cells[0].innerHTML);
+           if($scope.projectshow[$index] == true){
+            $scope.projectshow[$index] = false;
+           }else{
+               $scope.projectshow[$index] = true;
+           }
+           */
+
         }
-        //console.log($event); - doesnt work
-        console.log(obj);
-        console.log(obj.currentTarget);
-        console.log(obj.currentTarget.cells[0].innerHTML);
+    };//end of project click
+
+
+    $scope.categoryclick =function($index,obj, $event){
+
+    };
+    $scope.budgetclick =function($index,obj, $event){
+
+    };
+
+    $scope.transclick =function($index,obj, $event){
+
+    };
+   $scope.changestate=function(change){
+
+        if(change ==1){
+            $scope.stanje=1;
+            for(var i = 0; i< duzinaprojekata; i++) {
+                $scope.projectshow[i] = false;
+            }
+            $scope.buttonEnable= ["","","disenable","","disenable"];
+      }else if(change ==2){
+         $scope.stanje = 2;
+
+          for(var i = 0; i< duzinaprojekata; i++) {
+              $scope.projectshow[i] = true;
+          }
+            $scope.buttonEnable= ["disenable","disenable","","disenable","disenable"];
+
+
+      }else if(change ==3){
+            $scope.stanje = 3;
+
+            for(var i = 0; i< duzinaprojekata; i++) {
+                $scope.projectshow[i] = true;
+            }
+            $scope.buttonEnable= ["disenable","disenable","disenable","disenable",""];
+
+      }else if(change ==4){
+           $scope.stanje =1;
+            for(var i = 0; i< duzinaprojekata; i++) {
+                $scope.projectshow[i] = false;
+            }
+            $scope.buttonEnable= ["","","disenable","","disenable"];
+        }
 
     };
 
