@@ -177,7 +177,11 @@ app.controller('showTables', function($scope,$http,$window){
     $scope.editkatnaziv =[];
     $scope.hidekatnaziv=[];
     $scope.hidekatbudzet=[];
-    var change=[];
+    $scope.showtran = [];
+    $scope.addcatbottun=true;
+    var izmjene=[];
+    var originalprojects={};
+    var originaltrans={};
 
     $http.post('/api/getprojects', {HELLO: "HELLO"}).
     then(function SuccessCallback(data) {
@@ -195,12 +199,24 @@ app.controller('showTables', function($scope,$http,$window){
                   }
                   if (a.brojkat > b.brojkat) {
                       return 1;
+
                   }
-                  return 0;
+                  if(a.brojkat == b.brojkat){
+                      if(a.vrstakat =='K' && b.vrstakat == 'K') {
+                          return 0;
+                      } else if(a.vrstakat =='P' && b.vrstakat == 'P'){
+                          return 0;
+                      }else if(a.vrstakat =='K' && b.vrstakat == 'P'){
+                          return -1;
+                      }else if(a.vrstakat =='P' && b.vrstakat == 'K'){
+                          return 1;
+                      }
+                  }
               });
               newdata[i].kategorija.clean(undefined);
           }
            console.log (newdata);
+          originalprojects=JSON.parse(JSON.stringify(newdata));
           $scope.projects = newdata;
           duzinaprojekata= newdata.length;
         }
@@ -220,6 +236,7 @@ app.controller('showTables', function($scope,$http,$window){
             //console.log(data.data);
             newdata = transactionTableParser(data.data);
             console.log(newdata);
+            originaltrans=JSON.parse(JSON.stringify(newdata));
             duzinatransakcija=newdata.length;
             $scope.transactions=newdata;
         }
@@ -264,6 +281,61 @@ app.controller('showTables', function($scope,$http,$window){
 
         }
     };//end of project click
+$scope.addpodkat= function (parent,$index,obj,$event) {
+    var convert = String($scope.projects[parent].kategorija[$index].id_kat)
+    var conclude = convert.indexOf('X');
+    if( conclude == -1) {
+        var newpot = {
+            brojkat: $scope.projects[parent].kategorija[$index].brojkat,
+            budzet: 0,
+            id_kat: $scope.projects[parent].kategorija[$index].id_kat + "X",
+            naziv: "Podkategorija",
+            preostaliiznos: 0,
+            troskovi: 0,
+            vrstakat: "P"
+        };
+
+        $scope.projects[parent].kategorija.splice($index + 1, 0, newpot);
+    }
+    //console.log($scope.projects);
+  // $scope.$apply();
+
+};
+$scope.removepodkat = function (parent,$index,obj,$event) {
+ var convert = String($scope.projects[parent].kategorija[$index].id_kat)
+ var conclude = convert.indexOf('X');
+    if( conclude != -1) {
+        $scope.projects[parent].kategorija.splice($index, 1);
+       // console.log($scope.projects);
+    }else{
+
+    }
+};
+$scope.addkat = function($index,obj,$event){
+   //console.log($index);
+   var lengthofkat = $scope.projects[$index].kategorija.length;
+   var highestnum=0;
+   for(var i=0; i<lengthofkat; i++){
+       if($scope.projects[$index].kategorija[i].brojkat > highestnum){
+           highestnum = $scope.projects[$index].kategorija[i].brojkat;
+       }
+   }
+    var newpot ={
+        brojkat :  parseInt(highestnum)+1,
+        budzet : 0,
+        id_kat :    "KX",
+        naziv : "Kategorija",
+        preostaliiznos : 0,
+        troskovi : 0,
+        vrstakat : "K"
+    };
+    $scope.projects[$index].kategorija.splice(lengthofkat,0,newpot);
+
+
+};
+
+
+
 
      var selectedcategory=0;
      var selectedlastparent;
@@ -282,7 +354,7 @@ app.controller('showTables', function($scope,$http,$window){
             selectedlastid=$scope.projects[parent].kategorija[$index].id_kat;
              selectedindex=parent +' '+ $index;
              $scope.editkat[parent +' '+ $index] = true;
-             if($scope.projects[parent].kategorija[$index].vrstakat == 'P') {
+             if($scope.projects[parent].kategorija[$index].vrstakat == 'P' || $scope.projects[parent].kategorija[$index].id_kat == 'KX') {
                  $scope.editkatnaziv[parent + ' ' + $index] = true;
                  $scope.hidekatnaziv[parent + ' ' + $index]=true;
              }
@@ -293,25 +365,13 @@ app.controller('showTables', function($scope,$http,$window){
              $scope.editkatnaziv=[];
              $scope.hidekatnaziv=[];
              $scope.hidekatbudzet=[];
-              if($scope.projects[selectedlastparent].kategorija[selectedlastindex].naziv !=selectedlastnaziv ||
-                  $scope.projects[selectedlastparent].kategorija[selectedlastindex].budzet != selectedlastbudzet){
-                  /*console.log('Proslo stanje:' + selectedlastnaziv + ' '+ selectedlastbudzet);
-                  console.log(selectedlastid);
-                  console.log('Novo stanje:' + $scope.projects[selectedlastparent].kategorija[selectedlastindex].naziv + ' '
-                      +$scope.projects[selectedlastparent].kategorija[selectedlastindex].budzet );*/
-                change.push({id: $scope.projects[selectedlastparent].kategorija[selectedlastindex].id_kat,
-                            naziv: $scope.projects[selectedlastparent].kategorija[selectedlastindex].naziv,
-                            budzet: $scope.projects[selectedlastparent].kategorija[selectedlastindex].budzet
-                });
-                console.log(change);
-              }
 
              selectedcategory = 0;
              selectedindex = "";
              selectedlastnaziv="";
              selectedlastbudzet="";
              selectedlastid = "";
-
+            // console.log($scope.projects);
              //console.log($scope.katinput[selectedindex]);
          }
       }
@@ -331,6 +391,53 @@ app.controller('showTables', function($scope,$http,$window){
                 $scope.projectshow[i] = false;
             }
             $scope.buttonEnable= ["","","disenable","","disenable","disenable"];
+
+
+            for(var i=0; i<duzinaprojekata;i++){
+                var duzinakategorijaorig=originalprojects[i].kategorija.length;
+                var duzinakategorijacurr=$scope.projects[i].kategorija.length;
+                for(var j=0; j<duzinakategorijacurr;j++){
+                    var convert = String($scope.projects[i].kategorija[j].id_kat);
+                    var conclude = convert.indexOf('X');
+                    if(conclude != -1){
+                        izmjene.push({
+                            id: $scope.projects[i].kategorija[j].id_kat,
+                            naziv: $scope.projects[i].kategorija[j].naziv,
+                            budzet: $scope.projects[i].kategorija[j].budzet,
+                            id_projekt: $scope.projects[i].projekt.id
+                            });
+                    }else {
+
+                        for (var k = 0; k < duzinakategorijaorig; k++) {
+                            if ($scope.projects[i].kategorija[j].id_kat == originalprojects[i].kategorija[k].id_kat){
+                                if($scope.projects[i].kategorija[j].naziv != originalprojects[i].kategorija[k].naziv ||
+                                    $scope.projects[i].kategorija[j].budzet != originalprojects[i].kategorija[k].budzet){
+                                    izmjene.push({
+                                        id: $scope.projects[i].kategorija[j].id_kat,
+                                        naziv: $scope.projects[i].kategorija[j].naziv,
+                                        budzet: $scope.projects[i].kategorija[j].budzet,
+                                        id_projekt: $scope.projects[i].projekt.id
+
+                                    });
+
+
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
+
+            $http.post('/api/updatecategory', izmjene).
+            then(function SuccessCallback(data) {
+                $window.location.reload();
+
+            }, function errorCallback(data) {
+                console.error("error in posting");
+            });
+            $window.location.reload();
+
       }else if(change ==2){
          $scope.stanje = 2;
 
@@ -338,6 +445,8 @@ app.controller('showTables', function($scope,$http,$window){
               $scope.projectshow[i] = true;
           }
             $scope.buttonEnable= ["disenable","disenable","","disenable","disenable","disenable"];
+
+
 
 
       }else if(change ==3){
@@ -361,6 +470,7 @@ app.controller('showTables', function($scope,$http,$window){
                 $scope.projectshow[i] = false;
             }
             $scope.buttonEnable= ["","","disenable","","disenable","disenable"];
+            $window.location.reload();
         }
 
     };
@@ -609,7 +719,7 @@ var DateDiff = {
 
 var projectTableParser = function(data){
 
-
+   var katnum = 6;
     var brojprojekata = data.data.length;
     var part = [];
 
@@ -669,6 +779,10 @@ var projectTableParser = function(data){
                } else if (data.data[i].kategorija[j].naziv == "Troškovi obavljanja osnovne djelatnosti") {
                    projektlist[i].kategorija[j].vrstakat = "K";
                    projektlist[i].kategorija[j].brojkat = "5";
+               }else if (data.data[i].kategorija[j].tezina_kat ==0){
+                   projektlist[i].kategorija[j].vrstakat = "K";
+                   projektlist[i].kategorija[j].brojkat = String(katnum);
+                   katnum++;
                }else if(data.data[i].kategorija[j].tezina_kat == 1){//podkategorija
                   var noviid;
                   for(var k=0; k <projektlist[i].kategorija.length;k++){
@@ -684,6 +798,8 @@ var projectTableParser = function(data){
                               projektlist[i].kategorija[j].brojkat = "4";
                           } else if (noviid == "Troškovi obavljanja osnovne djelatnosti") {
                               projektlist[i].kategorija[j].brojkat = "5";
+                          }else{
+                              projektlist[i].kategorija[j].brojkat = "";
                           }
 
 
@@ -727,7 +843,9 @@ var projectTableParser = function(data){
 
 
 var transactionTableParser = function(data){
-
+     if(data.length <=0 ){
+         return;
+     }
     var days,months,year;
     for(var i=0; i <data.length; i++){
         year=data[i].about.datum.substring(0,4);

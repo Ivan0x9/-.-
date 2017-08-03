@@ -44,7 +44,8 @@
                                 </thead>
 
                                 <tbody  ng-repeat="kategorija in project.kategorija">
-                                <tr id="§kategorija.vrstakat§" ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()" data-ng-click="categoryclick($parent.$index,$index,$event)">
+                                <tr id="§kategorija.vrstakat§" ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()" data-ng-click="categoryclick($parent.$index,$index,$event)" >
+
                                     <td style="display:none">§kategorija.id_kat§</td>
                                     <td class="§kategorija.vrstakat§1">§kategorija.brojkat§</td>
                                     <td>
@@ -57,18 +58,19 @@
                                     </td>
                                     <td>§kategorija.troskovi§</td>
                                     <td>§kategorija.preostaliiznos§</td>
+
                                     <td id="rowLink" >
                                         <div style="position: absolute">
-                                            <button data-ng-if="kategorija.vrstakat === 'K' && stanje == 2 " ng-show="hoverEdit" type="button" class="btn btn-primary add-button"><span>+</span></button>
-                                            <button data-ng-if="kategorija.vrstakat === 'P' && stanje == 2  " ng-show="hoverEdit" style="left: 20px" type="button" class="btn btn-primary remove-button"><span>-</span></button>
+                                            <button data-ng-if="kategorija.vrstakat === 'K' && stanje == 2 " ng-show="hoverEdit" type="button" class="btn btn-primary add-button" data-ng-click="addpodkat($parent.$parent.$index,$index,$event);$event.stopPropagation()"><span>+</span></button>
+                                            <button data-ng-if=" stanje == 2  " ng-show="hoverEdit" style="left: 20px" type="button" class="btn btn-primary remove-button" data-ng-click="removepodkat($parent.$parent.$index,$index,$event);$event.stopPropagation()"><span>-</span></button>
                                         </div>
                                     </td>
                                 </tr>
                                 </tbody>
                                 <tfoot class="budget-indicator" colspan="3">
-                                <tr>
+                                <tr data-ng-if="stanje == 2 " ng-show="addcatbottun">
                                     <td colspan="5" style="background-color: transparent">
-                                        <button type="button" class="add-category-btn">Dodaj kategoriju</button>
+                                        <button  type="button" class="add-category-btn" data-ng-click="addkat($index,$event)">Dodaj kategoriju</button>
                                     </td>
                                 </tr>
                                 <tr data-ng-click="budgetclick($index,$event)" class="span3">
@@ -115,10 +117,11 @@
                     <td>§trans.about.partner§</td>
                     <td>§trans.about.opis§</td>
                     <td style="color: §trans.about.color§; width:20%">
-                        <div>§trans.about.iznos§ HRK</div>
-                        <div><input type="number" step="0.01" style="color: #000000; position: absolute; margin-top: -22px; width: 12%"></div>
+                        <div ng-hide="hidetran[$index]">§trans.about.iznos§ HRK</div>
+                        <div ng-show="showtran[$index]"><input type="number" step="0.01" style="color: #000000; position: absolute; margin-top: -22px; width: 12%"></div>
                     </td>
-                    <td id="rowLink"><button type="button" class="btn btn-primary link-button" data-ng-if="stanje == 3 "ng-show="open"><span class="glyphicon glyphicon-link"></span></button></td>
+                    <td id="rowLink"><button type="button" class="btn btn-primary link-button" data-ng-if="stanje == 3" ng-show="open"><span class="glyphicon glyphicon-link"></span></button></td>
+                    <td id="rowLink"><button type="button" class="btn btn-primary link-button" data-ng-if="stanje == 1 || stanje == 2" ng-show="open"><span class="glyphicon glyphicon-remove"></span></button></td>
                 </tr>
                 </tbody>
             </table>

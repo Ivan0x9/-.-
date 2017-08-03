@@ -558,7 +558,50 @@ router.post('/gettrans',function(req,res) {
 
 });
 
+router.post('/updatecategory',function(req,res){
+    var NEWSQLHEAD;
+    var SQLHEAD = 'INSERT INTO kategorija (id_kategorija,naziv,budzet,tezina_kat,id_kat,id_projekt) VALUES';
 
+    if(req.body.length <=0){
+
+
+        res.end();
+    }else {
+
+        for (var i = 0; i < req.body.length; i++) {
+            var convert = String(req.body[i].id);
+            var conclude = convert.indexOf('X');
+            if (convert == 'KX') {
+                console.log('KX');
+                SQLHEAD += "(" + 'DEFAULT' + ",'" + req.body[i].naziv + "'," + req.body[i].budzet + ",DEFAULT,DEFAULT," + req.body[i].id_projekt + "),";
+            } else if (conclude != -1) {
+                var id = parseInt(req.body[i].id.slice(0, -1));
+                SQLHEAD += "(" + 'DEFAULT' + ",'" + req.body[i].naziv + "'," + req.body[i].budzet + ",1," + id + "," + req.body[i].id_projekt + "),";
+            } else {
+                SQLHEAD += "(" + req.body[i].id + ",'" + req.body[i].naziv + "'," + req.body[i].budzet + ",DEFAULT,DEFAULT," + req.body[i].id_projekt + "),";
+            }
+        }
+        NEWSQLHEAD = SQLHEAD.slice(0, -1);
+        NEWSQLHEAD += "ON DUPLICATE KEY UPDATE id_kategorija=VALUES(id_kategorija)," +
+            "naziv=VALUES(naziv)," +
+            "budzet=VALUES(budzet);";
+
+
+
+
+        pool.query(NEWSQLHEAD, function (error, results, fields) {
+            if (error) throw error;
+
+
+
+        });
+    }
+
+    res.end();
+
+
+
+});
 
 
 
