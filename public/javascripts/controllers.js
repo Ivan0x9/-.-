@@ -799,7 +799,7 @@ var projectTableParser = function(data){
                           } else if (noviid == "Troškovi obavljanja osnovne djelatnosti") {
                               projektlist[i].kategorija[j].brojkat = "5";
                           }else{
-                              projektlist[i].kategorija[j].brojkat = "";
+                              projektlist[i].kategorija[j].brojkat = "999";
                           }
 
 
