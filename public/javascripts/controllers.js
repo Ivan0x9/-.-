@@ -171,8 +171,13 @@ app.controller('showTables', function($scope,$http,$window){
     $scope.stanje = 1; //pocetno stanje
     var duzinaprojekata;
     var duzinatransakcija;
-    $scope.buttonEnable= ["","","disenable","","disenable"];
-
+    var projekti;
+    $scope.buttonEnable= ["","","disenable","","disenable","disenable"];
+    $scope.editkat = [];
+    $scope.editkatnaziv =[];
+    $scope.hidekatnaziv=[];
+    $scope.hidekatbudzet=[];
+    var change=[];
 
     $http.post('/api/getprojects', {HELLO: "HELLO"}).
     then(function SuccessCallback(data) {
@@ -195,13 +200,15 @@ app.controller('showTables', function($scope,$http,$window){
               });
               newdata[i].kategorija.clean(undefined);
           }
-           // console.log (newdata);
+           console.log (newdata);
           $scope.projects = newdata;
           duzinaprojekata= newdata.length;
         }
     }, function errorCallback(data) {
         console.error("error in posting");
     });
+
+
 
     $http.post('/api/gettrans', {HELLO: "HELLO"}).
     then(function SuccessCallback(data) {
@@ -258,9 +265,56 @@ app.controller('showTables', function($scope,$http,$window){
         }
     };//end of project click
 
+     var selectedcategory=0;
+     var selectedlastparent;
+     var selectedlastindex;
+     var selectedlastnaziv;
+     var selectedlastid;
+     var selectedlastbudzet;
+     var selectedindex;
+    $scope.categoryclick =function(parent,$index,obj, $event){
+      if($scope.stanje == 2){
+         if(selectedcategory==0) {
+             selectedlastindex=$index;
+             selectedlastparent=parent;
+            selectedlastnaziv=$scope.projects[parent].kategorija[$index].naziv;
+            selectedlastbudzet=$scope.projects[parent].kategorija[$index].budzet;
+            selectedlastid=$scope.projects[parent].kategorija[$index].id_kat;
+             selectedindex=parent +' '+ $index;
+             $scope.editkat[parent +' '+ $index] = true;
+             if($scope.projects[parent].kategorija[$index].vrstakat == 'P') {
+                 $scope.editkatnaziv[parent + ' ' + $index] = true;
+                 $scope.hidekatnaziv[parent + ' ' + $index]=true;
+             }
+             $scope.hidekatbudzet[parent + ' ' + $index]=true;
+             selectedcategory = 1;
+         }else if(selectedcategory == 1 && selectedindex != parent+ ' ' +$index){
+             $scope.editkat= [];
+             $scope.editkatnaziv=[];
+             $scope.hidekatnaziv=[];
+             $scope.hidekatbudzet=[];
+              if($scope.projects[selectedlastparent].kategorija[selectedlastindex].naziv !=selectedlastnaziv ||
+                  $scope.projects[selectedlastparent].kategorija[selectedlastindex].budzet != selectedlastbudzet){
+                  /*console.log('Proslo stanje:' + selectedlastnaziv + ' '+ selectedlastbudzet);
+                  console.log(selectedlastid);
+                  console.log('Novo stanje:' + $scope.projects[selectedlastparent].kategorija[selectedlastindex].naziv + ' '
+                      +$scope.projects[selectedlastparent].kategorija[selectedlastindex].budzet );*/
+                change.push({id: $scope.projects[selectedlastparent].kategorija[selectedlastindex].id_kat,
+                            naziv: $scope.projects[selectedlastparent].kategorija[selectedlastindex].naziv,
+                            budzet: $scope.projects[selectedlastparent].kategorija[selectedlastindex].budzet
+                });
+                console.log(change);
+              }
 
-    $scope.categoryclick =function($index,obj, $event){
+             selectedcategory = 0;
+             selectedindex = "";
+             selectedlastnaziv="";
+             selectedlastbudzet="";
+             selectedlastid = "";
 
+             //console.log($scope.katinput[selectedindex]);
+         }
+      }
     };
     $scope.budgetclick =function($index,obj, $event){
 
@@ -276,14 +330,14 @@ app.controller('showTables', function($scope,$http,$window){
             for(var i = 0; i< duzinaprojekata; i++) {
                 $scope.projectshow[i] = false;
             }
-            $scope.buttonEnable= ["","","disenable","","disenable"];
+            $scope.buttonEnable= ["","","disenable","","disenable","disenable"];
       }else if(change ==2){
          $scope.stanje = 2;
 
           for(var i = 0; i< duzinaprojekata; i++) {
               $scope.projectshow[i] = true;
           }
-            $scope.buttonEnable= ["disenable","disenable","","disenable","disenable"];
+            $scope.buttonEnable= ["disenable","disenable","","disenable","disenable","disenable"];
 
 
       }else if(change ==3){
@@ -292,14 +346,21 @@ app.controller('showTables', function($scope,$http,$window){
             for(var i = 0; i< duzinaprojekata; i++) {
                 $scope.projectshow[i] = true;
             }
-            $scope.buttonEnable= ["disenable","disenable","disenable","disenable",""];
+            $scope.buttonEnable= ["disenable","disenable","disenable","disenable","",""];
 
       }else if(change ==4){
            $scope.stanje =1;
             for(var i = 0; i< duzinaprojekata; i++) {
                 $scope.projectshow[i] = false;
             }
-            $scope.buttonEnable= ["","","disenable","","disenable"];
+            $scope.buttonEnable= ["","","disenable","","disenable","disenable"];
+        }
+        else if(change == 5){
+            $scope.stanje =1;
+            for(var i = 0; i< duzinaprojekata; i++) {
+                $scope.projectshow[i] = false;
+            }
+            $scope.buttonEnable= ["","","disenable","","disenable","disenable"];
         }
 
     };
@@ -699,3 +760,4 @@ Array.prototype.clean = function(deleteValue) {
     }
     return this;
 };
+
