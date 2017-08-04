@@ -172,9 +172,14 @@ app.controller('showTables', function($scope,$http,$window){
     $scope.stanje = 1; //pocetno stanje
     var izabranakategorija = -1;
     var izabranatransakcija = -1;
+    var parentkat = -1;
+    var indexkat =-1;
+    var indextran = -1;
+    var oldtranvalue;
     var duzinaprojekata;
     var duzinatransakcija;
     var projekti;
+    var posttrans=[];
     $scope.buttonEnable= ["","","disenable","","disenable","disenable"];
     $scope.editkat = [];
     $scope.editkatnaziv =[];
@@ -183,6 +188,7 @@ app.controller('showTables', function($scope,$http,$window){
     $scope.openremove= [];
     $scope.openlink = [];
     $scope.showtran = [];
+    $scope.hidetran = [];
     $scope.addcatbottun=true;
     var izmjene=[];
     var originalprojects={};
@@ -380,8 +386,10 @@ $scope.addkat = function($index,obj,$event){
              //console.log($scope.katinput[selectedindex]);
          }
       }else if($scope.stanje == 3){
-          console.log(obj.currentTarget.children["0"].innerHTML);
-          izabranakategorija=obj.currentTarget.children["0"].innerHTML;
+          parentkat=parent;
+          indexkat = $index;
+          izabranakategorija=$scope.projects[parent].kategorija[$index].id_kat;
+          console.log(izabranakategorija);
           var stringC ='background-color: #0e67ff; color: #ffffff';
            $scope.selectedIndex = parent+" "+ $index;
           ////////////////////////////////////////////////////////////////////////////////
@@ -392,12 +400,86 @@ $scope.addkat = function($index,obj,$event){
     };
 
     $scope.transclick =function($index,obj, $event){
+        var uvjet = false;
         if($scope.stanje == 3 && izabranakategorija!=-1) {
-            izabranatransakcija = obj.currentTarget.children["0"].innerHTML;
-            console.log(izabranatransakcija);
-            $scope.selectedIndexTran = $index;
+            for(var i=0;i<$scope.transactions[$index].projekt.length;i++){
+                if($scope.projects[parentkat].projekt.id == $scope.transactions[$index].projekt[i].id_projekt){
+                    uvjet = true;
+
+                }else{
+
+                }
+            }
+            if(uvjet) {
+                indextran = $index;
+                oldtranvalue = $scope.transactions[$index].about.iznos;
+                console.log('STARA VRIJEDNOST'+oldtranvalue);
+                console.log(indextran);
+
+                izabranatransakcija = $scope.transactions[$index].about.id_tran;
+                console.log(izabranatransakcija);
+                $scope.selectedIndexTran = $index;
+                $scope.showtran[$index]=true;
+                $scope.hidetran[$index]=true;
+
+
+            }
         }
     };
+
+    $scope.linkpress=function($index,obj, $event){
+      var newobject = {
+          imeprojekta : "",
+          kategorija: "",
+          datum : "",
+          partner : "",
+          opis : "",
+          iznos: "",
+          id_kat: "",
+          id_tran: "",
+          pridjeljeno: ""
+      };
+       console.log('Nova vrijednost' +oldtranvalue);
+       console.log(indextran);
+       console.log($scope.transactions[indextran].about.iznos);
+       var newvalue = $scope.transactions[indextran].about.iznos;
+       var diff = oldtranvalue -newvalue;
+       console.log('RAZLIKA ' + diff);
+      if((oldtranvalue <0 && diff >0 ) || (oldtranvalue >0 && diff <0 )) {
+          $scope.selectedIndexTran = [];
+          $scope.showtran[indextran]=false;
+          $scope.hidetran[indextran]=false;
+          $scope.transactions[indextran].about.iznos=oldtranvalue;
+          indextran = -1;
+
+          return;
+      }
+      if(oldtranvalue == $scope.transactions[indextran].about.iznos){
+          newobject.pridjeljeno = 1;
+          newobject.iznos = oldtranvalue;
+          $scope.transactions.splice(indextran,1);
+      }else{
+          newobject.pridjeljeno = 0;
+          newobject.iznos = $scope.transactions[indextran].about.iznos;
+          $scope.transactions[indextran].about.iznos= oldtranvalue - $scope.transactions[indextran].about.iznos ;
+      }
+      newobject.imeprojekta = $scope.projects[parentkat].projekt.naziv;
+      newobject.kategorija = $scope.projects[parentkat].kategorija[indexkat].naziv;
+      newobject.datum = $scope.transactions[indextran].about.datum;
+      newobject.partner = $scope.transactions[indextran].about.partner;
+      newobject.opis= $scope.transactions[indextran].about.opis;
+      newobject.id_kat = $scope.projects[parentkat].kategorija[indexkat].id_kat;
+      newobject.id_tran = $scope.transactions[indextran].about.id_tran;
+
+        posttrans.push(newobject);
+        console.log(posttrans);
+        $scope.selectedIndexTran = [];
+        $scope.showtran[indextran]=false;
+        $scope.hidetran[indextran]=false;
+        indextran = -1;
+    };
+
+
    $scope.changestate=function(change){
 
         if(change ==1){
@@ -543,9 +625,12 @@ $scope.addkat = function($index,obj,$event){
     $scope.hoverInTran = function($index){
         if($scope.stanje ==2) {
             $scope.openremove[$index] = true;
-        }else if($scope.stanje ==3){
-            $scope.openlink[$index] = true;
+
+        }else  if($scope.stanje ==3 && $scope.selectedIndexTran==$index){
+                    $scope.openlink[$index] = true;
         }
+
+
     };
 
     $scope.hoverOutTran = function($index){
