@@ -111,14 +111,14 @@
                 </tr>
                 </thead>
                 <tbody ng-repeat="trans in transactions">
-                <tr ng-mouseover="hoverInTran($index)" ng-mouseleave="hoverOutTran($index)" ng-style="getStyleTran($index)" data-ng-click="transclick($index,$event)">
+                <tr ng-mouseover="hoverInTran($index)" ng-mouseleave="hoverOutTran($index)"  data-ng-click="transclick($index,$event)">
                     <th  style="display:none">§trans.about.id_tran§</th>
-                    <td>§trans.about.datum§</td>
-                    <td>§trans.about.partner§</td>
-                    <td>§trans.about.opis§</td>
-                    <td style="color: §trans.about.color§; width:20%">
-                        <div ng-hide="hidetran[$index]">§trans.about.iznos§ HRK</div>
-                        <div ng-show="showtran[$index]"><input type="number"value="§trans.about.iznos§" step="0.01" style="color: #000000; position: absolute; margin-top: -22px; width: 12%" ng-model="trans.about.iznos"></div>
+                    <td ng-style="getStyleTran($index)">§trans.about.datum§</td>
+                    <td ng-style="getStyleTran($index)">§trans.about.partner§</td>
+                    <td ng-style="getStyleTran($index)">§trans.about.opis§</td>
+                    <td style="color: §trans.about.color§; width:20%" ng-style="getStyleTran($index)">
+                        <div  ng-hide="hidetran[$index]">§trans.about.iznos§ HRK</div>
+                        <div  ng-show="showtran[$index]"><input type="number"value="§trans.about.iznos§" step="0.01" style="color: #000000; position: absolute; margin-top: -4px; width: 12%" ng-model="trans.about.iznos"></div>
                     </td>
                     <td id="rowLink"><button type="button" class="btn btn-primary link-button"  ng-show="openlink[$index]" data-ng-click="linkpress($index,$event);$event.stopPropagation()"><span class="glyphicon glyphicon-link"></span></button></td>
                     <td id="rowLink"><button type="button" class="btn btn-primary link-button"   ng-show="openremove[$index]" data-ng-click="removetranclick($index,$event)"><span class="glyphicon glyphicon-remove"></span></button></td>

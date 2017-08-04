@@ -454,6 +454,15 @@ $scope.addkat = function($index,obj,$event){
 
           return;
       }
+      if((oldtranvalue <0 && newvalue > 0) || (oldtranvalue >0 && newvalue < 0)){
+          $scope.selectedIndexTran = [];
+          $scope.showtran[indextran]=false;
+          $scope.hidetran[indextran]=false;
+          $scope.transactions[indextran].about.iznos=oldtranvalue;
+          indextran = -1;
+
+          return;
+      }
       if(oldtranvalue == $scope.transactions[indextran].about.iznos){
           newobject.pridjeljeno = 1;
           newobject.iznos = oldtranvalue;
