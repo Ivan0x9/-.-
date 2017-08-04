@@ -603,6 +603,18 @@ router.post('/updatecategory',function(req,res){
 
 });
 
+router.post('/deletetrans',function(req,res){
+    var SQLHEAD = "DELETE FROM transakcije WHERE id_tran = "+req.body.ID+";";
+    pool.query(SQLHEAD, function (error, results, fields) {
+        if (error) throw error;
+
+
+
+    });
+
+    res.end();
+});
+
 
 
 module.exports = router;

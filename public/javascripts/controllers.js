@@ -168,7 +168,10 @@ app.controller('showProjectGroup', function($scope) {
 
 
 app.controller('showTables', function($scope,$http,$window){
+    $scope.selection = { selectedNode:  null };
     $scope.stanje = 1; //pocetno stanje
+    var izabranakategorija = -1;
+    var izabranatransakcija = -1;
     var duzinaprojekata;
     var duzinatransakcija;
     var projekti;
@@ -177,6 +180,8 @@ app.controller('showTables', function($scope,$http,$window){
     $scope.editkatnaziv =[];
     $scope.hidekatnaziv=[];
     $scope.hidekatbudzet=[];
+    $scope.openremove= [];
+    $scope.openlink = [];
     $scope.showtran = [];
     $scope.addcatbottun=true;
     var izmjene=[];
@@ -374,6 +379,12 @@ $scope.addkat = function($index,obj,$event){
             // console.log($scope.projects);
              //console.log($scope.katinput[selectedindex]);
          }
+      }else if($scope.stanje == 3){
+          console.log(obj.currentTarget.children["0"].innerHTML);
+          izabranakategorija=obj.currentTarget.children["0"].innerHTML;
+          var stringC ='background-color: #0e67ff; color: #ffffff';
+           $scope.selectedIndex = parent+" "+ $index;
+          ////////////////////////////////////////////////////////////////////////////////
       }
     };
     $scope.budgetclick =function($index,obj, $event){
@@ -381,7 +392,11 @@ $scope.addkat = function($index,obj,$event){
     };
 
     $scope.transclick =function($index,obj, $event){
-
+        if($scope.stanje == 3 && izabranakategorija!=-1) {
+            izabranatransakcija = obj.currentTarget.children["0"].innerHTML;
+            console.log(izabranatransakcija);
+            $scope.selectedIndexTran = $index;
+        }
     };
    $scope.changestate=function(change){
 
@@ -475,6 +490,48 @@ $scope.addkat = function($index,obj,$event){
 
     };
 
+    $scope.getStyle = function(parent,child){
+        if( (parent+" "+child) === $scope.selectedIndex ){
+            return  {
+                'background-color': '#0e67ff',
+                'color': '#ffffff'
+
+        };
+        } else{
+            return "";
+        }
+    };
+
+    $scope.getStyleTran = function(child){
+        if( (child) === $scope.selectedIndexTran ){
+            return  {
+                'background-color': '#0e67ff',
+                'color': '#ffffff'
+
+            };
+        } else{
+            return "";
+        }
+    };
+
+   $scope.removetranclick=function($index,obj,$event){
+      var selectedtransid= obj.currentTarget.parentNode.parentNode.children[0].innerHTML;
+       console.log(selectedtransid);
+       console.log($scope.transactions[$index]);
+       $scope.transactions.splice($index,1);
+
+       $http.post('/api/deletetrans', {ID: selectedtransid}).
+       then(function SuccessCallback(data) {
+
+
+       }, function errorCallback(data) {
+           console.error("error in posting");
+       });
+
+
+
+   };
+
     $scope.hoverIn = function(){
         this.hoverEdit = true;
     };
@@ -482,6 +539,23 @@ $scope.addkat = function($index,obj,$event){
     $scope.hoverOut = function(){
         this.hoverEdit = false;
     };
+
+    $scope.hoverInTran = function($index){
+        if($scope.stanje ==2) {
+            $scope.openremove[$index] = true;
+        }else if($scope.stanje ==3){
+            $scope.openlink[$index] = true;
+        }
+    };
+
+    $scope.hoverOutTran = function($index){
+        if($scope.stanje ==2) {
+            $scope.openremove[$index] = false;
+        }else if($scope.stanje ==3){
+            $scope.openlink[$index] = false;
+        }
+    };
+
 
 });
 
