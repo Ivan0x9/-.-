@@ -386,10 +386,21 @@ $scope.addkat = function($index,obj,$event){
              //console.log($scope.katinput[selectedindex]);
          }
       }else if($scope.stanje == 3){
+         if(indextran != -1){
+             parentkat= -1;
+             indexkat = -1;
+
+             $scope.showtran[indextran]=false;
+             $scope.hidetran[indextran]=false;
+             indextran = -1;
+             $scope.selectedIndex = [];
+             $scope.getStyleTran(-1);
+             return;
+         }
           parentkat=parent;
           indexkat = $index;
           izabranakategorija=$scope.projects[parent].kategorija[$index].id_kat;
-          console.log(izabranakategorija);
+         // console.log(izabranakategorija);
           var stringC ='background-color: #0e67ff; color: #ffffff';
            $scope.selectedIndex = parent+" "+ $index;
           ////////////////////////////////////////////////////////////////////////////////
@@ -411,13 +422,17 @@ $scope.addkat = function($index,obj,$event){
                 }
             }
             if(uvjet) {
+                if(indextran != -1){
+                    $scope.showtran[indextran]=false;
+                    $scope.hidetran[indextran]=false;
+                }
                 indextran = $index;
                 oldtranvalue = $scope.transactions[$index].about.iznos;
-                console.log('STARA VRIJEDNOST'+oldtranvalue);
-                console.log(indextran);
+                //console.log('STARA VRIJEDNOST'+oldtranvalue);
+                //console.log(indextran);
 
                 izabranatransakcija = $scope.transactions[$index].about.id_tran;
-                console.log(izabranatransakcija);
+               // console.log(izabranatransakcija);
                 $scope.selectedIndexTran = $index;
                 $scope.showtran[$index]=true;
                 $scope.hidetran[$index]=true;
@@ -439,12 +454,12 @@ $scope.addkat = function($index,obj,$event){
           id_tran: "",
           pridjeljeno: ""
       };
-       console.log('Nova vrijednost' +oldtranvalue);
-       console.log(indextran);
-       console.log($scope.transactions[indextran].about.iznos);
+      // console.log('Nova vrijednost' +oldtranvalue);
+       //console.log(indextran);
+       //console.log($scope.transactions[indextran].about.iznos);
        var newvalue = $scope.transactions[indextran].about.iznos;
        var diff = oldtranvalue -newvalue;
-       console.log('RAZLIKA ' + diff);
+      // console.log('RAZLIKA ' + diff);
       if((oldtranvalue <0 && diff >0 ) || (oldtranvalue >0 && diff <0 )) {
           $scope.selectedIndexTran = [];
           $scope.showtran[indextran]=false;
@@ -600,6 +615,7 @@ $scope.addkat = function($index,obj,$event){
                 'color': '#ffffff'
 
             };
+
         } else{
             return "";
         }
