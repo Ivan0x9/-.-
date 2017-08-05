@@ -524,7 +524,9 @@ $scope.addkat = function($index,obj,$event){
       // console.log('Nova vrijednost' +oldtranvalue);
        //console.log(indextran);
        //console.log($scope.transactions[indextran].about.iznos);
-
+            if($scope.transactions[indextran]==undefined){
+                return;
+            }
 
             var newvalue = $scope.transactions[indextran].about.iznos;
             var diff = oldtranvalue - newvalue;
