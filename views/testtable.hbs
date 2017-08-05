@@ -97,12 +97,17 @@
         </div>
 
         <div id="right-column" class="scroll-area col-xs-12 col-sm-6 col-md-6 col-lg-6">
-            <button type="button" class="btn btn-primary btn-sm repo-button col-md-offset-4 col-xs-offset-4" id="submit">
-                <span class="glyphicon glyphicon-list-alt"></span>&nbsp;Odaberi transakciju
-            </button>
-            <button type="button" class="btn btn-primary btn-sm repo-button " id="submit">
-                <span class="glyphicon glyphicon-upload"></span>&nbsp;Upload
-            </button>
+            <form style="height: 40px; float: left" action="/api/gettrans" method="post">
+                <button type="button" class="btn btn-primary btn-sm repo-button col-md-offset-4 col-xs-offset-4" id="submit">
+                    <span class="glyphicon glyphicon-list-alt"></span>&nbsp;Odaberi transakciju
+                </button>
+            </form>
+
+            <form style="height: 40px">
+                <button style="margin-left: 70px" type="button" class="btn btn-primary btn-sm repo-button " id="submit">
+                    <span class="glyphicon glyphicon-upload"></span>&nbsp;Upload
+                </button>
+            </form>
 
             <table id="transaction-edit-table" class="table table-hover">
                 <thead>
