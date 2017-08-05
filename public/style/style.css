@@ -580,6 +580,11 @@ select{
     border-radius: 5px;
 }
 
+#confirmPT .close{
+    margin: 10px 10px 0 10px;
+    height: 0;
+}
+
 #confirmPT .col-md-12{
     padding-left: 0;
     padding-right: 0;
@@ -587,15 +592,15 @@ select{
 
 .pt-list-area{
     height: 78%;
+    width:100%;
     display: block;
     padding-top: 20px;
 }
 
-#confirmPT #right-column, #confirmPT #left-column{
-    background-color: transparent;
-}
-
 #confirmPT .message-area{
+    position: absolute;
+    bottom: 0;
+
     height: 19%;
     padding: 3.3%;
 
