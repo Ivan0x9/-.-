@@ -615,6 +615,107 @@ router.post('/deletetrans',function(req,res){
     res.end();
 });
 
+router.post('/transkat',function(req,res){
+    //console.log(req.body);
+    var preslika = JSON.parse(JSON.stringify(req.body));
+    var KATTROSK = [];
+    var NEWSQLHEAD;
+    var NEWSQLHEAD2;
+    var NEWSQLHEAD3;
+    var count = 3;
+    var SQLHEAD = 'INSERT INTO transakcije(id_tran,banka,racun,partner,iznos,opis,id_racun,pridjeljeno) VALUES';
+    for(var i =0 ; i <req.body.length ; i++){
+        SQLHEAD += '(' + req.body[i].id_tran + ",'X','X','X',"+req.body[i].noviznos+",'X',1,"+req.body[i].pridjeljeno+'),' ;
+
+    }
+    NEWSQLHEAD = SQLHEAD.slice(0, -1);
+    NEWSQLHEAD += "ON DUPLICATE KEY UPDATE id_tran=VALUES(id_tran)," +
+        "iznos=VALUES(iznos)," +
+        "pridjeljeno=VALUES(pridjeljeno);";
+
+    var SQLHEAD2 = 'INSERT INTO kat_tran (id_kat,id_tran,iznos) VALUES';
+    for(var i = 0; i <req.body.length; i++){
+        SQLHEAD2 += '('+req.body[i].id_kat+','+req.body[i].id_tran+','+req.body[i].iznos+'),';
+    }
+    NEWSQLHEAD2 = SQLHEAD2.slice(0, -1);
+    NEWSQLHEAD2 += ';';
+   // console.log('///////////////////////////////////////////////////////////////////////////////////////');
+
+   for(var i = 0; i< preslika.length; i++){
+       if(preslika[i]!=null) {
+           var newobj = {
+               id_kat: "",
+               troskovi: 0
+           };
+           newobj.id_kat = preslika[i].id_kat;
+           newobj.troskovi += req.body[i].iznos;
+           for (var j = i + 1; j < preslika.length; j++) {
+               if (preslika[j] != null) {
+                   if (newobj.id_kat == preslika[j].id_kat) {
+                       newobj.troskovi += preslika[j].iznos;
+                       preslika[j] = null;
+
+
+                   }
+               }
+
+           }
+           //console.log(newobj);
+           KATTROSK.push(newobj);
+       }
+
+    }
+    console.log(KATTROSK);
+    var SQLHEAD3 = 'INSERT INTO kategorija (id_kategorija,naziv,troskovi,id_projekt) VALUES';
+    for(var i =0 ; i <KATTROSK.length ; i++){
+        SQLHEAD3 += '(' + KATTROSK[i].id_kat +",'X',"+KATTROSK[i].troskovi+',1),' ;
+    }
+    NEWSQLHEAD3 = SQLHEAD3.slice(0, -1);
+    NEWSQLHEAD3 += "ON DUPLICATE KEY UPDATE id_kategorija=VALUES(id_kategorija)," +
+        "troskovi=VALUES(troskovi);" ;
+
+   // console.log(NEWSQLHEAD);
+    //console.log(NEWSQLHEAD2);
+   // console.log(NEWSQLHEAD3);
+    pool.query(NEWSQLHEAD, function (error, results, fields) {
+        if (error) throw error;
+       count--;
+        if(count == 0){
+            end();
+        }
+
+    });
+    pool.query(NEWSQLHEAD2, function (error, results, fields) {
+        if (error) throw error;
+        count--;
+        if(count == 0){
+            end();
+        }
+
+
+    });
+    pool.query(NEWSQLHEAD3, function (error, results, fields) {
+        if (error) throw error;
+        count--;
+        if(count == 0){
+            end();
+        }
+
+
+    });
+
+
+
+var end = function (){
+    res.end();
+};
+
+
+
+
+
+});
+
 
 
 module.exports = router;

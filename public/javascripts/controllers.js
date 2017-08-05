@@ -519,7 +519,8 @@ $scope.addkat = function($index,obj,$event){
           iznos: "",
           id_kat: "",
           id_tran: "",
-          pridjeljeno: ""
+          pridjeljeno: "",
+          noviznos: ""
       };
       // console.log('Nova vrijednost' +oldtranvalue);
        //console.log(indextran);
@@ -553,11 +554,13 @@ $scope.addkat = function($index,obj,$event){
             if (oldtranvalue == $scope.transactions[indextran].about.iznos) {
                 newobject.pridjeljeno = 1;
                 newobject.iznos = oldtranvalue;
+                newobject.noviznos = 0;
                 brisi = true;
             } else {
                 newobject.pridjeljeno = 0;
                 newobject.iznos = $scope.transactions[indextran].about.iznos;
                 $scope.transactions[indextran].about.iznos = oldtranvalue - $scope.transactions[indextran].about.iznos;
+                newobject.noviznos = oldtranvalue - $scope.transactions[indextran].about.iznos;
             }
         if(izabranakategorija != -1) {
             newobject.imeprojekta = $scope.projects[parentkat].projekt.naziv;
@@ -769,7 +772,17 @@ $scope.addkat = function($index,obj,$event){
         }
     };
 
+ $scope.linkserverpost = function(){
+     $http.post('/api/transkat', $scope.posttrans).
+     then(function SuccessCallback(data) {
+         $window.location.reload();
 
+     }, function errorCallback(data) {
+         console.error("error in posting");
+     });
+
+
+ }
 });
 
 
@@ -1047,7 +1060,7 @@ var projectTableParser = function(data){
                    naziv: data.data[i].kategorija[j].naziv,
                    budzet: data.data[i].kategorija[j].budzet,
                    troskovi: data.data[i].kategorija[j].troskovi,
-                   preostaliiznos: data.data[i].kategorija[j].budzet - data.data[i].kategorija[j].troskovi
+                   preostaliiznos: data.data[i].kategorija[j].budzet + data.data[i].kategorija[j].troskovi
 
 
                };
