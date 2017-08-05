@@ -167,7 +167,7 @@ app.controller('showProjectGroup', function($scope) {
 
 
 
-app.controller('showTables', function($scope,$http,$window,ModalService){
+app.controller('showTables', function($scope,$http,$window){
     $scope.selection = { selectedNode:  null };
     $scope.stanje = 1; //pocetno stanje
     var izabranakategorija = -1;
@@ -181,7 +181,7 @@ app.controller('showTables', function($scope,$http,$window,ModalService){
     var duzinaprojekata;
     var duzinatransakcija;
     var projekti;
-    var posttrans=[];
+    $scope.posttrans=[];
     $scope.buttonEnable= ["","","disenable","","disenable","disenable"];
     $scope.editkat = [];
     $scope.editkatnaziv =[];
@@ -234,7 +234,7 @@ app.controller('showTables', function($scope,$http,$window,ModalService){
               });
               newdata[i].kategorija.clean(undefined);
           }
-           console.log (newdata);
+           //console.log (newdata);
           originalprojects=JSON.parse(JSON.stringify(newdata));
           $scope.projects = newdata;
           duzinaprojekata= newdata.length;
@@ -254,7 +254,7 @@ app.controller('showTables', function($scope,$http,$window,ModalService){
             var newdata;
             //console.log(data.data);
             newdata = transactionTableParser(data.data);
-            console.log(newdata);
+            //console.log(newdata);
             originaltrans=JSON.parse(JSON.stringify(newdata));
             duzinatransakcija=newdata.length;
             $scope.transactions=newdata;
@@ -403,7 +403,7 @@ $scope.addkat = function($index,obj,$event){
           parentkat=parent;
           indexkat = $index;
           izabranakategorija=$scope.projects[parent].kategorija[$index].id_kat;
-          console.log(izabranakategorija);
+          //console.log(izabranakategorija);
           var stringC ='background-color: #0e67ff; color: #ffffff';
            $scope.selectedIndex = parent+" "+ $index;
           ////////////////////////////////////////////////////////////////////////////////
@@ -441,17 +441,17 @@ $scope.addkat = function($index,obj,$event){
                 projbudzet = $scope.projects[$index].projekt.naziv;
                 namebudzet = "Budžetni prihodi";
                 idbudzet = $scope.projects[$index].budzet.id_budzet;
-                console.log(projbudzet, namebudzet, idbudzet);
+                //console.log(projbudzet, namebudzet, idbudzet);
                 izabranbuzet = 1;
                 $scope.categorybudz = $index;
                 $scope.broj = 0;
             }else if (select == 1){
                 indexbudzet = $index;
-                console.log(indexbudzet);
+               // console.log(indexbudzet);
                 projbudzet = $scope.projects[$index].projekt.naziv;
                 namebudzet = "Nepovezani budžet";
                 idbudzet = $scope.projects[$index].budzet.id_prebudzet;
-                console.log(projbudzet, namebudzet, idbudzet);
+               // console.log(projbudzet, namebudzet, idbudzet);
                 izabranbuzet = 1;
                 $scope.categorybudz = $index;
                 $scope.broj = 1;
@@ -497,7 +497,7 @@ $scope.addkat = function($index,obj,$event){
                 //console.log(indextran);
 
                 izabranatransakcija = $scope.transactions[$index].about.id_tran;
-               console.log(izabranatransakcija);
+              // console.log(izabranatransakcija);
                 $scope.selectedIndexTran = $index;
                 $scope.category = $index;
                 $scope.showtran[$index]=true;
@@ -578,8 +578,8 @@ $scope.addkat = function($index,obj,$event){
             $scope.transactions.splice(indextran, 1);
 
         }
-            posttrans.push(newobject);
-            console.log(posttrans);
+            $scope.posttrans.push(newobject);
+            console.log($scope.posttrans);
             $scope.selectedIndexTran = [];
             $scope.openlink = [];
             $scope.category = -1;
@@ -767,29 +767,10 @@ $scope.addkat = function($index,obj,$event){
         }
     };
 
-    // MODAL FUNCTION START ============================================================================================
-    $scope.show = function() {
-        ModalService.showModal({
-            templateUrl: 'modal.hbs',
-            controller: "ModalController"
-        }).then(function(modal) {
-            modal.element.modal();
-            modal.close.then(function(result) {
-                $scope.message = "You said " + result; // Provjerava koji se botun klika
-                console.log($scope.message); // Ispisuje šta se kliklo
-            });
-        });
-    };
-    // END =============================================================================================================
+
 });
 
-app.controller('ModalController', function($scope, close) {
 
-    $scope.close = function(result) {
-        close(result, 500); // close, but give 500ms for bootstrap to animate
-
-    };
-});
 
 app.controller('CreateProCtrl', function($scope, $window, $http, $sce){
      //lets make angular change some shit
