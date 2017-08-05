@@ -134,9 +134,12 @@
             <button type="button" value="editPT" class="btn btn-primary btn-sm footer-button §buttonEnable[1]§" id="edit" data-ng-click="changestate(2)">Uredi projekte i kategorije</button>
             <button type="button" value="closure" class="btn btn-primary btn-sm footer-button  §buttonEnable[2]§" id="submit" data-ng-click="changestate(1)">Zaključi projekte i kategorije</button>
             <button type="button" value="assignT" class="btn btn-primary btn-sm footer-button §buttonEnable[3]§" id="assign" data-ng-click="changestate(3)">Pridjeli transakcije</button>
-            <button type="button" value="closeAssign" class="btn btn-primary btn-sm footer-button §buttonEnable[4]§" id="submit" data-ng-click="changestate(4)">Zaključi transakcije</button>
+            <button type="button" value="closeAssign" class="btn btn-primary btn-sm footer-button §buttonEnable[4]§" id="submit" data-ng-click="changestate(4); show()">Zaključi transakcije</button>
             <button type="button" value="closeAssign" class="btn btn-primary btn-sm footer-button §buttonEnable[5]§" id="submit" data-ng-click="changestate(5)">Odbaci promjene</button>
         </footer>
+
+        {{>modal}}
+
     </div>
 </div>
 

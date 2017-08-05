@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-var app = angular.module('myApp.controllers', []);
+var app = angular.module('myApp.controllers', ['angularModalService']);
 
 app.config(function($interpolateProvider) {
     $interpolateProvider.startSymbol('§');
@@ -167,7 +167,7 @@ app.controller('showProjectGroup', function($scope) {
 
 
 
-app.controller('showTables', function($scope,$http,$window){
+app.controller('showTables', function($scope,$http,$window,ModalService){
     $scope.selection = { selectedNode:  null };
     $scope.stanje = 1; //pocetno stanje
     var izabranakategorija = -1;
@@ -667,13 +667,13 @@ $scope.addkat = function($index,obj,$event){
             }
             $scope.buttonEnable= ["disenable","disenable","disenable","disenable","",""];
 
-      }else if(change ==4){
+      }/*else if(change ==4){
            $scope.stanje =1;
             for(var i = 0; i< duzinaprojekata; i++) {
                 $scope.projectshow[i] = false;
             }
             $scope.buttonEnable= ["","","disenable","","disenable","disenable"];
-        }
+        }*/
         else if(change == 5){
             $scope.stanje =1;
             for(var i = 0; i< duzinaprojekata; i++) {
@@ -767,10 +767,29 @@ $scope.addkat = function($index,obj,$event){
         }
     };
 
-
+    // MODAL FUNCTION START ============================================================================================
+    $scope.show = function() {
+        ModalService.showModal({
+            templateUrl: 'modal.hbs',
+            controller: "ModalController"
+        }).then(function(modal) {
+            modal.element.modal();
+            modal.close.then(function(result) {
+                $scope.message = "You said " + result; // Provjerava koji se botun klika
+                console.log($scope.message); // Ispisuje šta se kliklo
+            });
+        });
+    };
+    // END =============================================================================================================
 });
 
+app.controller('ModalController', function($scope, close) {
 
+    $scope.close = function(result) {
+        close(result, 500); // close, but give 500ms for bootstrap to animate
+
+    };
+});
 
 app.controller('CreateProCtrl', function($scope, $window, $http, $sce){
      //lets make angular change some shit
