@@ -742,6 +742,63 @@ router.post('/gettemplate',function(req,res){
 
 });
 
+router.post('/deletekattrans',function(req,res){
+ var count = 3;
+    //console.log(req.body);
+
+
+    var SQLHEAD = 'INSERT INTO transakcije(id_tran,banka,racun,partner,iznos,opis,id_racun,pridjeljeno) VALUES';
+
+        SQLHEAD += '(' + req.body.id_tran + ",'X','X','X',"+req.body.iznos+",'X',1,0)" ;
+
+    SQLHEAD += "ON DUPLICATE KEY UPDATE id_tran=VALUES(id_tran)," +
+        "iznos=VALUES(iznos)+transakcije.iznos," +
+        "pridjeljeno=VALUES(pridjeljeno);";
+
+    var SQLHEAD2 = 'INSERT INTO kategorija (id_kategorija,naziv,troskovi,id_projekt) VALUES';
+        SQLHEAD2 += '('+ req.body.id_kat +",'X',"+req.body.iznos+',1)' ;
+
+
+    SQLHEAD2 += "ON DUPLICATE KEY UPDATE id_kategorija=VALUES(id_kategorija)," +
+        "troskovi=VALUES(troskovi)- kategorija.troskovi;" ;
+
+
+    var SQLHEAD3 = 'DELETE FROM kat_tran WHERE kat_tran.id_kat_tran =' +req.body.id_kat_tran +';'
+
+    pool.query(SQLHEAD, function (error, results, fields) {
+        if (error) throw error;
+        count--;
+        if(count == 0){
+            end();
+        }
+
+    });
+    pool.query(SQLHEAD2, function (error, results, fields) {
+        if (error) throw error;
+        count--;
+        if(count == 0){
+            end();
+        }
+
+
+    });
+    pool.query(SQLHEAD3, function (error, results, fields) {
+        if (error) throw error;
+        count--;
+        if(count == 0){
+            end();
+        }
+
+
+    });
+
+    var end = function (){
+        res.send('ok');
+        res.end();
+    };
+
+});
+
 
 
 module.exports = router;

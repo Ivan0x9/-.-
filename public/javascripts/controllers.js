@@ -168,7 +168,7 @@ app.controller('oneproject', function($scope,$http,$window,$document,$location) 
 
 
      idprojekta = parseInt($window.location.pathname.replace('/project-template/',""));
-    console.log(idprojekta);
+   // console.log(idprojekta);
 
 
 
@@ -180,11 +180,11 @@ app.controller('oneproject', function($scope,$http,$window,$document,$location) 
             console.log('NOTHING IN BASE');
             //ako nema transakcija
         }else {
-           console.log(data.data);
+
 
             $scope.namepro=data.data[0].ime;
            kattran=parsekattran(data.data);
-          something.push(kattran);
+           //console.log(kattran);
           $scope.katran =JSON.parse(JSON.stringify(kattran));
         }
 
@@ -192,15 +192,35 @@ app.controller('oneproject', function($scope,$http,$window,$document,$location) 
         console.error("error in posting");
     });
 
-    console.log(something);
 
 
 
+$scope.removetran = function(parent,$index,obj, $event){
+    //console.log (parent);
+   // console.log($index);
+//console.log($scope.katran);
+var slanje = {
+    id_kat_tran: $scope.katran[parent].transakcije[$index].id_kat_tran,
+    id_tran : $scope.katran[parent].transakcije[$index].id_tran,
+    iznos : $scope.katran[parent].transakcije[$index].iznos,
+    id_kat : $scope.katran[parent].kategorija.id_kat
+};
+
+    $http.post('/api/deletekattrans', slanje).
+    then(function SuccessCallback(data) {
+        if(data.data=='ok'){
+            $scope.katran[parent].transakcije.splice($index,1);
+            //ako nema transakcija
+        }else {
 
 
+        }
 
+    }, function errorCallback(data) {
+        console.error("error in posting");
+    });
 
-
+};
 
 
 
