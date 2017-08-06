@@ -50,6 +50,8 @@ router.post('/', function(req, res) {
                          id_rac = results[0].id_br_rac;
 
                          wrapper();
+                     }else{
+                         res.end('wrong');
                      }
                   });
     var wrapper = function() {
@@ -107,7 +109,8 @@ router.post('/', function(req, res) {
                 }
 
         });
-        res.write('success!');
+        res.redirect('/testtable');
+        //res.write('success!');
         res.end();
     });
 
