@@ -19,7 +19,8 @@ router.get('/:tagId', function(req, res, next) {
 
             //sending errors
             res.render('project-template', {
-                id: idprojekta
+                id: idprojekta,
+                title: 'Uvid u projekt'
             });
 
 

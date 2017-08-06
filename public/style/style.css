@@ -33,6 +33,12 @@ select{
     width: 100%;
 }
 
+#content-project {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
 #left-column{
     background-color: #eaeaea;
 }
@@ -441,21 +447,32 @@ select{
     background-color: transparent;
 }
 
-#project-table tbody .sub-category-row1{
-    background-color: transparent;
-}
-
-#project-table tbody .sub-category-row2{
-    background-color: transparent;
-}
-
 .transaction-row{
-    border: 2px solid #367abd;
-    padding: 40px;
+    padding: 20px;
+}
+
+.transaction-row td{
+    background-color: #ffffff;
+    color: #367ABD;
+}
+
+.transaction-row tr:hover td{
+    background-color: #367abd;
+    color: #ffffff;
 }
 
 .transaction-row table tbody tr td{
     padding-right: 30px;
+    padding-bottom: 10px;
+}
+
+#B{
+    background-color: #367abd;
+    color: #ffffff;
+}
+.B1{
+    background-color: #095a8e;
+    color: #ffffff;
 }
 
 #project-table tbody .transaction-row, #project-table tbody .transaction-row th{
@@ -500,21 +517,6 @@ select{
     background-color: #f1bc39;
     color: #ffffff;
 }
-
-.transaction-row td{
-    background-color: #ffffff;
-    color: #367ABD;
-}
-
-.transaction-row:hover td{
-    background-color: #367ABD;
-    color: #ffffff;
-}
-
-.transaction-row th{
-
-}
-
 
 /* PROJECT TRANSACTION STYLESHEET =============================================== */
 /* PROJECT TABLE -------------------------------------------------------------------------------------- */

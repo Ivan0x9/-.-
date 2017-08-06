@@ -2,20 +2,14 @@
 <html ng-app="myApp.controllers">
 <head>
     {{>headpart}}
-    <title>{{id}}</title>
 </head>
 <body>
 <div id="wrapper" ng-controller="oneproject">
     {{>projectnav}}
 
-    <div id="content" >
+    <div id="content-project" class="project-content-view" >
         <div id="left-column" class="scroll-area col-xs-9 col-md-9">
-            <ul class="list-group">
-                <li class="list-group-item col-md-3 col-xs-3">Briši</li>
-                <li class="list-group-item col-md-3 col-xs-3">Briši</li>
-                <li class="list-group-item col-md-3 col-xs-3">Briši</li>
-                <li class="list-group-item col-md-3 col-xs-3">Briši</li>
-            </ul>
+
             <ul class="list-group">
                 <li class="list-group-item col-md-6 col-xs-6">Ime projekta</li>
                 <li class="list-group-item col-md-6 col-xs-6">§namepro§</li>
@@ -51,7 +45,7 @@
                                     <td>§tran.partner§</td>
                                     <td>§tran.opis§</td>
                                     <td>§tran.iznos§ HRK</td>
-                                    <td style="position: absolute; right: 5px" id="rowLink">
+                                    <td style="position: absolute; right: 5px; background-color: transparent" id="rowLink">
                                         <div >
                                             <button style="left: 20px" type="button" class="btn btn-primary remove-button" data-ng-click="removetran($parent.$index,$index,$event)"><span>-</span></button>
                                         </div>

@@ -17,7 +17,11 @@ router.get('/', function(req, res, next) {
         if( results.length  > 0){
 
             //sending errors
-            res.render('testtable', { title: 'testtable' });
+            res.render('testtable', {
+                id: 'logout',
+                title: 'Pregled projekata i transakcija',
+                item: 'Odjava'
+            });
 
 
         }else {
