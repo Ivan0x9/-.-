@@ -672,7 +672,7 @@ router.post('/transkat',function(req,res){
     }
     NEWSQLHEAD3 = SQLHEAD3.slice(0, -1);
     NEWSQLHEAD3 += "ON DUPLICATE KEY UPDATE id_kategorija=VALUES(id_kategorija)," +
-        "troskovi=VALUES(troskovi);" ;
+        "troskovi=VALUES(troskovi)+ kategorija.troskovi;" ;
 
    // console.log(NEWSQLHEAD);
     //console.log(NEWSQLHEAD2);
@@ -710,6 +710,32 @@ var end = function (){
     res.end();
 };
 
+});
+
+router.post('/gettemplate',function(req,res){
+
+    var SQLHEAD = ['SELECT kat_tran.id_kat,kategorija.naziv, kategorija.budzet, kategorija.troskovi, kat_tran.id_tran,kat_tran.iznos,transakcije.datum,transakcije.partner,transakcije.opis,kat_tran.id_kat_tran,projekt.ime ',
+        'FROM transakcije, kat_tran,kategorija, projekt ',
+        'WHERE ',
+        'transakcije.id_tran = kat_tran.id_tran AND ',
+        'kat_tran.id_kat = kategorija.id_kategorija AND ',
+        'kategorija.id_projekt = projekt.id_projekt AND ',
+        'kategorija.id_projekt=?;'].join('');
+     var inserts =[req.body.id];
+
+     pool.query(SQLHEAD,inserts, function (error, results, fields) {
+        if (error) throw error;
+        if(results.length > 0){
+            res.send(results);
+            res.end();
+
+        }else{
+            res.send('empty');
+            res.end();
+        }
+
+
+    });
 
 
 

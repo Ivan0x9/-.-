@@ -72,6 +72,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(lessMiddleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/project-template', express.static(path.join(__dirname, 'public')));
 // Use express-session middleware for express
 module.exports = cookieconf={
     cookieName: 'sessval', // cookie name dictates the key name added to the request object

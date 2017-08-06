@@ -1,24 +1,24 @@
 <!DOCTYPE html>
-<html ng-app="myApp">
+<html ng-app="myApp.controllers">
 <head>
     {{>headpart}}
-    <title>{{project.name}}</title>
+    <title>{{id}}</title>
 </head>
 <body>
-<div id="wrapper">
+<div id="wrapper" ng-controller="oneproject">
     {{>projectnav}}
 
-    <div id="content" ng-controller="showProjectGroup">
+    <div id="content" >
         <div id="left-column" class="scroll-area col-xs-9 col-md-9">
             <ul class="list-group">
-                <li class="list-group-item col-md-3 col-xs-3">Ukupno</li>
-                <li class="list-group-item col-md-3 col-xs-3">$$$</li>
-                <li class="list-group-item col-md-3 col-xs-3">Nepovezani budžet</li>
-                <li class="list-group-item col-md-3 col-xs-3">$$$</li>
+                <li class="list-group-item col-md-3 col-xs-3">Briši</li>
+                <li class="list-group-item col-md-3 col-xs-3">Briši</li>
+                <li class="list-group-item col-md-3 col-xs-3">Briši</li>
+                <li class="list-group-item col-md-3 col-xs-3">Briši</li>
             </ul>
             <ul class="list-group">
-                <li class="list-group-item col-md-6 col-xs-6">Preostali iznos</li>
-                <li class="list-group-item col-md-6 col-xs-6">$$$</li>
+                <li class="list-group-item col-md-6 col-xs-6">Ime projekta</li>
+                <li class="list-group-item col-md-6 col-xs-6">§namepro§</li>
             </ul>
 
             <table id="project-table" class="table">
@@ -31,26 +31,26 @@
                     <th>Preostali iznos</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr id="K">
-                    <td style="display:none">§kategorija.id_kat§</td>
-                    <td class="K1">1</td>
-                    <td>kategorija</td>
-                    <td>0</td>
-                    <td>0</td>
-                    <td>0</td>
+                <tbody ng-repeat="kat in katran">
+                <tr id="§kat.kategorija.kategorija§">
+                    <td style="display:none"></td>
+                    <td class="§kat.kategorija.kategorija§1">§$index+1§</td>
+                    <td>§kat.kategorija.naziv§</td>
+                    <td>§kat.kategorija.budzet§</td>
+                    <td>§kat.kategorija.troskovi§</td>
+                    <td>§kat.kategorija.budzet + kat.kategorija.troskovi§</td>
                 </tr>
                 <tr class="transaction-row">
                     <td colspan="6">
                         <div class="span6">
                             <table>
-                                <tbody>
+                                <tbody ng-repeat="tran in kat.transakcije">
                                 <tr>
-                                    <td  style="display:none">§trans.about.id_tran§</td>
-                                    <td>09.01.2017</td>
-                                    <td>PBZ - VISA ELEKTRON DEBITNA KARTICA</td>
-                                    <td>POS MOVING SCOPE PARIS 84,00 EUR</td>
-                                    <td>-640.08 HRK</td>
+                                    <td  style="display:none"></td>
+                                    <td>§tran.datum§</td>
+                                    <td>§tran.partner§</td>
+                                    <td>§tran.opis§</td>
+                                    <td>§tran.iznos§ HRK</td>
                                     <td style="position: absolute; right: 5px" id="rowLink">
                                         <div >
                                             <button style="left: 20px" type="button" class="btn btn-primary remove-button" data-ng-click="removepodkat($parent.$parent.$index,$index,$event);$event.stopPropagation()"><span>-</span></button>
@@ -68,28 +68,9 @@
         </div>
         <div id="right-column" class="scroll-area col-xs-3 col-md-3">
             <div id="budget-content-form">
-                    <div class="budget-form">
-                        <div class="budget-content submit-form-fields form-group row">
-                            <label class="form-control-label">Izaberi IBAN</label>
-                            <div>
-                                <select class="col-xs-10 col-sm-10 col-md-10 float-md-right" ng-model="dropdownIBAN" ng-options="x for x in names"  ng-change="update($index)"></select>
-                            </div>
-                        </div>
-                        <div class="budget-content submit-form-fields form-group row">
-                            <label for="createAccount" class="form-control-label">Unesi IBAN</label>
-                            <div class="repeatthis">
-                                <input type="text" id="createAccount" maxlength="21" ng-model="newIBAN">
-                                <button type="button" class="btn btn-primary btn-sm cp-button" ng-click="addIBAN()">+</button>
-                            </div>
 
-                            <div class="repeatIBAN" ng-style="showIBANS" ng-repeat="IBAN in IBANS">
-                                <input type="text" id="createAccount" maxlength="21" ng-model="IBAN.value" disabled>
-                                <button type="button" class="btn btn-primary btn-sm cp-button" ng-model="IBAN.button" ng-click="delIBAN($index)">-</button>
-                            </div>
 
-                            <button type="button" class="btn btn-primary" id="submit">
-                                <span>Potvrdi</span>
-                            </button>
+
                         </div>
                     </div>
             </div>
@@ -102,5 +83,6 @@
         </footer>
     </div>
 </div>
+{{>onbodyend}}
 </body>
 </html>

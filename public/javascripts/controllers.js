@@ -152,14 +152,59 @@ app.controller('hoverLink', function($scope){
     $scope.open = false;
 });
 
-app.controller('showProject', function($scope, $location){
+app.controller('unusable', function($scope, $location){
     $scope.showProject = function(project){
         $location.path('#/project-list/' + project.id);
     };
+    console.log('RADI');
 });
 
-app.controller('showProjectGroup', function($scope) {
-    $scope.name = 'World'; // <-- ...The hell???
+app.controller('oneproject', function($scope,$http,$window,$document,$location) {
+      var idprojekta;
+      var kattran;
+      var something=[];
+
+       $scope.katran=[];
+
+
+     idprojekta = parseInt($window.location.pathname.replace('/project-template/',""));
+    console.log(idprojekta);
+
+
+
+
+
+    $http.post('/api/gettemplate', {id: idprojekta}).
+    then(function SuccessCallback(data) {
+        if(data.data=='empty'){
+            console.log('NOTHING IN BASE');
+            //ako nema transakcija
+        }else {
+           console.log(data.data);
+
+            $scope.namepro=data.data[0].ime;
+           kattran=parsekattran(data.data);
+          something.push(kattran);
+          $scope.katran =JSON.parse(JSON.stringify(kattran));
+        }
+
+    }, function errorCallback(data) {
+        console.error("error in posting");
+    });
+
+    console.log(something);
+
+
+
+
+
+
+
+
+
+
+
+
 });
 
 
@@ -275,7 +320,7 @@ app.controller('showTables', function($scope,$http,$window){
     $scope.projectclick=function($index,obj, $event) {
         if ($scope.stanje == 1) {
             var projectidfromhtml = obj.currentTarget.cells[0].innerHTML;
-            var poststring = '/project/' + projectidfromhtml;
+            var poststring = '/project-template/' + projectidfromhtml;
             $window.location.href = poststring;
 
 
@@ -1179,3 +1224,101 @@ Array.prototype.clean = function(deleteValue) {
     return this;
 };
 
+var parsekattran = function(data){
+    var parsed =[{
+        kategorija: {},
+        transakcije: []
+
+    }
+    ];
+
+    //console.log(data);
+
+    for(var i=0; i <data.length; i++){
+        if((data[i].naziv =='Ljudski resursi') ||
+            (data[i].naziv =='Putovanja') ||
+            (data[i].naziv =='Oprema i roba') ||
+            (data[i].naziv =='Ostali troškovi i usluge') ||
+            (data[i].naziv =='Troškovi obavljanja osnovne djelatnosti')){
+                data[i].kategorija = 'K';
+        }else if((data[i].naziv =='Budžetni prihodi') || (data[i].naziv =='Nepovezani budžet')){
+               data[i].kategorija = 'B';
+        }else{
+            data[i].kategorija = 'P';
+        }
+
+    }
+
+    data.sort(function(a,b){
+        if(a.id_kat < b.id_kat){
+            return -1;
+        }else if(a.id_kat > b.id_kat){
+            return 1;
+
+        }else{
+            return 0;
+        }
+    });
+
+   // console.log(data);
+
+
+    var oldid = -1;
+     var out = 0;
+    for(var i = 0; i<data.length; i++ ){
+        if(oldid != data[i].id_kat) {
+            parsed[out].kategorija.id_kat = data[i].id_kat;
+                parsed[out].kategorija.naziv = data[i].naziv;
+                parsed[out].kategorija.budzet = data[i].budzet;
+                parsed[out].kategorija.troskovi = data[i].troskovi;
+                parsed[out].kategorija. kategorija = data[i].kategorija;
+
+
+           for (var j = i; j < data.length; j++) {
+               if (parsed[out].kategorija.id_kat == data[j].id_kat) {
+                   parsed[out].transakcije[j] = {
+                       id_kat_tran : data[j].id_kat_tran,
+                   id_tran: data[j].id_tran,
+                   iznos :data[j].iznos,
+                   opis : data[j].opis,
+                   partner : data[j].partner,
+                   datum : data[j].datum.substring(6,8) +"." + data[j].datum.substring(4,6) +"."+ data[j].datum.substring(0,4)
+               };
+               }
+           }
+           if(i+1 != data.length) {
+               parsed.push({
+                   kategorija: {
+                       id_kat: -1,
+                       naziv: "" ,
+                       budzet: -1,
+                       troskovi: -1,
+                       kategorija: "",
+                       datum: ""
+                   }
+
+                   ,
+                   transakcije: []
+
+               });
+           }
+           out++;
+           oldid= data[i].id_kat;
+       }else{
+
+       }
+
+    }
+
+    for(var i=0; i < parsed.length; i++){
+        parsed[i].transakcije.clean(undefined);
+    }
+
+
+
+
+
+
+    return parsed;
+
+};
