@@ -323,17 +323,30 @@ select{
     background-color: #095a8e;
 }
 
-#left-column .table-hover tbody tr{
-    background-color: #ffffff;
+#project-table tbody #K{
+    background-color: #b1d9e7;
 }
 
-#left-column .table-hover tbody tr:hover td{
-    background-color: #e0f1ff;
-    cursor: pointer;
-}
-
-#left-column .table-hover tbody tr:active td{
+#project-table tbody #K:hover{
     background-color: #ff8c00;
+    color: #ffffff;
+}
+
+.K1{
+    background-color: #ff8c00;
+    color: #ffffff;
+}
+
+#project-table tbody #P{
+    background-color: #c1e9f7;
+}
+
+#project-table tbody #P:hover td{
+    background-color: #ffc300;
+}
+
+.P1{
+    background-color: #ffc300;
     color: #ffffff;
 }
 
@@ -434,6 +447,15 @@ select{
 
 #project-table tbody .sub-category-row2{
     background-color: transparent;
+}
+
+.transaction-row{
+    border: 2px solid #367abd;
+    padding: 40px;
+}
+
+.transaction-row table tbody tr td{
+    padding-right: 30px;
 }
 
 #project-table tbody .transaction-row, #project-table tbody .transaction-row th{
