@@ -9,7 +9,7 @@ angular.module('myApp', [
   'myApp.filters',
   'myApp.services',
   'myApp.directives',
-  'angularModalService',
+  'angularModalService'
 
   // 3rd party dependencies
   //'btford.socket-io'

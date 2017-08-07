@@ -1032,8 +1032,8 @@ app.controller('CreateProCtrl', function($scope, $window, $http, $sce){
          $http.post('/api/PUSHPROJECT', {name: $scope.projectName, start: sdatestr, end: edatestr, budget: $scope.budget, IBANS: $scope.IBANS  }).
          then(function SuccessCallback(data) {
              if(data.data=='success'){
-                 console.log('NOTHING IN BASE redirect');
-
+                 //console.log('NOTHING IN BASE redirect');
+                 $window.location.href = '/testtable';
              }else {
 
                  console.log('Something went wrong');
