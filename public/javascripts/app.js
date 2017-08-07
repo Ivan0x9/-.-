@@ -12,5 +12,5 @@ angular.module('myApp', [
   'angularModalService',
 
   // 3rd party dependencies
-  'btford.socket-io'
+  //'btford.socket-io'
 ]);

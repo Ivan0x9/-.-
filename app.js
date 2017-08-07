@@ -46,8 +46,8 @@ var upload =require('./routes/upload.js');
 //additional configuration
 var app = express();
 var http = require('http').createServer(app);
-var io = require('socket.io')(http);
-require('./lib/io')(io);
+//var io = require('socket.io')(http);
+//require('./lib/io')(io);
 //session
 
 

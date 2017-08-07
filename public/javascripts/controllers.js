@@ -9,7 +9,7 @@ app.config(function($interpolateProvider) {
     $interpolateProvider.endSymbol('§');
 });
 
-app.controller('LoginCtrl', function ($scope, $window, $http, $sce, socket) {
+app.controller('LoginCtrl', function ($scope, $window, $http, $sce) {
 
     $scope.sendLogin=function() {
 
@@ -1055,21 +1055,21 @@ app.controller('CreateProCtrl', function($scope, $window, $http, $sce){
 
 });
 
-app.controller('AppCtrl', function ($scope, socket) {
+/*app.controller('AppCtrl', function ($scope) {
    $scope.sendMessage=function() {
        socket.emit('send:message', function (data) {
 
        });
    }
   }).
-  controller('MyCtrl1', function ($scope, socket) {
+  controller('MyCtrl1', function ($scope) {
     socket.on('send:time', function (data) {
       $scope.time = data.time;
     });
   }).
   controller('MyCtrl2', function ($scope) {
     // write Ctrl here
-  });
+  });*/
 
 //functions
 var DateDiff = {
