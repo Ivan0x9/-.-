@@ -97,10 +97,13 @@
         </div>
 
         <div id="right-column" class="scroll-area col-xs-12 col-sm-6 col-md-6 col-lg-6">
-            <form style="height: 80px" action="upload" method="post" enctype="multipart/form-data">
+            <form style="height: 80px" action="upload" method="post" enctype="multipart/form-data" class="col-xs-6 col-md-6">
                 <input type="file" name="filetoupload">
                 <input type="submit">
             </form>
+            <div style="height: 80px; margin-top: 15px" class="col-xs-6 col-md-6">
+                <button type="button" class="btn btn-primary" id="submit" data-toggle="modal" data-target="#cashsub">Gotovinska transakcija</button>
+            </div>
 
             <table id="transaction-edit-table" class="table table-hover">
                 <thead>
@@ -175,6 +178,36 @@
                         <button type="button" ng-click="linkserverpost(); close('Yes')" class="btn btn-primary" id="submit" data-dismiss="modal">DA</button>
                         <button type="button" ng-click="changestate(5)" class="btn btn-primary" id="submit" data-dismiss="modal">NE</button>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="cashsub">
+            <div class="modal-content">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <div class="modal-dialog pt-list-area">
+                    <form>
+                        <div class="form-group">
+                            <label for="date">Datum</label>
+                            <input type="date" class="form-control" id="date" placeholder="Birajte datum" name="date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="partner">Naziv (Partner)</label>
+                            <input type="text" class="form-control" id="partner" placeholder="Ime partnera ili naziv gotovinske transakcije" name="partner">
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Opis</label>
+                            <input type="text" class="form-control" id="description" placeholder="Opis gotovinske transakcije" name="description" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="amount">Iznos</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">HRK</span>
+                                <input type="number" step="0.01" class="form-control" id="amount" name="amount" required>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+                    </form>
                 </div>
             </div>
         </div>

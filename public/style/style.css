@@ -562,7 +562,7 @@ select{
 }
 
 #transaction-edit-table{
-    margin-top: 20px;
+    margin-top: 120px;
     width: 95%;
 }
 
@@ -692,6 +692,36 @@ select{
 .cell-3{
     background-color: #e0f1ff;
 }
+
+/* CASH SUBMIT MODAL STYLE */
+#cashsub{
+    height: 380px;
+    width: 70%;
+    top: 10%;
+    left: 15%;
+}
+    #cashsub .modal-content{
+        border: 2px solid #367abd;
+        border-radius: 5px;
+    }
+    #cashsub .pt-list-area{
+        height: 40vh;
+    }
+    #cashsub #submit{
+        position: relative;
+        left: 25%;
+        margin-bottom: -50px;
+    }
+
+#cashsub form .form-group{
+    height: auto;
+    width: 50%;
+    margin: 0 auto;
+}
+
+    #cashsub form div label{
+        display: inline;
+    }
 
 /* BUTTONS, ERRORS & WARNING MESSAGES =========================================== */
 
