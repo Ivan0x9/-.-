@@ -13,48 +13,84 @@ router.post('/', function(req, res) {
     form.parse(req, function (err, fields, files) {
         var oldpath = files.filetoupload.path;
         var newpath = oldpath;
-       // console.log(oldpath);
+        // console.log(oldpath);
         /*
         var newpath = 'C:/Users/User2/WebstormProjects/EM-Project/uploads/' + files.filetoupload.name;
         fs.rename(oldpath, newpath, function (err) {
             if (err) throw err;
 
         });*/
-        fs.exists(oldpath, function(exists){
-            if(exists){ // results true
-               fs.readFile(oldpath,function(err,data){
-                   if(err) {
-                       return console.log(err);
-                   }
-                 var  content=data;
-                 var BANKA;
-                 var IBAN;
-                 var racun, partner,adresa,grad,iznos,opis,datum;
-                 var id_rac;
-                 var UI;
-                 var temp;
-                 var SQLHEAD = 'INSERT INTO transakcije'+
-                     '(banka,racun,partner,adresa,grad,iznos,opis,datum,id_racun)' +
-                     'VALUES';
-                   //console.log(content);
-                   var encoded  = iconvlite.decode(content, 'cp1250');
+        fs.exists(oldpath, function (exists) {
+            if (exists) { // results true
+                fs.readFile(oldpath, function (err, data) {
+                    if (err) {
+                        return console.log(err);
+                    }
+                    var content = data;
 
-                   var array =encoded.split('\n');
-                   //console.log(array);
-                  BANKA = array[0].substr(7,50).trim();
-                  IBAN = array[1].substr(18,21);
+                    var IBAN;
 
-                  pool.query("SELECT id_br_rac FROM br_rac WHERE br_rac.IBAN ='"+IBAN+"';", function (error, results, fields) {
-                      if (error) throw error;
-                     if(results.length > 0) {
-                         id_rac = results[0].id_br_rac;
+                    var id_rac;
 
-                         wrapper();
-                     }else{
-                         res.end('wrong');
-                     }
-                  });
-    var wrapper = function() {
+
+                    //console.log(content);
+                    var encoded = iconvlite.decode(content, 'cp1250');
+
+                    var array = encoded.split('\n');
+                    //console.log(array);
+
+                    IBAN = array[1].substr(18, 21);
+
+                    pool.query("SELECT id_br_rac FROM br_rac WHERE br_rac.IBAN ='" + IBAN + "';", function (error, results, fields) {
+                        if (error) throw error;
+                        if (results.length > 0) {
+                            id_rac = results[0].id_br_rac;
+
+                            wrapper(array,id_rac,newpath);
+                            res.redirect('/testtable');
+//res.write('success!');
+                            res.end();
+                        } else {
+                            res.end('wrong');
+                        }
+
+
+                    });
+
+
+
+                });
+                // console.log(encoded);
+            }
+
+        });
+
+    });
+
+
+
+});
+
+
+
+
+
+
+
+
+
+
+    var wrapper = function(array,id_rac,newpath) {
+        var SQLHEAD = 'INSERT INTO transakcije' +
+            '(banka,racun,partner,adresa,grad,iznos,opis,datum,id_racun)' +
+            'VALUES';
+        var UI;
+        var temp;
+        var racun, partner, adresa, grad, iznos, opis, datum;
+
+        var BANKA;
+
+        BANKA = array[0].substr(7, 50).trim();
 
         for (var i = 0; i < array.length; i++) {
             if (array[i].charAt(999) == '5') {
@@ -77,21 +113,26 @@ router.post('/', function(req, res) {
                 iznos = iznos * UI;
 
                 SQLHEAD += "('" + BANKA + "','" + racun + "','" + partner + "','" + adresa + "','" + grad +
-                    "'," + iznos + ",'" + opis + "','" + datum + "',"+id_rac+ '),';
+                    "'," + iznos + ",'" + opis + "','" + datum + "'," + id_rac + '),';
 
 
             }
         }
         var fixedSQL = SQLHEAD.substring(0, SQLHEAD.length - 1);
         fixedSQL += ';';
-          pool.query(fixedSQL, function (error, results, fields) {
-              if (error) throw error;
-          });
+        pool.query(fixedSQL, function (error, results, fields) {
+            if (error) throw error;
+            fs.unlink(newpath, function (err) {
+                if (err) return console.log(err);
+                //console.log('file deleted successfully');
 
-        fs.unlink(newpath,function(err){
-            if(err) return console.log(err);
-            //console.log('file deleted successfully');
+            });
+
+
+
         });
+
+
 
 
         /*
@@ -102,22 +143,6 @@ router.post('/', function(req, res) {
 
              console.log("The file was saved!");
          });*/
-    }
-               // console.log(encoded);
-               });
-
-                }
-
-        });
-        res.redirect('/testtable');
-        //res.write('success!');
-        res.end();
-    });
-
-
-
-
-
-});
+    };
 
 module.exports = router;
