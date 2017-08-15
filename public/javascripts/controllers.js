@@ -534,21 +534,11 @@ $scope.addkat = function($index,obj,$event){
         if($scope.stanje == 3) {
             if(izabranakategorija != -1) {
                 for (var i = 0; i < $scope.transactions[$index].projekt.length; i++) {
-                    if ($scope.projects[parentkat].projekt.id == $scope.transactions[$index].projekt[i].id_projekt) {
-                        uvjet = true;
-
-                    } else {
-
-                    }
+                    uvjet = true;
                 }
             }else if(izabranbuzet == 1){
                 for (var i = 0; i < $scope.transactions[$index].projekt.length; i++) {
-                    if ($scope.projects[indexbudzet].projekt.id == $scope.transactions[$index].projekt[i].id_projekt) {
-                        uvjet = true;
-
-                    } else {
-
-                    }
+                    uvjet = true;
                 }
             }
             if(uvjet) {
