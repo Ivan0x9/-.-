@@ -27,7 +27,6 @@ router.post('/', function(req, res) {
                         return console.log(err);
                     }
                     var content = data;
-                    var datum;
 
                     var IBAN;
 
@@ -82,14 +81,12 @@ router.post('/', function(req, res) {
 
 
     var wrapper = function(array,id_rac,newpath) {
-        var racun, partner, adresa, grad, iznos, opis, datum;
-
         var SQLHEAD = 'INSERT INTO transakcije' +
             '(banka,racun,partner,adresa,grad,iznos,opis,datum,id_racun)' +
             'VALUES';
         var UI;
         var temp;
-
+        var racun, partner, adresa, grad, iznos, opis, datum;
 
         var BANKA;
 
