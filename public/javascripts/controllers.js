@@ -232,7 +232,7 @@ var slanje = {
 
 
 
-app.controller('showTables', function($scope,$http,$window){
+app.controller('showTables', function($scope,$http,$window, $timeout){
     $scope.selection = { selectedNode:  null };
     $scope.stanje = 1; //pocetno stanje
     var izabranakategorija = -1;
@@ -406,9 +406,20 @@ $scope.addkat = function($index,obj,$event){
 
 
 };
-
-
-
+/*
+$scope.addtran = function(){
+        $http.post('/api/gettrans', {
+            date: $scope.date,
+            partner: $scope.partner,
+            description: $scope.description,
+            amount: $scope.amount
+        }).then(function successCallback(){
+            $timeout(function (){ $window.location.href = '/testtable'; }, 1500);
+        }, function errorCallback(){
+            console.error("Error in posting");
+        });
+};
+*/
 
      var selectedcategory=0;
      var selectedlastparent;
@@ -534,11 +545,11 @@ $scope.addkat = function($index,obj,$event){
         if($scope.stanje == 3) {
             if(izabranakategorija != -1) {
                 for (var i = 0; i < $scope.transactions[$index].projekt.length; i++) {
-                    uvjet = true;
+                        uvjet = true;
                 }
             }else if(izabranbuzet == 1){
                 for (var i = 0; i < $scope.transactions[$index].projekt.length; i++) {
-                    uvjet = true;
+                        uvjet = true;
                 }
             }
             if(uvjet) {

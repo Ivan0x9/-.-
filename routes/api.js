@@ -484,78 +484,152 @@ router.post('/gettrans',function(req,res) {
     ].join('');
 
     var inserts = [req.sessval.id];
-    pool.query(sql,inserts,function (error, results, fields) {
-        if (error) throw error;
-        var currenttranid=-1;
-        var trannum=-1;
-        var transakcije =[
-            {about: {},
-                projekt: []
+    /*var submit = [req.body.date, req.body.partner, req.body.description, req.body.amount];*/
 
-            }
-
-        ];
-
-        if(results.length > 0) {
-
-
-            for (var i = 0; i < results.length; i++) {
-                if (currenttranid != results[i].id_tran) {
-                    trannum++;
-                    currenttranid = results[i].id_tran;
-                    var j = i;
-                    var kategnum = 0;
-                    transakcije[trannum].about = {
-                        "id_tran": results[i].id_tran,
-                        "banka": results[i].banka,
-                        "racun": results[i].racun,
-                        "partner": results[i].partner,
-                        "adresa": results[i].adresa,
-                        "iznos": results[i].iznos,
-                        "opis": results[i].opis,
-                        "datum": results[i].datum,
-                        "datumpos": results[i].datumpos,
-                        "id_racun": results[i].id_racun
-
-
-                    };
-                    while (currenttranid == results[j].id_tran) {
-                        transakcije[trannum].projekt[kategnum] = {
-                            "id_projekt": results[j].id_projekt
-
-                        };
-                        j++;
-                        kategnum++;
-                        if (j == results.length) {
-                            break;
-                        }
-                    }
-                    if (j != results.length) {
-                        transakcije.push({
-                            about: {},
-                            projekt: []
-
-                        });
-                    }
-
-                } else {
+    if(inserts){
+        pool.query(sql,inserts,function (error, results, fields) {
+            if (error) throw error;
+            var currenttranid=-1;
+            var trannum=-1;
+            var transakcije =[
+                {about: {},
+                    projekt: []
 
                 }
 
+            ];
+
+            if(results.length > 0) {
+
+
+                for (var i = 0; i < results.length; i++) {
+                    if (currenttranid != results[i].id_tran) {
+                        trannum++;
+                        currenttranid = results[i].id_tran;
+                        var j = i;
+                        var kategnum = 0;
+                        transakcije[trannum].about = {
+                            "id_tran": results[i].id_tran,
+                            "banka": results[i].banka,
+                            "racun": results[i].racun,
+                            "partner": results[i].partner,
+                            "adresa": results[i].adresa,
+                            "iznos": results[i].iznos,
+                            "opis": results[i].opis,
+                            "datum": results[i].datum,
+                            "datumpos": results[i].datumpos,
+                            "id_racun": results[i].id_racun
+
+
+                        };
+                        while (currenttranid == results[j].id_tran) {
+                            transakcije[trannum].projekt[kategnum] = {
+                                "id_projekt": results[j].id_projekt
+
+                            };
+                            j++;
+                            kategnum++;
+                            if (j == results.length) {
+                                break;
+                            }
+                        }
+                        if (j != results.length) {
+                            transakcije.push({
+                                about: {},
+                                projekt: []
+
+                            });
+                        }
+
+                    } else {
+
+                    }
+
+                }
+                res.send(transakcije);
+                res.end();
+            }else{
+                res.send('Prazno');
+
             }
-            res.send(transakcije);
-            res.end();
-        }else{
-            res.send('Prazno');
-
-        }
 
 
 
-    });
+        });
+    }
+/*
+    else if(submit){
+        pool.query(sql,submit,function (error, results, fields) {
+            if (error) throw error;
+            var currenttranid=-1;
+            var trannum=-1;
+            var transakcije =[
+                {about: {},
+                    projekt: []
+
+                }
+
+            ];
+
+            if(results.length > 0) {
+
+
+                for (var i = 0; i < results.length; i++) {
+                    if (currenttranid != results[i].id_tran) {
+                        trannum++;
+                        currenttranid = results[i].id_tran;
+                        var j = i;
+                        var kategnum = 0;
+                        transakcije[trannum].about = {
+                            "id_tran": results[i].id_tran,
+                            "banka": results[i].banka,
+                            "racun": results[i].racun,
+                            "partner": results[i].partner,
+                            "adresa": results[i].adresa,
+                            "iznos": results[i].iznos,
+                            "opis": results[i].opis,
+                            "datum": results[i].datum,
+                            "datumpos": results[i].datumpos,
+                            "id_racun": results[i].id_racun
+
+
+                        };
+                        while (currenttranid == results[j].id_tran) {
+                            transakcije[trannum].projekt[kategnum] = {
+                                "id_projekt": results[j].id_projekt
+
+                            };
+                            j++;
+                            kategnum++;
+                            if (j == results.length) {
+                                break;
+                            }
+                        }
+                        if (j != results.length) {
+                            transakcije.push({
+                                about: {},
+                                projekt: []
+
+                            });
+                        }
+
+                    } else {
+
+                    }
+
+                }
+                res.send(transakcije);
+                res.end();
+            }else{
+                res.send('Prazno');
+
+            }
 
 
 
+        });
+    }
+*/
 });
 
 router.post('/updatecategory',function(req,res){
