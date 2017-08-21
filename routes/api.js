@@ -219,10 +219,6 @@ router.post('/PUSHPROJECT',function(req,res) {
 
 });
 
-
-
-
-
 router.post('/GETIBANS',function(req,res){
 
 
@@ -254,8 +250,6 @@ router.post('/GETIBANS',function(req,res){
 
 
 });
-
-
 
 router.post('/IBAN',function(req,res){
    // console.log(req.sessval.user);
@@ -291,11 +285,6 @@ router.post('/IBAN',function(req,res){
 
 
 });
-
-
-
-
-
 
 router.post('/login', function(req, res) {
  //ka fol provjerio bazu
@@ -467,10 +456,6 @@ router.post('/getprojects',function(req,res){
 
 
 });
-
-
-
-
 
 router.post('/gettrans',function(req,res) {
     var sql = [
@@ -872,7 +857,5 @@ router.post('/deletekattrans',function(req,res){
     };
 
 });
-
-
 
 module.exports = router;

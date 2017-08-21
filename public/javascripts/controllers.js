@@ -540,16 +540,16 @@ $scope.addtran = function(){
 
     };
 
-    $scope.transclick =function($index,obj, $event){
+    $scope.transclick =function($index){
         var uvjet = false;
         if($scope.stanje == 3) {
             if(izabranakategorija != -1) {
                 for (var i = 0; i < $scope.transactions[$index].projekt.length; i++) {
-                        uvjet = true;
+                    uvjet = true;
                 }
             }else if(izabranbuzet == 1){
                 for (var i = 0; i < $scope.transactions[$index].projekt.length; i++) {
-                        uvjet = true;
+                    uvjet = true;
                 }
             }
             if(uvjet) {
@@ -793,7 +793,7 @@ $scope.addtran = function(){
         }
     };
 
-   $scope.removetranclick=function($index,obj,$event){
+   $scope.removetranclick=function($index,obj){
       var selectedtransid= obj.currentTarget.parentNode.parentNode.children[0].innerHTML;
        console.log(selectedtransid);
        console.log($scope.transactions[$index]);
