@@ -186,10 +186,17 @@
             <div class="modal-content">
                 <button type="button" class="close" style="padding-right: 5px;" data-dismiss="modal">&times;</button>
                 <div class="modal-dialog pt-list-area">
-                    <form>
+                    <form method="post">
+                        <blockquote style="height: 50px;">
+                            <p>§date§</p>
+                            <p>§partner§</p>
+                            <p>§description§</p>
+                            <p>§amount§</p>
+
+                        </blockquote>
                         <div class="form-group">
                             <label for="date">Datum</label>
-                            <input type="text" class="form-control" id="date" placeholder="DD.MM.GGGG" maxlength="10" name="date" ng-model="date" required>
+                            <input type="text" class="form-control" id="date" placeholder="GGGDDMM" maxlength="8" name="date" ng-model="datum" required>
                         </div>
                         <div class="form-group">
                             <label for="partner">Naziv (Partner)</label>
@@ -197,13 +204,13 @@
                         </div>
                         <div class="form-group">
                             <label for="description">Opis</label>
-                            <input type="text" class="form-control" id="description" placeholder="Opis gotovinske transakcije" name="description" ng-model="description" required>
+                            <input type="text" class="form-control" id="description" placeholder="Opis gotovinske transakcije" name="description" ng-model="opis" required>
                         </div>
                         <div class="form-group">
                             <label for="amount">Iznos</label>
                             <div class="input-group">
                                 <span class="input-group-addon">HRK</span>
-                                <input type="number" step="0.01" class="form-control" id="amount" name="amount" ng-model="amount" required>
+                                <input type="number" step="0.01" class="form-control" id="amount" name="amount" ng-model="iznos" required>
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary" id="submit" ng-click="addtran()">Pohrani</button>

@@ -406,20 +406,49 @@ $scope.addkat = function($index,obj,$event){
 
 
 };
-/*
+
 $scope.addtran = function(){
-        $http.post('/api/gettrans', {
-            date: $scope.date,
-            partner: $scope.partner,
-            description: $scope.description,
-            amount: $scope.amount
-        }).then(function successCallback(){
-            $timeout(function (){ $window.location.href = '/testtable'; }, 1500);
-        }, function errorCallback(){
-            console.error("Error in posting");
-        });
-};
+    /*
+    var tranlenght = $scope.transactions[$index].about.length;
+    var highestnumber = 0;
+    for(var i = 0; i < tranlenght; i++){
+        if($scope.transactions[$index].about[i].id_tran > highestnumber){
+            highestnumber = $scope.transactions[$index].about[i].id_tran;
+        }
+    }
+    var newpot = {
+        id_tran: parseInt(highestnumber)+1,
+        banka: " ",
+        racun: " ",
+        partner: "Example partner",
+        adresa: " ",
+        iznos: "1111",
+        opis: "example opis",
+        datum: "11.11.2017",
+        datumpos: transactions[$index].about.datumpos,
+        id_racun: " "
+    };
+    $scope.transactions[$index].about.splice(tranlenght,0,newpot);
 */
+
+    $http.post('/api/submittran', {
+        partner: $scope.partner,
+        iznos: $scope.iznos,
+        opis: $scope.opis,
+        datum: $scope.datum
+    }).then(function successCallback(data){
+        if(data.data == 'success')
+        {
+            $window.location.href = '/testtable';
+        }else{
+            console.log('Something went wrong');
+        }
+    }, function errorCallback(data){
+        console.error("Error in posting");
+    });
+
+};
+
 
      var selectedcategory=0;
      var selectedlastparent;
