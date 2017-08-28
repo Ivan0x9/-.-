@@ -17,18 +17,18 @@ app.controller('LoginCtrl', function ($scope, $window, $http, $sce) {
 
         if(($scope.usernameemail == '' || $scope.usernameemail == undefined) &&($scope.password == ''  || $scope.password == undefined)) {
             $scope.showMsg = {'visibility': 'visible'};
-            varHTML = 'Molimo unesite korisničko ime ili email te lozinku.';
+            varHTML = 'Molimo unesite korisničko ime te lozinku.';
 
             $scope.insertHTML = $sce.trustAsHtml(varHTML);
 
         }else if($scope.usernameemail == '' || $scope.usernameemail == undefined){
             $scope.showMsg = {'visibility': 'visible'};
-            varHTML='Molimo unesite korisničko ime ili email.';
+            varHTML='Molimo unesite korisničko ime.';
 
             $scope.insertHTML = $sce.trustAsHtml(varHTML);
         }else if($scope.password == '' || $scope.password == undefined){
             $scope.showMsg = {'visibility': 'visible'};
-            varHTML='Molimo unesite lozinku';
+            varHTML='Molimo unesite lozinku.';
 
             $scope.insertHTML = $sce.trustAsHtml(varHTML);
 
