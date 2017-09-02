@@ -232,7 +232,7 @@ var slanje = {
 
 
 
-app.controller('showTables', function($scope,$http,$window, $timeout){
+app.controller('showTables', function($scope,$http,$sce,$window,$timeout){
     $scope.selection = { selectedNode:  null };
     $scope.stanje = 1; //pocetno stanje
     var izabranakategorija = -1;
@@ -408,45 +408,49 @@ $scope.addkat = function($index,obj,$event){
 };
 
 $scope.addtran = function(){
-    /*
-    var tranlenght = $scope.transactions[$index].about.length;
-    var highestnumber = 0;
-    for(var i = 0; i < tranlenght; i++){
-        if($scope.transactions[$index].about[i].id_tran > highestnumber){
-            highestnumber = $scope.transactions[$index].about[i].id_tran;
-        }
+    var varHTML;
+
+    if($scope.datum == '' || $scope.datum == undefined ||$scope.datum == null){
+        $scope.showMsg = {'visibility': 'visible'};
+        varHTML='Molimo unesite datum.';
+
+        $scope.insertHTML = $sce.trustAsHtml(varHTML);
     }
-    var newpot = {
-        id_tran: parseInt(highestnumber)+1,
-        banka: " ",
-        racun: " ",
-        partner: "Example partner",
-        adresa: " ",
-        iznos: "1111",
-        opis: "example opis",
-        datum: "11.11.2017",
-        datumpos: transactions[$index].about.datumpos,
-        id_racun: " "
-    };
-    $scope.transactions[$index].about.splice(tranlenght,0,newpot);
-*/
+    if($scope.partner == '' || $scope.partner == undefined){
+        $scope.showMsg = {'visibility': 'visible'};
+        varHTML='Molimo unesite partnera.';
 
-    $http.post('/api/submittran', {
-        partner: $scope.partner,
-        iznos: $scope.iznos,
-        opis: $scope.opis,
-        datum: $scope.datum
-    }).then(function successCallback(data){
-        if(data.data == 'success')
-        {
-            $window.location.href = '/testtable';
-        }else{
-            console.log('Something went wrong');
-        }
-    }, function errorCallback(data){
-        console.error("Error in posting");
-    });
+        $scope.insertHTML = $sce.trustAsHtml(varHTML);
+    }
+    else if($scope.opis == '' || $scope.opis == undefined){
+        $scope.showMsg = {'visibility': 'visible'};
+        varHTML='Molimo uneiste opis.';
 
+        $scope.insertHTML = $sce.trustAsHtml(varHTML);
+    }
+    else if($scope.iznos == '' || $scope.iznos == undefined){
+        $scope.showMsg = {'visibility': 'visible'};
+        varHTML='Molimo unesite iznos.';
+
+        $scope.insertHTML = $sce.trustAsHtml(varHTML);
+    }
+    else{
+        $http.post('/api/submittran', {
+            partner: $scope.partner,
+            iznos: $scope.iznos,
+            opis: $scope.opis,
+            datum: $scope.datum
+        }).then(function successCallback(data){
+            if(data.data == 'success')
+            {
+                $window.location.href = '/testtable';
+            }else{
+                console.log('Something went wrong');
+            }
+        }, function errorCallback(data){
+            console.error("Error in posting");
+        });
+    }
 };
 
 

@@ -189,11 +189,11 @@
                     <form method="post">
                         <div class="form-group">
                             <label for="date">Datum</label>
-                            <input type="text" class="form-control" id="date" placeholder="GGGDDMM" maxlength="8" name="date" ng-model="datum" required>
+                            <input type="text" class="form-control" id="date" placeholder="GGGGDDMM" maxlength="8" name="date" ng-model="datum" required>
                         </div>
                         <div class="form-group">
                             <label for="partner">Naziv (Partner)</label>
-                            <input type="text" class="form-control" id="partner" placeholder="Ime partnera ili naziv gotovinske transakcije" name="partner" ng-model="partner">
+                            <input type="text" class="form-control" id="partner" placeholder="Ime partnera ili naziv gotovinske transakcije" name="partner" ng-model="partner" required>
                         </div>
                         <div class="form-group">
                             <label for="description">Opis</label>
@@ -207,6 +207,9 @@
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary" id="submit" ng-click="addtran()">Pohrani</button>
+                        <div class="warning-message col-md-12 col-lg-12 text-center" ng-style="showMsg">
+                            <span ng-bind-html="insertHTML"></span><br>
+                        </div>
                     </form>
                 </div>
             </div>
