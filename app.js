@@ -15,7 +15,7 @@ var formidable = require('formidable');
 var iconvlite = require('iconv-lite');
 //database
 
-var port = 3030;
+var port = 3000;
 
 var db = require('./lib/DB');
 
