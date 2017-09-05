@@ -316,13 +316,12 @@ app.controller('showTables', function($scope,$http,$sce,$window,$timeout){
             console.log('NOTHING IN BASE');
             //ako nema transakcija
         }else {
-            var newdata;
+            var newdata = transactionTableParser(data.data);
             //console.log(data.data);
-            newdata = transactionTableParser(data.data);
             //console.log(newdata);
             originaltrans=JSON.parse(JSON.stringify(newdata));
+            $scope.transactions=originaltrans;
             duzinatransakcija=newdata.length;
-            $scope.transactions=newdata;
         }
 
     }, function errorCallback(data) {
@@ -1242,27 +1241,23 @@ var projectTableParser = function(data){
 
 
 var transactionTableParser = function(data){
+
      if(data.length <=0 ){
          return;
      }
-    var days,months,year;
-    for(var i=0; i <data.length; i++){
-        year=data[i].about.datum.substring(0,4);
-        months=data[i].about.datum.substring(4,6);
-        days=data[i].about.datum.substring(6,8);
-        data[i].about.datum= days +"." + months +"."+ year;
-        if(data[i].about.iznos < 0){
-            data[i].about.color = "red";
-        }else{
-            data[i].about.color = "black"
-        }
-
-    }
-
-
-
-    return data;
-
+     var days,months,year;
+     for(var i=0; i <data.length; i++){
+         year=data[i].about.datum.substring(0,4);
+         months=data[i].about.datum.substring(4,6);
+         days=data[i].about.datum.substring(6,8);
+         data[i].about.datum= days +"." + months +"."+ year;
+         if(data[i].about.iznos < 0){
+             data[i].about.color = "red";
+         }else{
+             data[i].about.color = "black";
+         }
+     }
+     return data;
 };
 
 Array.prototype.move = function (from, to) {

@@ -6,6 +6,8 @@ var pool=db.pool;
 var fs = require('fs');
 var iconvlite = require('iconv-lite');
 
+iconvlite.skipDecodeWarning = true;
+
 router.post('/', function(req, res) {
 
     var form = new formidable.IncomingForm();
@@ -43,7 +45,7 @@ router.post('/', function(req, res) {
 
                     pool.query("SELECT id_br_rac FROM br_rac WHERE br_rac.IBAN ='" + IBAN + "';", function (error, results, fields) {
                         if (error) throw error;
-                        if (results.length > 0) {
+                        if (results.length >= 0) {
                             id_rac = results[0].id_br_rac;
 
                             wrapper(array,id_rac,newpath);

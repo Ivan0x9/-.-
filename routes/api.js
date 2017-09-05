@@ -531,7 +531,6 @@ router.post('/gettrans',function(req,res) {
 
                 }
                 res.send(transakcije);
-                res.end();
             }else{
                 res.send('Prazno');
 
@@ -557,7 +556,7 @@ router.post('/submittran', function(req,res){
         ",datum=?",
         ",id_racun=?"
     ].join('');
-    var inserts = ["","",req.body.partner,"","",req.body.iznos,req.body.opis,req.body.datum,1];
+    var inserts = ["","",req.body.partner,"","",req.body.iznos,req.body.opis,req.body.datum,25];
 
     pool.query(sql, inserts, function (error) {
         if(error) throw error;
