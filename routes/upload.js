@@ -51,7 +51,14 @@ router.post('/', function(req, res) {
                                 console.log(results);
                                 res.send("Dokument nije pravilno učitan.");
                             } else {
-                                id_rac = 1;
+                                if(IBAN == "HR1354673766890543872"){
+                                    id_rac = 11;
+                                    return id_rac;
+                                }
+                                else if(IBAN == ""){
+                                    res.send("Nepostojeći IBAN učitan.");
+                                }
+                                //id_rac = results[0].id_br_rac;
                                 wrapper(array,id_rac,newpath);
                                 return res.redirect('/testtable');
 
