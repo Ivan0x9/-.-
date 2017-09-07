@@ -42,31 +42,19 @@ router.post('/', function(req, res) {
 
                     IBAN = array[1].substr(18, 21);
 
-                    pool.getConnection(function(err, connection){
-                        if(err) throw err;
-                        connection.query("SELECT id_br_rac FROM br_rac WHERE IBAN ='"+IBAN+"';", function (error, results, fields) {
+                    pool.query("SELECT id_br_rac FROM br_rac WHERE IBAN ='"+IBAN+"';", function (error, results, fields) {
                             if (error) throw error;
 
                             if (results.length < 0) {
                                 console.log(results);
                                 res.send("Dokument nije pravilno učitan.");
                             } else {
-                                if(IBAN == "HR1354673766890543872"){
-                                    id_rac = 11;
-                                    return id_rac;
-                                }
-                                else if(IBAN == ""){
-                                    res.send("Nepostojeći IBAN učitan.");
-                                }
-                                //id_rac = results[0].id_br_rac;
+                                id_rac = results[0].id_br_rac;
                                 wrapper(array,id_rac,newpath);
                                 return res.redirect('/testtable');
-
                             }
                         });
                     });
-
-                });
                 // console.log(encoded);
             }
 
