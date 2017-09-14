@@ -85,7 +85,7 @@ var wrapper = function(array,id_rac,newpath) {
             }
             racun = array[i].substr(2, 34).trim();
             partner = array[i].substr(36, 70).trim();
-            partner = partner.replace("'", "\\'");
+            partner = partner.replace(/'/g, "\\'");
             adresa = array[i].substr(106, 35).trim();
             grad = array[i].substr(141, 35).trim();
             datum = array[i].substr(184, 8);
