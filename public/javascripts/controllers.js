@@ -433,12 +433,19 @@ $scope.addtran = function(){
 
         $scope.insertHTML = $sce.trustAsHtml(varHTML);
     }
+    else if($scope.id_rac == '' || $scope.id_rac == undefined){
+        $scope.showMsg = {'visibility': 'visible'};
+        varHTML='Molimo unesite broj ključa Vašeg IBAN računa.';
+
+        $scope.insertHTML = $sce.trustAsHtml(varHTML);
+    }
     else{
         $http.post('/api/submittran', {
             partner: $scope.partner,
             iznos: $scope.iznos,
             opis: $scope.opis,
-            datum: $scope.datum
+            datum: $scope.datum,
+            id_rac: $scope.id_rac
         }).then(function successCallback(data){
             if(data.data == 'success')
             {

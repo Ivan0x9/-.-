@@ -695,9 +695,9 @@ select{
 
 /* CASH SUBMIT MODAL STYLE */
 #cashsub{
-    height: 380px;
+    height: 480px;
     width: 70%;
-    top: 10%;
+    top: 5%;
     left: 15%;
 }
     #cashsub .modal-content{

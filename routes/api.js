@@ -556,7 +556,7 @@ router.post('/submittran', function(req,res){
         ",datum=?",
         ",id_racun=?"
     ].join('');
-    var inserts = ["","",req.body.partner,"","",req.body.iznos,req.body.opis,req.body.datum,1];
+    var inserts = ["","",req.body.partner,"","",req.body.iznos,req.body.opis,req.body.datum,req.body.id_rac];
 
     pool.query(sql, inserts, function (error) {
         if(error) throw error;
