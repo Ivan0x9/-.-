@@ -14,7 +14,7 @@
             <table id="projectEditTable" class="table" >
                 <thead >
                 <tr>
-                    <th>Naziv</th>
+                    <th>Naziv projekta</th>
                     <th style="width:23%">Trajanje</th>
                     <th style="width: 25%">Iznos</th>
                 </tr>
@@ -24,13 +24,13 @@
                 <tr class="clickableRow" data-ng-click="projectclick($index,$event)">
                     <td style="display: none">§project.projekt.id§</td>
                     <td>§project.projekt.naziv§</td>
-                    <td>§project.projekt.trajanje§</td>
+                    <td>§project.projekt.trajanje§ dan(a)</td>
                     <td>§project.projekt.iznos§</td>
                 </tr>
 
                 <tr id="categoryTable">
                     <td colspan="5">
-                        <div ng-show="projectshow[$index]"  class="span5">
+                        <div ng-hide="projectshow[$index]"  class="span5">
 
                             <table class="table table-condensed">
                                 <thead>

@@ -330,8 +330,6 @@ app.controller('showTables', function($scope,$http,$sce,$window,$timeout){
 
     $scope.projectshow =[];
 
-
-
      /*
     var result = document.getElementsByClassName("clickableRow");
         console.log(result);*/
@@ -342,19 +340,16 @@ app.controller('showTables', function($scope,$http,$sce,$window,$timeout){
             var poststring = '/project-template/' + projectidfromhtml;
             $window.location.href = poststring;
 
-
         } else if ($scope.stanje == 2 || $scope.stanje == 3) {
             if ($scope.projectshow[$index] == true) {
                 $scope.projectshow[$index] = false;
             } else {
                 $scope.projectshow[$index] = true;
             }
-
-
         }
     };//end of project click
 $scope.addpodkat= function (parent,$index,obj,$event) {
-    var convert = String($scope.projects[parent].kategorija[$index].id_kat)
+    var convert = String($scope.projects[parent].kategorija[$index].id_kat);
     var conclude = convert.indexOf('X');
     if( conclude == -1) {
         var newpot = {
@@ -764,10 +759,7 @@ $scope.addtran = function(){
           for(var i = 0; i< duzinaprojekata; i++) {
               $scope.projectshow[i] = true;
           }
-            $scope.buttonEnable= ["disenable","disenable","","disenable","disenable","disenable"];
-
-
-
+          $scope.buttonEnable= ["disenable","disenable","","disenable","disenable","disenable"];
 
       }else if(change ==3){
             $scope.stanje = 3;
