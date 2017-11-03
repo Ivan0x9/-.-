@@ -2,7 +2,7 @@
 
 /* Controllers */
 
-var app = angular.module('myApp.controllers', ['angularModalService']);
+var app = angular.module('myApp.controllers', ['angularModalService','angular.filter']);
 
 app.config(function($interpolateProvider) {
     $interpolateProvider.startSymbol('§');

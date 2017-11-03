@@ -115,8 +115,8 @@
                 </tr>
                 </thead>
                 <tbody >
-                <tr ng-repeat="trans in transactions track by $index" ng-mouseover="hoverInTran($index)" ng-mouseleave="hoverOutTran($index)"  data-ng-click="transclick($index)">
-                    <th  style="display:none">§trans.about.id_tran§</th>
+                <tr ng-repeat="trans in transactions | unique: 'about.id_tran'" ng-mouseover="hoverInTran($index)" ng-mouseleave="hoverOutTran($index)"  data-ng-click="transclick($index)">
+                    <th style="display:none">§trans.about.id_tran§</th>
                     <td ng-style="getStyleTran($index,category)">§trans.about.datum§</td>
                     <td ng-style="getStyleTran($index,category)">§trans.about.partner§</td>
                     <td ng-style="getStyleTran($index,category)">§trans.about.opis§</td>
