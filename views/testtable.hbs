@@ -122,7 +122,7 @@
                     <td ng-style="getStyleTran($index,category)">§trans.about.opis§</td>
                     <td style="color: §trans.about.color§; width:20%" ng-style="getStyleTran($index,category)">
                         <div  ng-hide="hidetran[$index]">§trans.about.iznos§ HRK</div>
-                        <div  ng-show="showtran[$index]"><input type="number" value="§trans.about.iznos§" step="any" style="color: #000000; position: absolute; margin-top: -4px; width: 12%" ng-model="trans.about.iznos"></div>
+                        <div  ng-show="showtran[$index]"><input type="number" value="§trans.about.iznos§" step="any" style="color: #000000; position: absolute; margin-top: -4px; width: 12%" ng-model="trans.about.iznos" ng-model-options="{getterSetter:true}"></div>
                     </td>
                     <td id="rowLink"><button type="button" class="btn btn-primary link-button"  ng-show="openlink[$index]" data-ng-click="linkpress($index,$event);$event.stopPropagation()"><span class="glyphicon glyphicon-link"></span></button></td>
                     <td id="rowLink"><button type="button" class="btn btn-primary link-button"   ng-show="openremove[$index]" data-ng-click="removetranclick($index,$event)"><span class="glyphicon glyphicon-remove"></span></button></td>

@@ -660,7 +660,7 @@ $scope.addtran = function(){
                 newobject.pridjeljeno = 0;
                 newobject.iznos = $scope.transactions[indextran].about.iznos;
                 $scope.transactions[indextran].about.iznos = oldtranvalue - $scope.transactions[indextran].about.iznos;
-                newobject.noviznos = oldtranvalue - $scope.transactions[indextran].about.iznos;
+                newobject.noviznos = $scope.transactions[indextran].about.iznos;
             }
         if(izabranakategorija != -1) {
             newobject.imeprojekta = $scope.projects[parentkat].projekt.naziv;
